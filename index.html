@@ -64,6 +64,8 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
 .step button:last-child{background:var(--navy);color:#fff}
 .step button:disabled{opacity:.3}
 .step input{width:48px;height:40px;text-align:center;border:1.5px solid var(--line);border-radius:10px;font-weight:600;font-size:1.05rem}
+.form-check-input:checked{background-color:var(--green);border-color:var(--green)}.form-check-input:focus{box-shadow:0 0 0 .2rem rgba(22,131,63,.2);border-color:var(--green)}
+.rd{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin-bottom:8px}.rd.cur{border-color:var(--green);background:var(--green-s)}.rd .progress{height:8px;border-radius:99px;background:#e9eef7}.rd .progress-bar{background:var(--green)}.rd.full .progress-bar{background:#c0392b}
 .pill{padding:3px 12px;border-radius:99px;font-size:.82rem;white-space:nowrap;font-weight:500}
 .bar{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);box-shadow:0 -8px 24px rgba(11,46,122,.1);padding:10px 14px calc(10px + env(safe-area-inset-bottom));z-index:25}
 .bar .tot{font-size:1.6rem;font-weight:600;color:var(--navy);line-height:1.1}
@@ -97,6 +99,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
  </div>
 
  <div class="wrap">
+  <div class="cardx d-none" id="rounds_card"><div class="h" style="margin-bottom:10px">🗓 รอบการสั่งจอง</div><div id="rounds"></div></div>
   <div class="cardx" id="order">
    <div class="h"><i>1</i>แบบเสื้อ ราคา และตารางไซส์</div>
    <img id="design" class="design d-block mx-auto mb-2" src="design.jpg" alt="แบบเสื้อและตารางไซส์">
@@ -113,7 +116,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
     <div class="col-6 col-md-3"><label class="form-label">เบอร์โทร *</label><input id="f_phone" class="form-control" inputmode="tel" autocomplete="tel"></div>
     <div class="col-md-6"><label class="form-label">Line / Facebook</label><input id="f_line" class="form-control"></div>
     <div class="col-md-6"><label class="form-label">วิธีรับสินค้า</label>
-     <select id="f_del" class="form-select"><option>รับที่โรงเรียนวันงาน</option><option>จัดส่งไปรษณีย์</option></select></div>
+     <select id="f_del" class="form-select"><option>รับที่โรงเรียนตามรอบนัด</option><option>จัดส่งไปรษณีย์</option></select></div>
     <div class="col-12 d-none" id="addrWrap"><label class="form-label">ที่อยู่จัดส่ง *</label><textarea id="f_addr" class="form-control" rows="2"></textarea></div>
     <div class="col-12"><label class="form-label">หมายเหตุ</label><input id="f_note" class="form-control"></div>
    </div>
@@ -150,7 +153,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nv"><span class="navbar-toggler-icon"></span></button>
    <div class="collapse navbar-collapse" id="nv"><div class="navbar-nav me-auto gap-1">
     <a class="nav-link active" data-s="overview" href="#admin">ภาพรวม</a><a class="nav-link" data-s="orders" href="#admin">ออเดอร์</a>
-    <a class="nav-link" data-s="sizes" href="#admin">ไซส์/ราคา/โควต้า</a><a class="nav-link" data-s="report" href="#admin">รายงาน</a><a class="nav-link" data-s="qr" href="#admin">QR</a></div>
+    <a class="nav-link" data-s="rounds" href="#admin">รอบสั่งจอง</a><a class="nav-link" data-s="sizes" href="#admin">ไซส์/ราคา/โควต้า</a><a class="nav-link" data-s="report" href="#admin">รายงาน</a><a class="nav-link" data-s="qr" href="#admin">QR</a></div>
     <span class="text-white-50 small me-3" id="live">●</span><a class="btn btn-sm btn-outline-light me-2" href="#">หน้าบ้าน</a>
     <button class="btn btn-sm btn-light" id="btnLogout">ออก</button></div></div></nav>
 
@@ -160,15 +163,21 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
    <div class="asec on" id="a_overview">
     <div class="cardx"><h6>เปิด/ปิดรับสั่งจอง</h6><div class="d-flex gap-2 flex-wrap align-items-center">
      <div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="op"><label class="form-check-label" for="op">เปิดรับสั่งจอง</label></div>
-     <span class="small text-muted">ปิดรับวันที่</span><input type="date" id="dl" class="form-control form-control-sm" style="max-width:170px">
+     <span class="small text-muted">สวิตช์หลัก: ปิดแล้วทุกรอบจะรับสั่งจองไม่ได้ แม้อยู่ในช่วงเวลา</span>
      <button class="btn btn-primary btn-sm" id="btnOpen">บันทึก</button></div></div>
+    <div class="cardx"><h6>สถานะรอบสั่งจอง</h6><div class="table-responsive"><table class="table table-sm align-middle mb-0" id="t_rnd"></table></div></div>
     <div class="cardx"><h6>ยอดแยกตามไซส์ (เรียลไทม์)</h6><div class="table-responsive"><table class="table table-sm align-middle" id="t_size"></table></div></div></div>
 
    <div class="asec" id="a_orders"><div class="cardx">
-    <div class="row g-2 mb-2"><div class="col-md-6"><input id="q" class="form-control" placeholder="ค้นหา เลขที่/ชื่อ/เบอร์/รุ่น"></div>
-     <div class="col-md-3"><select id="fs" class="form-select"></select></div>
-     <div class="col-md-3"><button class="btn btn-outline-primary w-100" id="btnCsv">⬇ CSV (เปิดใน Excel)</button></div></div>
+    <div class="row g-2 mb-2"><div class="col-md-3"><input id="q" class="form-control" placeholder="ค้นหา เลขที่/ชื่อ/เบอร์/รุ่น"></div>
+     <div class="col-md-3"><select id="fs" class="form-select"></select></div><div class="col-md-2"><select id="fr" class="form-select"></select></div><div class="col-md-2"><select id="fp" class="form-select"><option value="">รับเสื้อ: ทั้งหมด</option><option value="pending">รอรับเสื้อ (ชำระแล้ว)</option><option value="picked">รับเสื้อแล้ว</option></select></div>
+     <div class="col-md-2"><button class="btn btn-outline-primary w-100" id="btnCsv">⬇ CSV (เปิดใน Excel)</button></div></div>
     <div class="table-responsive"><table class="table table-hover align-middle small"><thead><tr><th>เลขที่</th><th>ผู้สั่ง</th><th>รายการ</th><th class="text-end">ยอด</th><th>สถานะ</th><th>เอกสาร</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div></div>
+
+   <div class="asec" id="a_rounds"><div class="cardx"><h6>กำหนดรอบการสั่งจอง</h6>
+    <div class="small text-muted mb-2">กำหนดช่วงเวลาเปิด–ปิดรับ และจำกัดจำนวนเสื้อ <b>รวมทุกไซส์</b> ต่อรอบ (0 = ไม่จำกัด) · รอบที่เปิดใช้ห้ามมีช่วงเวลาซ้อนกัน · ออเดอร์ที่ยกเลิกจะคืนโควต้าให้รอบอัตโนมัติ · ถ้าไม่มีรอบเลย ระบบจะรับสั่งตามสวิตช์หลักอย่างเดียว</div>
+    <div class="table-responsive"><table class="table table-sm align-middle"><thead><tr><th>ชื่อรอบ</th><th>เริ่มรับ</th><th>ปิดรับ</th><th>จำกัด (ตัว)</th><th>เปิดใช้</th><th>จอง / เหลือ</th><th></th></tr></thead><tbody id="rd"></tbody></table></div>
+    <button class="btn btn-outline-primary btn-sm" id="btnAddRd">+ เพิ่มรอบ</button> <button class="btn btn-primary btn-sm" id="btnSaveRd">บันทึกรอบ</button></div></div>
 
    <div class="asec" id="a_sizes"><div class="cardx"><h6>ตั้งค่าไซส์ (โควต้า 0 = ไม่จำกัด)</h6>
     <div class="table-responsive"><table class="table table-sm align-middle"><thead><tr><th>ไซส์</th><th>ราคา/ตัว</th><th>โควต้า</th><th>รอบอก/ยาว</th><th></th></tr></thead><tbody id="sz"></tbody></table></div>
@@ -224,13 +233,17 @@ addEventListener('hashchange',route);
 
 /* ===================== หน้าบ้าน ===================== */
 let INIT={sizes:[]},Q={},CUR=null;
+const TM=['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+const tm=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}:\d{2})$/.exec(s||'');return m?`${+m[3]} ${TM[+m[2]-1]} ${+m[1]+543} ${m[4]} น.`:esc(s)};
+const RST={open:['กำลังเปิดรับ','bg-success-subtle text-success-emphasis'],upcoming:['เร็ว ๆ นี้','bg-warning-subtle text-warning-emphasis'],full:['เต็มแล้ว','bg-danger-subtle text-danger-emphasis'],ended:['ปิดแล้ว','bg-secondary-subtle text-secondary-emphasis'],off:['ปิด','bg-secondary-subtle text-secondary-emphasis']};
 const idx=s=>INIT.sizes.findIndex(x=>x.size===s);
 function load(){
   return api('getInit').then(d=>{
     INIT=d;$('proj').textContent=d.project||'เสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569';
-    const mn=Math.min(...d.sizes.map(s=>s.price));
-    $('chips').innerHTML=(d.sizes.length?`<span class="chip chip-y">ราคา ${mn} บาท/ตัว</span>`:'')+(d.open&&d.deadline?`<span class="chip">ปิดรับ ${esc(d.deadline)}</span>`:'')+(d.contacts?`<span class="chip">📞 ${esc(d.contacts)}</span>`:'');
-    $('closed').classList.toggle('d-none',d.open);$('btnSubmit').disabled=!d.open;
+    const R=d.round,mn=d.sizes.length?Math.min(...d.sizes.map(s=>s.price)):0;
+    $('chips').innerHTML=(mn?`<span class="chip chip-y">ราคา ${num(mn)} บาท/ตัว</span>`:'')+(R?`<span class="chip">🗓 ${esc(R.name)} · ปิดรับ ${tm(R.end)}</span>`+(R.limit?`<span class="chip">เหลือ ${R.remaining} จาก ${R.limit} ตัว</span>`:''):'')+(d.contacts?`<span class="chip">📞 ${esc(d.contacts)}</span>`:'');
+    $('closed').textContent='⛔ '+(d.msg||'');$('closed').classList.toggle('d-none',d.open);$('btnSubmit').disabled=!d.open;
+    drawRounds(d.rounds||[]);
     $('sizes').innerHTML=d.sizes.map((s,i)=>{
       const out=s.remaining!=null&&s.remaining<=0;
       return `<div class="col-6 col-md-4 col-lg-3"><div class="size" id="c_${i}">
@@ -243,8 +256,19 @@ function load(){
     calc();
   }).catch(e=>{$('sizes').innerHTML='<div class="text-center p-3"><div class="text-danger mb-2">โหลดข้อมูลไม่สำเร็จ</div><button class="btn btn-sm btn-outline-primary" onclick="load()">ลองใหม่</button></div>';err(e)});
 }
-function lim(s){const z=INIT.sizes[idx(s)];return z&&z.remaining!=null?z.remaining:500}
-function setq(s,v){const n=Math.max(0,Math.min(lim(s),parseInt(v)||0));Q[s]=n;$('q_'+idx(s)).value=n;calc()}
+function drawRounds(rs){
+  $('rounds_card').classList.toggle('d-none',!rs.length);
+  $('rounds').innerHTML=rs.map(r=>{const st=RST[r.state]||RST.off,pc=r.limit?Math.min(100,Math.round(r.booked*100/r.limit)):0;
+    return `<div class="rd ${r.state==='open'?'cur':''} ${r.state==='full'?'full':''}"><div class="d-flex justify-content-between align-items-center gap-2"><b>${esc(r.name)}</b><span class="pill ${st[1]}">${st[0]}</span></div>
+    <div class="small text-muted">${tm(r.start)} – ${tm(r.end)}</div>
+    ${r.limit?`<div class="progress mt-2"><div class="progress-bar" style="width:${pc}%"></div></div><div class="small mt-1">จองแล้ว ${r.booked} / ${r.limit} ตัว · <b>${r.remaining>0?'เหลือ '+r.remaining:'เต็มแล้ว'}</b></div>`:'<div class="small mt-1">ไม่จำกัดจำนวน</div>'}</div>`}).join('');
+}
+const totalQ=()=>Object.values(Q).reduce((a,b)=>a+b,0);
+function lim(s){const z=INIT.sizes[idx(s)];let m=z&&z.remaining!=null?z.remaining:500;const R=INIT.round;
+  if(R&&R.limit)m=Math.min(m,R.remaining-(totalQ()-(Q[s]||0)));return Math.max(0,m)}
+function setq(s,v){const want=parseInt(v)||0,n=Math.max(0,Math.min(lim(s),want));
+  if(want>n&&INIT.round&&INIT.round.limit&&n<(INIT.sizes[idx(s)].remaining??500))Swal.fire({toast:true,position:'top',icon:'info',title:`${INIT.round.name} เหลือ ${INIT.round.remaining} ตัว (รวมทุกไซส์)`,timer:2500,showConfirmButton:false});
+  Q[s]=n;$('q_'+idx(s)).value=n;calc()}
 function calc(){
   let q=0,p=0;INIT.sizes.forEach((s,i)=>{const n=Q[s.size]||0;q+=n;p+=n*s.price;$('c_'+i)?.classList.toggle('on',n>0)});
   $('tq').textContent=q;$('tp').textContent=num(p);
@@ -273,7 +297,7 @@ function submitOrder(){
       ['f_name','f_year','f_phone','f_line','f_addr','f_note'].forEach(i=>$(i).value='');
       return Swal.fire({icon:'success',title:'สั่งจองสำเร็จ',confirmButtonColor:'#0B2E7A',showCancelButton:true,
         confirmButtonText:'📄 ใบสั่งซื้อ (PDF)',cancelButtonText:'ปิด',
-        html:`<div>เลขที่ <b style="color:#16833F;font-size:1.3rem">${esc(o.id)}</b></div><div>${esc(o.items)} · <b>${num(o.total)}</b> บาท</div>
+        html:`<div>เลขที่ <b style="color:#16833F;font-size:1.3rem">${esc(o.id)}</b></div>${o.round?`<div class="small text-muted">${esc(o.round)}</div>`:''}<div>${esc(o.items)} · <b>${num(o.total)}</b> บาท</div>
         <img src="${INIT.qr||QR_IMG}" style="max-width:230px;margin:10px auto;display:block;border-radius:10px">
         <a class="small" href="${INIT.qr||QR_IMG}" download="promptpay-qr">⬇ บันทึกรูป QR</a>
         <div class="small mt-1">ชื่อบัญชี: ${esc(INIT.account)}<br>${esc(INIT.bank)}</div>
@@ -283,6 +307,7 @@ function submitOrder(){
   });
 }
 $('btnSubmit').onclick=submitOrder;
+function rc(id,phone){busy('กำลังสร้างใบเสร็จ...');api('getReceiptPdf',id,phone).then(r=>{Swal.close();saveFile(r)}).catch(err)}
 function dl(id,phone){busy('กำลังสร้าง PDF...');api('getOrderPdf',id,phone).then(r=>{Swal.close();saveFile(r)}).catch(err)}
 
 const cls={'รอชำระเงิน':'bg-warning-subtle text-warning-emphasis','รอตรวจสอบการชำระเงิน':'bg-info-subtle text-info-emphasis','ชำระเงินแล้ว':'bg-success-subtle text-success-emphasis','ยกเลิก':'bg-danger-subtle text-danger-emphasis'};
@@ -294,13 +319,16 @@ function track(){
     CUR={id:o.id,phone:ph};store.set('sh_last',CUR);
     const up=o.status==='รอชำระเงิน'||o.status==='รอตรวจสอบการชำระเงิน';
     $('t_res').innerHTML=`<div class="border rounded-4 p-3"><div class="d-flex justify-content-between"><b>${esc(o.id)}</b><span class="pill ${cls[o.status]||''}">${esc(o.status)}</span></div>
-     <div class="small text-muted">${esc(o.name)} · รุ่น ${esc(o.year)} · ${esc(o.date)}</div><div class="mt-1">${esc(o.items)}</div><div><b>${num(o.total)} บาท</b> · ${esc(o.delivery)}</div>
-     <button class="btn btn-sm btn-outline-primary mt-2" id="b_dl">📄 ดาวน์โหลดใบสั่งซื้อ</button>
+     <div class="small text-muted">${esc(o.name)} · รุ่น ${esc(o.year)} · ${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div><div class="mt-1">${esc(o.items)}</div><div><b>${num(o.total)} บาท</b> · ${esc(o.delivery)}</div>
+     <button class="btn btn-sm btn-outline-primary mt-2" id="b_dl">📄 ใบสั่งซื้อ</button>
+     ${o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-success mt-2 ms-1" id="b_rc">🧾 ใบเสร็จรับเงิน</button><div class="small mt-2" style="color:var(--green)">✔ ชำระเงินแล้ว${o.receiptNo?' · เลขที่ใบเสร็จ <b>'+esc(o.receiptNo)+'</b>':''}<br>บันทึก/พิมพ์ใบเสร็จนี้ไว้เป็นหลักฐานแสดงเมื่อรับเสื้อ</div>`:''}
+     ${o.picked?`<div class="mt-2 p-2 rounded-3" style="background:var(--green-s);color:var(--green)">📦 <b>${o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว'}</b> เมื่อ ${esc(o.pickedAt)}${o.receiver?' · ผู้รับ '+esc(o.receiver):''}</div>`:''}
      ${up?`<hr><div class="small mb-1">${o.status==='รอชำระเงิน'?'แนบสลิปโอนเงิน':'แนบสลิปใหม่ (ถ้าต้องการเปลี่ยน)'}</div>
      <input id="s_payer" class="form-control form-control-sm mb-2" placeholder="ชื่อผู้โอน">
      <input id="s_file" type="file" accept="image/*,application/pdf" class="form-control form-control-sm mb-2">
      <button class="btn-o btn-sm" id="b_slip">ส่งสลิป</button>`:''}</div>`;
     $('b_dl').onclick=()=>dl(CUR.id,CUR.phone);
+    if($('b_rc'))$('b_rc').onclick=()=>rc(CUR.id,CUR.phone);
     if($('b_slip'))$('b_slip').onclick=slip;
   }).catch(e=>{$('t_res').innerHTML='';err(e)});
 }
@@ -332,35 +360,56 @@ document.querySelectorAll('a[data-s]').forEach(a=>{a.onclick=e=>{e.preventDefaul
 
 function refresh(){
   api('adminDashboard',T).then(d=>{
-    const first=!D;D=d;if(first){$('op').checked=d.open;$('dl').value=d.deadline}
+    const first=!D;D=d;if(first)$('op').checked=d.master;
     $('live').textContent='● อัปเดต '+d.report.at;
     const t=d.report.total;
     $('stats').innerHTML=[['ออเดอร์',t.orders],['จำนวนเสื้อ (ตัว)',t.qty],['ยอดสั่งรวม (บาท)',num(t.amt)],['รับเงินแล้ว (บาท)',num(t.paidAmt)],
-      ['รอตรวจสลิป',d.report.byStatus['รอตรวจสอบการชำระเงิน'].n],['ยังไม่ชำระ',d.report.byStatus['รอชำระเงิน'].n]]
-      .map(x=>`<div class="col-6 col-md-2"><div class="cardx stat text-center mb-0"><div class="v">${x[1]}</div><div class="l">${x[0]}</div></div></div>`).join('');
+      ['รอตรวจสลิป',d.report.byStatus['รอตรวจสอบการชำระเงิน'].n],['ยังไม่ชำระ',d.report.byStatus['รอชำระเงิน'].n],['รอรับเสื้อ (ตัว)',t.pendingQty],['รับเสื้อแล้ว (ตัว)',t.pickedQty]]
+      .map(x=>`<div class="col-6 col-md-3"><div class="cardx stat text-center mb-0"><div class="v">${x[1]}</div><div class="l">${x[0]}</div></div></div>`).join('');
     $('t_size').innerHTML='<thead><tr><th>ไซส์</th><th>ราคา</th><th>โควต้า</th><th>จองแล้ว</th><th>เหลือ</th></tr></thead><tbody>'+d.sizes.map(s=>`<tr><td><b>${esc(s.size)}</b></td><td>${s.price}</td><td>${s.quota||'ไม่จำกัด'}</td><td>${s.booked}</td><td>${s.remaining==null?'∞':s.remaining}</td></tr>`).join('')+'</tbody>';
+    const rv=$('fr').value;$('fr').innerHTML='<option value="">ทุกรอบ</option>'+[...new Set(d.orders.map(o=>o.roundName).concat(d.rounds.map(r=>r.name)))].filter(Boolean).map(n=>`<option>${esc(n)}</option>`).join('');$('fr').value=rv;
+    $('t_rnd').innerHTML=d.rounds.length?'<thead><tr><th>รอบ</th><th>ช่วงเวลา</th><th>สถานะ</th><th class="text-end">จอง</th><th class="text-end">เหลือ</th></tr></thead><tbody>'+d.rounds.map(r=>{const st=RST[r.state]||RST.off;return `<tr><td><b>${esc(r.name)}</b></td><td class="small">${tm(r.start)} – ${tm(r.end)}</td><td><span class="pill ${st[1]}">${st[0]}</span></td><td class="text-end">${r.booked}${r.limit?' / '+r.limit:''}</td><td class="text-end">${r.remaining==null?'∞':r.remaining}</td></tr>`}).join('')+'</tbody>':'<tbody><tr><td class="text-muted">ยังไม่ได้กำหนดรอบ (รับสั่งตามสวิตช์หลัก)</td></tr></tbody>';
     if(first)$('fs').innerHTML='<option value="">ทุกสถานะ</option>'+d.statuses.map(s=>`<option>${s}</option>`).join('');
     drawOrders();drawReport();
     $('qrst').textContent=d.qr?'มีรูป QR ที่อัปโหลดไว้ในระบบ (อัปโหลดใหม่เพื่อแทนที่)':'ยังไม่ได้อัปโหลด – ระบบใช้ไฟล์ qr.jpg ใน repo';
     if(first||!document.activeElement.closest('#sz'))drawSz();
+    if(first||!document.activeElement.closest('#rd'))drawRd();
   }).catch(err);
 }
 function drawOrders(){
-  const q=$('q').value.toLowerCase(),s=$('fs').value;
-  $('tb').innerHTML=D.orders.filter(o=>(!s||o.status===s)&&(!q||[o.id,o.name,o.phone,o.year].join(' ').toLowerCase().includes(q))).map(o=>`
-   <tr><td><b>${esc(o.id)}</b><div class="text-muted">${esc(o.date)}</div></td><td>${esc(o.name)}<div class="text-muted">รุ่น ${esc(o.year)} · ${esc(o.phone)}</div></td>
+  const q=$('q').value.toLowerCase(),s=$('fs').value,rr=$('fr').value,pp=$('fp').value;
+  $('tb').innerHTML=D.orders.filter(o=>(!s||o.status===s)&&(!rr||o.roundName===rr)&&(!pp||(pp==='picked'?o.picked:(!o.picked&&o.status==='ชำระเงินแล้ว')))&&(!q||[o.id,o.name,o.phone,o.year].join(' ').toLowerCase().includes(q))).map(o=>`
+   <tr><td><b>${esc(o.id)}</b><div class="text-muted">${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div></td><td>${esc(o.name)}<div class="text-muted">รุ่น ${esc(o.year)} · ${esc(o.phone)}</div></td>
    <td>${esc(o.items)}<div class="text-muted">${esc(o.delivery)}</div></td><td class="text-end">${num(o.total)}</td>
-   <td><select class="form-select form-select-sm border-${col[o.status]}" data-st="${esc(o.id)}">${D.statuses.map(x=>`<option ${x===o.status?'selected':''}>${x}</option>`).join('')}</select></td>
-   <td>${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">PDF</a>`:''}</td>
+   <td><select class="form-select form-select-sm border-${col[o.status]}" data-st="${esc(o.id)}">${D.statuses.map(x=>`<option ${x===o.status?'selected':''}>${x}</option>`).join('')}</select>
+     ${o.picked?`<div class="mt-1"><span class="pill bg-success-subtle text-success-emphasis">📦 ${plabel(o)}</span><div class="text-muted">${esc(o.pickedAt)}<br>ผู้รับ: ${esc(o.receiver)}${o.pickNote?' · '+esc(o.pickNote):''}</div><a href="#" class="small text-danger" data-unpk="${esc(o.id)}">ยกเลิกการบันทึก</a></div>`:o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-outline-success py-0 mt-1" data-pk="${esc(o.id)}">📦 ${o.delivery==='จัดส่งไปรษณีย์'?'บันทึกจัดส่ง':'บันทึกรับเสื้อ'}</button>`:''}</td>
+   <td>${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">PDF</a>`:''}
+     ${o.status==='ชำระเงินแล้ว'?`<div class="mt-1"><button class="btn btn-sm btn-success py-0" data-rc="${esc(o.id)}">🧾 ${esc(o.receiptNo||'ใบเสร็จ')}</button>${o.receiptDate?`<div class="text-muted">${esc(o.receiptDate)}</div>`:''}</div>`:''}</td>
    <td><button class="btn btn-sm btn-outline-danger" data-del="${esc(o.id)}">ลบ</button></td></tr>`).join('')||'<tr><td colspan="7" class="text-center text-muted">ไม่พบข้อมูล</td></tr>';
 }
-$('q').oninput=drawOrders;$('fs').onchange=drawOrders;
+$('q').oninput=drawOrders;$('fs').onchange=drawOrders;$('fr').onchange=drawOrders;$('fp').onchange=drawOrders;
 $('tb').onchange=e=>{if(e.target.dataset.st)setSt(e.target.dataset.st,e.target.value)};
-$('tb').onclick=e=>{const b=e.target.closest('[data-del]');if(b)del(b.dataset.del)};
+$('tb').onclick=e=>{const b=e.target.closest('[data-del]');if(b)return del(b.dataset.del);
+  const k=e.target.closest('[data-pk]');if(k)return pickDlg(k.dataset.pk);
+  const u=e.target.closest('[data-unpk]');if(u){e.preventDefault();return unpick(u.dataset.unpk)}
+  const r=e.target.closest('[data-rc]');if(r){busy('กำลังสร้างใบเสร็จ...');api('adminGetReceipt',T,r.dataset.rc).then(x=>{Swal.close();saveFile(x);refresh()}).catch(err)}};
+const plabel=o=>o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว';
+function pickDlg(id){const o=D.orders.find(x=>x.id===id);if(!o)return;const post=o.delivery==='จัดส่งไปรษณีย์',lb=post?'จัดส่ง':'รับเสื้อ';
+  Swal.fire({title:'บันทึก'+lb+' '+id,showCancelButton:true,confirmButtonText:'บันทึก',cancelButtonText:'ยกเลิก',confirmButtonColor:'#16833F',
+    html:`<div class="text-start small mb-2">${esc(o.name)} · <b>${esc(o.items)}</b><br>ตรวจไซส์/จำนวนให้ตรงก่อนส่งมอบ · ใบเสร็จ ${esc(o.receiptNo||'(จะออกให้อัตโนมัติ)')}</div>
+    <input id="pk_n" class="swal2-input" placeholder="ชื่อผู้${post?'รับพัสดุ':'รับเสื้อ'}" value="${esc(o.name)}"><input id="pk_t" type="datetime-local" class="swal2-input" value="${dtl(new Date())}"><input id="pk_m" class="swal2-input" placeholder="หมายเหตุ (เช่น เลขพัสดุ / ผู้รับแทน)">`,
+    preConfirm:()=>({receiver:$('pk_n').value.trim(),at:$('pk_t').value,note:$('pk_m').value})}).then(r=>{if(!r.isConfirmed)return;
+    api('adminSetPickup',T,id,true,r.value).then(()=>{ok('บันทึก'+lb+'แล้ว');refresh()}).catch(err)})}
+function unpick(id){Swal.fire({title:'ยกเลิกการบันทึก '+id+'?',text:'ใช้เมื่อบันทึกผิดพลาดเท่านั้น (ระบบเก็บประวัติไว้ในชีต)',icon:'warning',showCancelButton:true,confirmButtonColor:'#d33',confirmButtonText:'ยกเลิกการบันทึก',cancelButtonText:'ปิด'}).then(r=>{
+  if(r.isConfirmed)api('adminSetPickup',T,id,false).then(()=>{ok('ยกเลิกแล้ว');refresh()}).catch(err)})}
 function setSt(id,st){
   Swal.fire({title:'เปลี่ยนสถานะ '+id,text:'เป็น "'+st+'" ?',icon:'question',showCancelButton:true,confirmButtonText:'ยืนยัน'}).then(r=>{
     if(!r.isConfirmed)return refresh();
-    api('adminSetStatus',T,id,st).then(()=>{ok('อัปเดตแล้ว');refresh()}).catch(err)});
+    api('adminSetStatus',T,id,st).then(r=>{
+      if(r&&r.receiptError)Swal.fire({icon:'warning',title:'เปลี่ยนสถานะแล้ว แต่ออกใบเสร็จไม่สำเร็จ',text:r.receiptError+' (กดปุ่มใบเสร็จในรายการเพื่อลองใหม่)'});
+      else if(r&&r.receipt)Swal.fire({icon:'success',title:'ยืนยันรับเงิน + ออกใบเสร็จแล้ว',html:`เลขที่ <b>${esc(r.receipt.no)}</b><br><span class="small text-muted">บันทึกใน Drive แล้ว · กดปุ่ม 🧾 ในรายการเพื่อดาวน์โหลด</span>`,timer:3000,showConfirmButton:false});
+      else ok('อัปเดตแล้ว');
+      refresh()}).catch(err)});
 }
 function del(id){Swal.fire({title:'ลบออเดอร์ '+id+'?',text:'ลบถาวร (แนะนำให้ใช้สถานะ "ยกเลิก" แทน)',icon:'warning',showCancelButton:true,confirmButtonColor:'#d33',confirmButtonText:'ลบ'}).then(r=>{
   if(r.isConfirmed)api('adminDeleteOrder',T,id).then(()=>{ok('ลบแล้ว');refresh()}).catch(err)})}
@@ -369,19 +418,35 @@ function drawSz(){$('sz').innerHTML=D.sizes.map(s=>szRow(s)).join('')}
 $('btnAddSz').onclick=()=>$('sz').insertAdjacentHTML('beforeend',szRow());
 $('btnSaveSz').onclick=()=>{const rows=[...$('sz').rows].map(r=>{const i=r.querySelectorAll('input');return{size:i[0].value,price:i[1].value,quota:i[2].value,chest:i[3].value}});
   api('adminSaveSizes',T,rows).then(()=>{ok('บันทึกแล้ว');refresh()}).catch(err)};
-$('btnOpen').onclick=()=>api('adminSetOpen',T,$('op').checked,$('dl').value).then(()=>ok('บันทึกแล้ว')).catch(err);
+const dtl=d=>{const z=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`};
+function rdRow(r){if(!r){const a=new Date();a.setMinutes(0,0,0);const b=new Date(a.getTime()+7*864e5);b.setHours(23,59,0,0);r={id:'',name:'รอบที่ '+($('rd').rows.length+1),start:dtl(a),end:dtl(b),limit:0,active:true}}
+  const st=RST[r.state];return `<tr data-id="${esc(r.id)}"><td><input class="form-control form-control-sm" style="min-width:130px" value="${esc(r.name)}"></td>
+  <td><input type="datetime-local" class="form-control form-control-sm" value="${esc(String(r.start).replace(' ','T'))}"><div class="small text-muted th">${tm(r.start)}</div></td>
+  <td><input type="datetime-local" class="form-control form-control-sm" value="${esc(String(r.end).replace(' ','T'))}"><div class="small text-muted th">${tm(r.end)}</div></td>
+  <td><input type="number" min="0" class="form-control form-control-sm" style="width:90px" value="${r.limit||0}"></td>
+  <td class="text-center"><input type="checkbox" class="form-check-input" ${r.active?'checked':''}></td>
+  <td class="small">${r.id?`${r.booked} / ${r.remaining==null?'∞':r.remaining} ${st?`<span class="pill ${st[1]}">${st[0]}</span>`:''}`:'<span class="text-muted">ใหม่</span>'}</td>
+  <td><button class="btn btn-sm btn-outline-danger" onclick="this.closest('tr').remove()">✕</button></td></tr>`}
+function drawRd(){$('rd').innerHTML=D.rounds.map(rdRow).join('')}
+$('rd').oninput=e=>{if(e.target.type==='datetime-local'){const t=e.target.parentNode.querySelector('.th');if(t)t.textContent=e.target.value?tm(e.target.value):''}};
+$('btnAddRd').onclick=()=>$('rd').insertAdjacentHTML('beforeend',rdRow());
+$('btnSaveRd').onclick=()=>{const rows=[...$('rd').rows].map(r=>{const i=r.querySelectorAll('input');return{id:r.dataset.id,name:i[0].value,start:i[1].value,end:i[2].value,limit:i[3].value,active:i[4].checked}});
+  if(!rows.length&&!confirm('ไม่มีรอบเลย ระบบจะรับสั่งตามสวิตช์หลักอย่างเดียว ต้องการบันทึกหรือไม่?'))return;
+  api('adminSaveRounds',T,rows).then(()=>{ok('บันทึกรอบแล้ว');D=null;refresh()}).catch(err)};
+$('btnOpen').onclick=()=>api('adminSetOpen',T,$('op').checked).then(()=>ok('บันทึกแล้ว')).catch(err);
 function drawReport(){
   const r=D.report,tb=(h,rows)=>`<table class="table table-sm table-bordered"><thead><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;
   $('rep').innerHTML=`<h5>รายงานสรุปการสั่งซื้อเสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569</h5><div class="small text-muted mb-2">ข้อมูล ณ ${r.at}</div>
-   <p>ออเดอร์ ${r.total.orders} · ${r.total.qty} ตัว · ยอดรวม <b>${num(r.total.amt)}</b> บาท · ชำระแล้ว <b>${num(r.total.paidAmt)}</b> บาท</p>
+   <p>ออเดอร์ ${r.total.orders} · ${r.total.qty} ตัว · ยอดรวม <b>${num(r.total.amt)}</b> บาท · ชำระแล้ว <b>${num(r.total.paidAmt)}</b> บาท<br>📦 รับเสื้อแล้ว <b>${r.total.pickedQty}</b> ตัว (${r.total.pickedOrders} ออเดอร์) · รอรับเสื้อ <b>${r.total.pendingQty}</b> ตัว (${r.total.pendingOrders} ออเดอร์)</p>
    <h6>แยกตามไซส์</h6>${tb(['ไซส์','จำนวน','ชำระแล้ว (ตัว)','ยอด'],Object.keys(r.bySize).map(k=>`<tr><td>${esc(k)}</td><td>${r.bySize[k].qty}</td><td>${r.bySize[k].paidQty}</td><td>${num(r.bySize[k].amt)}</td></tr>`).join(''))}
    <h6>แยกตามรุ่น</h6>${tb(['รุ่น','ออเดอร์','ตัว','ยอด'],Object.keys(r.byYear).sort().map(k=>`<tr><td>${esc(k)}</td><td>${r.byYear[k].n}</td><td>${r.byYear[k].qty}</td><td>${num(r.byYear[k].amt)}</td></tr>`).join(''))}
+   <h6>แยกตามรอบสั่งจอง</h6>${tb(['รอบ','ออเดอร์','ตัว','ยอด'],Object.keys(r.byRound).map(k=>`<tr><td>${esc(k)}</td><td>${r.byRound[k].n}</td><td>${r.byRound[k].qty}</td><td>${num(r.byRound[k].amt)}</td></tr>`).join(''))}
    <h6>แยกตามสถานะ</h6>${tb(['สถานะ','ออเดอร์','ยอด'],D.statuses.map(k=>`<tr><td>${k}</td><td>${r.byStatus[k].n}</td><td>${num(r.byStatus[k].amt)}</td></tr>`).join(''))}`;
 }
 $('btnPdf').onclick=()=>{busy('กำลังสร้าง PDF...');api('adminReportPdf',T).then(r=>{Swal.close();saveFile(r)}).catch(err)};
 $('btnCsv').onclick=()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
-  const h=['เลขที่','วันที่','ชื่อ','รุ่น','เบอร์','รายการ','จำนวน','ยอด','รับสินค้า','สถานะ'];
-  const t=[h.map(q).join(',')].concat(D.orders.map(o=>[o.id,o.date,o.name,o.year,'\t'+o.phone,o.items,o.qty,o.total,o.delivery,o.status].map(q).join(','))).join('\r\n');
+  const h=['เลขที่','วันที่','ชื่อ','รุ่น','เบอร์','รายการ','จำนวน','ยอด','รับสินค้า','สถานะ','รอบ','เลขที่ใบเสร็จ','วันที่รับเสื้อ','ผู้รับเสื้อ'];
+  const t=[h.map(q).join(',')].concat(D.orders.map(o=>[o.id,o.date,o.name,o.year,'\t'+o.phone,o.items,o.qty,o.total,o.delivery,o.status,o.roundName,o.receiptNo,o.pickedAt,o.receiver].map(q).join(','))).join('\r\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/csv'}));a.download='orders.csv';a.click()};
 $('btnQr').onclick=()=>{const f=$('qf').files[0];if(!f)return err('กรุณาเลือกไฟล์รูป QR');const r=new FileReader();
   r.onload=()=>api('adminUploadQr',T,{mimeType:f.type,base64:r.result.split(',')[1]}).then(()=>{ok('อัปโหลด QR แล้ว');refresh()}).catch(err);r.readAsDataURL(f)};
