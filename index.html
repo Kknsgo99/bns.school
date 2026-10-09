@@ -103,7 +103,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
   <div class="cardx" id="order">
    <div class="h"><i>1</i>แบบเสื้อ ราคา และตารางไซส์</div>
    <img id="design" class="design d-block mx-auto mb-2" src="design.jpg" alt="แบบเสื้อและตารางไซส์">
-   <div class="small text-muted text-center mb-3">แตะรูปเพื่อขยาย · **วัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง**</div>
+   <div class="small text-muted text-center mb-3">แตะรูปเพื่อขยาย · <b>วัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง</b></div>
    <div class="h"><i>2</i>เลือกไซส์และจำนวน</div>
    <div class="row g-2" id="sizes"><div class="text-center text-muted p-3">กำลังโหลดไซส์...</div></div>
   </div>
@@ -193,6 +193,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
  </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 /* ===== ตั้งค่า: วาง URL ของ Web App (ลงท้ายด้วย /exec) หลัง Deploy Code.gs ===== */
 const API_URL='https://script.google.com/macros/s/AKfycbxrLGMFDrm9RPVufwT0eaBD2n1Q9odJvUk5oSw8C34CMCqtQKTC_pHyCEqCWMXkNXjN/exec';
@@ -333,13 +334,25 @@ function track(){
   }).catch(e=>{$('t_res').innerHTML='';err(e)});
 }
 $('btnTrack').onclick=track;
+/* ย่อรูปสลิปจากมือถืออัตโนมัติ (ภาพถ่ายมักใหญ่เกิน 5 MB) */
+function shrink(f){return new Promise(res=>{
+  if(!/^image\/(jpeg|png|webp)$/.test(f.type)||f.size<1.5*1048576)return res({blob:f,type:f.type});
+  const im=new Image();
+  im.onload=()=>{const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');
+    c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+    c.toBlob(b=>res(b?{blob:b,type:'image/jpeg'}:{blob:f,type:f.type}),'image/jpeg',.82)};
+  im.onerror=()=>res({blob:f,type:f.type});
+  im.src=URL.createObjectURL(f)})}
 function slip(){
   const f=$('s_file').files[0];if(!f)return err('กรุณาเลือกไฟล์สลิป');
-  if(f.size>5*1048576)return err('ไฟล์ใหญ่เกิน 5 MB');
   busy('กำลังส่งสลิป...');
-  const r=new FileReader();r.onload=()=>api('attachSlip',{id:CUR.id,phone:CUR.phone,payer:$('s_payer').value,filename:f.name,mimeType:f.type,base64:r.result.split(',')[1]})
-    .then(()=>{Swal.fire({icon:'success',title:'ส่งสลิปแล้ว',text:'รอครูตรวจสอบยอดเงิน',confirmButtonColor:'#0B2E7A'});track()}).catch(err);
-  r.readAsDataURL(f);
+  shrink(f).then(s=>{
+    if(s.blob.size>5*1048576)return err('ไฟล์ใหญ่เกิน 5 MB');
+    const r=new FileReader();
+    r.onload=()=>api('attachSlip',{id:CUR.id,phone:CUR.phone,payer:$('s_payer').value,filename:f.name,mimeType:s.type,base64:r.result.split(',')[1]})
+      .then(()=>{Swal.fire({icon:'success',title:'ส่งสลิปแล้ว',text:'รอครูตรวจสอบยอดเงิน',confirmButtonColor:'#0B2E7A'});track()}).catch(err);
+    r.readAsDataURL(s.blob);
+  });
 }
 (function init(){
   const b=store.get('sh_buyer');if(b){$('f_name').value=b.name||'';$('f_phone').value=b.phone||'';$('f_year').value=b.year||'';$('f_line').value=b.line||''}
@@ -352,13 +365,15 @@ let D=null;
 const col={'รอชำระเงิน':'warning','รอตรวจสอบการชำระเงิน':'info','ชำระเงินแล้ว':'success','ยกเลิก':'danger'};
 function login(){api('adminLogin',$('pass').value).then(t=>{T=t;sessionStorage.setItem('tk',t);$('pass').value='';start()}).catch(err)}
 function logout(){sessionStorage.removeItem('tk');T=null;D=null;clearInterval(timer);$('a_dash').classList.add('d-none');$('a_login').classList.remove('d-none')}
-function start(){$('a_login').classList.add('d-none');$('a_dash').classList.remove('d-none');refresh();clearInterval(timer);timer=setInterval(refresh,20000)}
+function start(){$('a_login').classList.add('d-none');$('a_dash').classList.remove('d-none');refresh();clearInterval(timer);timer=setInterval(()=>refresh(true),20000)}
 $('btnLogin').onclick=login;$('pass').onkeydown=e=>{if(e.key==='Enter')login()};$('btnLogout').onclick=logout;
 document.querySelectorAll('a[data-s]').forEach(a=>{a.onclick=e=>{e.preventDefault();
   document.querySelectorAll('a[data-s]').forEach(x=>x.classList.toggle('active',x===a));
   document.querySelectorAll('.asec').forEach(s=>s.classList.toggle('on',s.id==='a_'+a.dataset.s))}});
 
-function refresh(){
+function refresh(silent){
+  // รีเฟรชอัตโนมัติ: ข้ามถ้าแอดมินกำลังเลือกสถานะ/พิมพ์ในตาราง กันดรอปดาวน์ถูกปิด
+  if(silent===true&&document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#tb'))return;
   api('adminDashboard',T).then(d=>{
     const first=!D;D=d;if(first)$('op').checked=d.master;
     $('live').textContent='● อัปเดต '+d.report.at;
@@ -374,7 +389,7 @@ function refresh(){
     $('qrst').textContent=d.qr?'มีรูป QR ที่อัปโหลดไว้ในระบบ (อัปโหลดใหม่เพื่อแทนที่)':'ยังไม่ได้อัปโหลด – ระบบใช้ไฟล์ qr.jpg ใน repo';
     if(first||!document.activeElement.closest('#sz'))drawSz();
     if(first||!document.activeElement.closest('#rd'))drawRd();
-  }).catch(err);
+  }).catch(e=>{if(silent!==true)err(e)});
 }
 function drawOrders(){
   const q=$('q').value.toLowerCase(),s=$('fs').value,rr=$('fr').value,pp=$('fp').value;
@@ -399,9 +414,9 @@ function pickDlg(id){const o=D.orders.find(x=>x.id===id);if(!o)return;const post
     html:`<div class="text-start small mb-2">${esc(o.name)} · <b>${esc(o.items)}</b><br>ตรวจไซส์/จำนวนให้ตรงก่อนส่งมอบ · ใบเสร็จ ${esc(o.receiptNo||'(จะออกให้อัตโนมัติ)')}</div>
     <input id="pk_n" class="swal2-input" placeholder="ชื่อผู้${post?'รับพัสดุ':'รับเสื้อ'}" value="${esc(o.name)}"><input id="pk_t" type="datetime-local" class="swal2-input" value="${dtl(new Date())}"><input id="pk_m" class="swal2-input" placeholder="หมายเหตุ (เช่น เลขพัสดุ / ผู้รับแทน)">`,
     preConfirm:()=>({receiver:$('pk_n').value.trim(),at:$('pk_t').value,note:$('pk_m').value})}).then(r=>{if(!r.isConfirmed)return;
-    api('adminSetPickup',T,id,true,r.value).then(()=>{ok('บันทึก'+lb+'แล้ว');refresh()}).catch(err)})}
+    api('adminSetPickup',T,id,true,r.value).then(()=>{ok('บันทึก'+lb+'แล้ว');refresh()}).catch(e=>{err(e);refresh()})})}
 function unpick(id){Swal.fire({title:'ยกเลิกการบันทึก '+id+'?',text:'ใช้เมื่อบันทึกผิดพลาดเท่านั้น (ระบบเก็บประวัติไว้ในชีต)',icon:'warning',showCancelButton:true,confirmButtonColor:'#d33',confirmButtonText:'ยกเลิกการบันทึก',cancelButtonText:'ปิด'}).then(r=>{
-  if(r.isConfirmed)api('adminSetPickup',T,id,false).then(()=>{ok('ยกเลิกแล้ว');refresh()}).catch(err)})}
+  if(r.isConfirmed)api('adminSetPickup',T,id,false).then(()=>{ok('ยกเลิกแล้ว');refresh()}).catch(e=>{err(e);refresh()})})}
 function setSt(id,st){
   Swal.fire({title:'เปลี่ยนสถานะ '+id,text:'เป็น "'+st+'" ?',icon:'question',showCancelButton:true,confirmButtonText:'ยืนยัน'}).then(r=>{
     if(!r.isConfirmed)return refresh();
@@ -409,7 +424,7 @@ function setSt(id,st){
       if(r&&r.receiptError)Swal.fire({icon:'warning',title:'เปลี่ยนสถานะแล้ว แต่ออกใบเสร็จไม่สำเร็จ',text:r.receiptError+' (กดปุ่มใบเสร็จในรายการเพื่อลองใหม่)'});
       else if(r&&r.receipt)Swal.fire({icon:'success',title:'ยืนยันรับเงิน + ออกใบเสร็จแล้ว',html:`เลขที่ <b>${esc(r.receipt.no)}</b><br><span class="small text-muted">บันทึกใน Drive แล้ว · กดปุ่ม 🧾 ในรายการเพื่อดาวน์โหลด</span>`,timer:3000,showConfirmButton:false});
       else ok('อัปเดตแล้ว');
-      refresh()}).catch(err)});
+      refresh()}).catch(e=>{err(e);refresh()})});
 }
 function del(id){Swal.fire({title:'ลบออเดอร์ '+id+'?',text:'ลบถาวร (แนะนำให้ใช้สถานะ "ยกเลิก" แทน)',icon:'warning',showCancelButton:true,confirmButtonColor:'#d33',confirmButtonText:'ลบ'}).then(r=>{
   if(r.isConfirmed)api('adminDeleteOrder',T,id).then(()=>{ok('ลบแล้ว');refresh()}).catch(err)})}
