@@ -105,32 +105,36 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
  <div class="top"><div class="container d-flex justify-content-between align-items-center" style="max-width:920px">
   <a class="logo" href="#"><b>👕</b><span>เสื้อที่ระลึก 2569</span></a>
   <div class="d-flex gap-2"><a class="btn-sub" href="#order">สั่งซื้อ</a><a class="btn-sub" href="#track">ติดตาม</a></div></div></div>
- <section class="hero"><div class="container">
-  <span class="tag">ผ้าป่าศิษย์เก่า 2569</span>
-  <h1 id="proj">กำลังโหลด...</h1>
-  <p class="sub">โรงเรียนบ้านนาสวรรค์ · สั่งรวมรุ่นได้หลายไซส์ในออเดอร์เดียว</p>
-  <div id="chips"></div>
-  <div class="cta"><a class="btn-main" href="#order">สั่งจองเสื้อ</a><a class="btn-sub" href="#track">ติดตามออเดอร์ / แนบสลิป</a></div>
-  <div class="alert-closed d-none" id="closed">⛔ ขณะนี้ปิดรับสั่งจองแล้ว</div>
- </div></section>
+ <section class="hero"><div class="container"><div class="hero-grid">
+  <div class="hero-copy">
+   <span class="tag">ผ้าป่าศิษย์เก่า 2569</span>
+   <h1 id="proj">กำลังโหลด...</h1>
+   <p class="sub">โรงเรียนบ้านนาสวรรค์ · สั่งรวมรุ่นได้หลายไซส์ในออเดอร์เดียว</p>
+   <div id="chips"></div>
+   <div class="cta"><a class="btn-main" href="#order">สั่งจองเสื้อ</a><a class="btn-sub" href="#track">ติดตามออเดอร์ / แนบสลิป</a></div>
+   <div class="alert-closed d-none" id="closed">⛔ ขณะนี้ปิดรับสั่งจองแล้ว</div>
+  </div>
+  <div class="hero-art">
+   <img id="design" class="design" src="design.jpg" alt="แบบเสื้อโปโล NSW ราคาและตารางไซส์">
+   <div class="hero-art-note">แตะรูปเพื่อขยาย · ตารางไซส์วัดเป็นหน่วยนิ้ว กรุณาเทียบก่อนสั่งจอง</div>
+  </div>
+ </div></div></section>
  <div class="steps">
   <div class="st"><i>1</i><div><b>เลือกไซส์</b><span>กรอกข้อมูลผู้สั่ง</span></div></div>
   <div class="st"><i>2</i><div><b>โอนเงิน</b><span>สแกน QR พร้อมเพย์</span></div></div>
-  <div class="st"><i>3</i><div><b>แนบสลิป</b><span>รอยืนยันยอด</span></div></div>
+  <div class="st"><i>3</i><div><b>แนบสลิป</b><span>ระบบตรวจยอดให้ทันที</span></div></div>
  </div>
 
  <div class="wrap">
   <div class="cardx d-none" id="rounds_card"><div class="h" style="margin-bottom:10px">🗓 รอบการสั่งจอง</div><div id="rounds"></div></div>
   <div class="cardx" id="order">
-   <div class="h"><i>1</i>แบบเสื้อ ราคา และตารางไซส์</div>
-   <img id="design" class="design d-block mx-auto mb-2" src="design.jpg" alt="แบบเสื้อและตารางไซส์">
-   <div class="small text-muted text-center mb-3">แตะรูปเพื่อขยาย · **วัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง**</div>
-   <div class="h"><i>2</i>เลือกไซส์และจำนวน</div>
+      <div class="h"><i>1</i>เลือกไซส์และจำนวน</div>
+   <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3"><span class="small text-muted">ขนาดวัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง</span><button type="button" class="btn-sub" style="min-height:38px;padding:0 14px;font-size:.9rem" id="btnTable">🔍 ดูตารางไซส์</button></div>
    <div class="row g-2" id="sizes"><div class="text-center text-muted p-3">กำลังโหลดไซส์...</div></div>
   </div>
 
   <div class="cardx">
-   <div class="h"><i>3</i>ข้อมูลผู้สั่ง</div>
+   <div class="h"><i>2</i>ข้อมูลผู้สั่ง</div>
    <div class="row g-3">
     <div class="col-md-6"><label class="form-label">ชื่อ-นามสกุล / ตัวแทนรุ่น *</label><input id="f_name" class="form-control" autocomplete="name"></div>
     <div class="col-6 col-md-3"><label class="form-label">รุ่น (พ.ศ.)</label><input id="f_year" class="form-control" inputmode="numeric" placeholder="เช่น 2530"></div>
@@ -144,7 +148,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
   </div>
 
   <div class="cardx" id="track">
-   <div class="h"><i>4</i>ติดตามสถานะ / แนบสลิป / ใบสั่งซื้อ</div>
+   <div class="h"><i>3</i>ติดตามสถานะ / แนบสลิป / ใบสั่งซื้อ</div>
    <div class="row g-2">
     <div class="col-md-5"><input id="t_id" class="form-control" placeholder="เลขที่ออเดอร์ เช่น SH2569-0001"></div>
     <div class="col-md-4"><input id="t_phone" class="form-control" inputmode="tel" placeholder="เบอร์โทรที่ใช้สั่ง"></div>
@@ -394,6 +398,7 @@ function calc(){
 }
 $('sizes').onclick=e=>{const b=e.target.closest('button[data-d]');if(b)setq(b.dataset.s,(Q[b.dataset.s]||0)+ +b.dataset.d)};
 $('sizes').oninput=e=>{if(e.target.dataset.q)setq(e.target.dataset.q,e.target.value)};
+$('btnTable').onclick=()=>$('design').click();
 $('design').onclick=()=>Swal.fire({imageUrl:$('design').src,imageAlt:'แบบเสื้อ',width:'min(96vw,900px)',padding:'.5em',showConfirmButton:false,showCloseButton:true});
 $('f_del').onchange=e=>$('addrWrap').classList.toggle('d-none',e.target.value!=='จัดส่งไปรษณีย์');
 
@@ -440,6 +445,8 @@ function track(){
      <button class="btn btn-sm btn-outline-primary mt-2" id="b_dl">🖼 ใบสั่งซื้อ (JPG)</button>
      ${o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-success mt-2 ms-1" id="b_rc">🧾 ใบเสร็จรับเงิน (JPG)</button><div class="small mt-2" style="color:var(--green)">✔ ชำระเงินแล้ว${o.receiptNo?' · เลขที่ใบเสร็จ <b>'+esc(o.receiptNo)+'</b>':''}<br>บันทึก/พิมพ์ใบเสร็จนี้ไว้เป็นหลักฐานแสดงเมื่อรับเสื้อ</div>`:''}
      ${o.picked?`<div class="mt-2 p-2 rounded-3" style="background:var(--green-s);color:var(--green)">📦 <b>${o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว'}</b> เมื่อ ${esc(o.pickedAt)}${o.receiver?' · ผู้รับ '+esc(o.receiver):''}</div>`:''}
+     ${o.status==='รอชำระเงิน'&&['ยอดไม่ตรง','ไม่ใช่สลิป','ซ้ำ'].includes(o.slipResult)?`<div class="mt-2 p-2 rounded-3" style="background:#FDECEA;color:#9b1c1c">⚠ <b>สลิปล่าสุดไม่ผ่านการตรวจสอบ</b>: ${esc(o.slipNote)}<br><span class="small">กรุณาโอนใหม่ให้ถูกต้องแล้วแนบสลิปอีกครั้ง หรือติดต่อ</span> ${telLink(o.contact)}</div>`:''}
+     ${o.status==='รอตรวจสอบการชำระเงิน'?`<div class="mt-2 p-2 rounded-3" style="background:${o.slipResult==='ผ่าน'?'var(--green-s)':'var(--yellow-s)'}">${o.slipResult==='ผ่าน'?'✔ ตรวจสลิปเบื้องต้นผ่านแล้ว (ยอดตรง) รอครูยืนยัน':'🔎 รอครูตรวจสอบสลิปด้วยตนเอง'}${o.slipNote?'<br><span class="small">'+esc(o.slipNote)+'</span>':''}</div>`:''}
      ${up?`<hr><div class="small mb-1">${o.status==='รอชำระเงิน'?'แนบสลิปโอนเงิน':'แนบสลิปใหม่ (ถ้าต้องการเปลี่ยน)'}</div>
      <input id="s_payer" class="form-control form-control-sm mb-2" placeholder="ชื่อผู้โอน">
      <input id="s_file" type="file" accept="image/*,application/pdf" class="form-control form-control-sm mb-2">
@@ -450,13 +457,29 @@ function track(){
   }).catch(e=>{$('t_res').innerHTML='';err(e)});
 }
 $('btnTrack').onclick=track;
-function slip(){
+const fileB64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.onerror=no;r.readAsDataURL(f)});
+async function slipPrep(f){ // ย่อรูปสลิป ≤1600px เป็น JPEG: อัปโหลดไว + OCR อ่านยอดแม่นขึ้น
+  const raw=async()=>({mimeType:f.type||mimeOf(f.name),base64:await fileB64(f)});
+  if(!/^image\/(jpeg|png|webp)$/.test(f.type||''))return raw();
+  try{const bm=await createImageBitmap(f),k=Math.min(1,1600/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
+    c.width=Math.round(bm.width*k);c.height=Math.round(bm.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(bm,0,0,c.width,c.height);
+    return{mimeType:'image/jpeg',base64:c.toDataURL('image/jpeg',0.88).split(',')[1]}}catch(e){return raw()}}
+const telLink=s=>{const m=/0\d{2}-?\d{3}-?\d{4}/.exec(s||'');return m?`<a class="btn btn-success btn-sm mt-1" href="tel:${m[0].replace(/-/g,'')}">📞 โทร ${esc(s)}</a>`:esc(s||'ผู้ดูแล')};
+function slipResult(r){
+  if(r.accepted)return Swal.fire({icon:r.result==='ผ่าน'?'success':'info',title:r.result==='ผ่าน'?'ส่งสลิปแล้ว ✔ ยอดตรงกับคำสั่งซื้อ':'ส่งสลิปแล้ว รอครูตรวจสอบ',
+    html:`<div>${esc(r.message||'')}</div><div class="small text-muted mt-2">รอครูยืนยันยอดเงิน แล้วจะออกใบเสร็จรับเงินให้</div>`,confirmButtonColor:'#0B2E7A'});
+  return Swal.fire({icon:'error',title:'สลิปไม่ผ่านการตรวจสอบ',confirmButtonText:'เข้าใจแล้ว',confirmButtonColor:'#0B2E7A',
+    html:`<div class="text-start"><div class="p-2 rounded-3 mb-2" style="background:#FDECEA;color:#9b1c1c">⚠ ${esc(r.message||'')}</div>
+    <b>กรุณาทำรายการโอนใหม่ให้ถูกต้อง แล้วแนบสลิปอีกครั้ง</b><br>หรือติดต่อสอบถาม<br>${telLink(r.contact)}</div>`})}
+async function slip(){
   const f=$('s_file').files[0];if(!f)return err('กรุณาเลือกไฟล์สลิป');
-  if(f.size>5*1048576)return err('ไฟล์ใหญ่เกิน 5 MB');
-  busy('กำลังส่งสลิป...');
-  const r=new FileReader();r.onload=()=>api('attachSlip',{id:CUR.id,phone:CUR.phone,payer:$('s_payer').value,filename:f.name,mimeType:f.type||mimeOf(f.name),base64:r.result.split(',')[1]})
-    .then(()=>{Swal.fire({icon:'success',title:'ส่งสลิปแล้ว',text:'รอครูตรวจสอบยอดเงิน',confirmButtonColor:'#0B2E7A'});track()}).catch(err);
-  r.readAsDataURL(f);
+  if(f.size>10*1048576)return err('ไฟล์ใหญ่เกิน 10 MB');
+  busy('กำลังตรวจสอบสลิป... (ประมาณ 5–10 วินาที)');
+  try{const p=await slipPrep(f);
+    if(p.base64.length*.75>5*1048576){Swal.close();return err('ไฟล์ใหญ่เกิน 5 MB กรุณาใช้รูปอื่น')}
+    const r=await api('attachSlip',{id:CUR.id,phone:CUR.phone,payer:$('s_payer').value,filename:f.name,mimeType:p.mimeType,base64:p.base64});
+    await slipResult(r);track()}
+  catch(e){err(e)}
 }
 (function init(){
   const b=store.get('sh_buyer');if(b){$('f_name').value=b.name||'';$('f_phone').value=b.phone||'';$('f_year').value=b.year||'';$('f_line').value=b.line||''}
@@ -502,7 +525,7 @@ function drawOrders(){
    <td>${esc(o.items)}<div class="text-muted">${esc(o.delivery)}</div></td><td class="text-end">${num(o.total)}</td>
    <td><select class="form-select form-select-sm border-${col[o.status]}" data-st="${esc(o.id)}">${D.statuses.map(x=>`<option ${x===o.status?'selected':''}>${x}</option>`).join('')}</select>
      ${o.picked?`<div class="mt-1"><span class="pill bg-success-subtle text-success-emphasis">📦 ${plabel(o)}</span><div class="text-muted">${esc(o.pickedAt)}<br>ผู้รับ: ${esc(o.receiver)}${o.pickNote?' · '+esc(o.pickNote):''}</div><a href="#" class="small text-danger" data-unpk="${esc(o.id)}">ยกเลิกการบันทึก</a></div>`:o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-outline-success py-0 mt-1" data-pk="${esc(o.id)}">📦 ${o.delivery==='จัดส่งไปรษณีย์'?'บันทึกจัดส่ง':'บันทึกรับเสื้อ'}</button>`:''}</td>
-   <td>${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">ใบสั่งซื้อ</a>`:''}
+   <td>${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">ใบสั่งซื้อ</a>`:''}${slipBadge(o)}
      ${o.status==='ชำระเงินแล้ว'?`<div class="mt-1"><button class="btn btn-sm btn-success py-0" data-rc="${esc(o.id)}">🧾 ${esc(o.receiptNo||'ใบเสร็จ')}</button>${o.receiptDate?`<div class="text-muted">${esc(o.receiptDate)}</div>`:''}</div>`:''}</td>
    <td><button class="btn btn-sm btn-outline-danger" data-del="${esc(o.id)}">ลบ</button></td></tr>`).join('')||'<tr><td colspan="7" class="text-center text-muted">ไม่พบข้อมูล</td></tr>';
 }
@@ -513,6 +536,9 @@ $('tb').onclick=e=>{const b=e.target.closest('[data-del]');if(b)return del(b.dat
   const u=e.target.closest('[data-unpk]');if(u){e.preventDefault();return unpick(u.dataset.unpk)}
   const r=e.target.closest('[data-rc]');if(r){const id=r.dataset.rc,o0=D.orders.find(x=>x.id===id);busy('กำลังสร้างรูปใบเสร็จ...');
     adminReceipt(id,!(o0&&o0.receiptUrl)).then(({d,img})=>{Swal.close();showDoc(img,d.receiptNo+'.jpg','ใบเสร็จรับเงิน '+d.receiptNo);refresh()}).catch(err)}};
+const SLB={'ผ่าน':['success','✔ สลิปผ่านตรวจอัตโนมัติ'],'ยอดไม่ตรง':['danger','⚠ ยอดไม่ตรง'],'ไม่ใช่สลิป':['danger','⚠ ไม่ใช่สลิป'],'ซ้ำ':['danger','⚠ สลิปซ้ำ'],'ตรวจอัตโนมัติไม่ได้':['warning','🔎 ตรวจเอง']};
+const slipBadge=o=>{if(!o.slipResult)return'';const b=SLB[o.slipResult]||['secondary',o.slipResult];
+  return `<div class="mt-1"><span class="pill bg-${b[0]}-subtle text-${b[0]}-emphasis">${b[1]}</span>${(o.slipAmt!==''&&o.slipAmt!=null&&!o.slipNote)?`<div class="text-muted">ยอดในสลิป ${num(o.slipAmt)} บาท</div>`:''}${o.slipNote?`<div class="text-muted">${esc(o.slipNote)}</div>`:''}</div>`};
 const plabel=o=>o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว';
 function pickDlg(id){const o=D.orders.find(x=>x.id===id);if(!o)return;const post=o.delivery==='จัดส่งไปรษณีย์',lb=post?'จัดส่ง':'รับเสื้อ';
   Swal.fire({title:'บันทึก'+lb+' '+id,showCancelButton:true,confirmButtonText:'บันทึก',cancelButtonText:'ยกเลิก',confirmButtonColor:'#16833F',
@@ -526,7 +552,9 @@ function pickDlg(id){const o=D.orders.find(x=>x.id===id);if(!o)return;const post
 function unpick(id){Swal.fire({title:'ยกเลิกการบันทึก '+id+'?',text:'ใช้เมื่อบันทึกผิดพลาดเท่านั้น (ระบบเก็บประวัติไว้ในชีต)',icon:'warning',showCancelButton:true,confirmButtonColor:'#d33',confirmButtonText:'ยกเลิกการบันทึก',cancelButtonText:'ปิด'}).then(r=>{
   if(r.isConfirmed)api('adminSetPickup',T,id,false).then(()=>{ok('ยกเลิกแล้ว');refresh();adminReceipt(id,true).catch(()=>{})}).catch(err)})}
 function setSt(id,st){
-  Swal.fire({title:'เปลี่ยนสถานะ '+id,text:'เป็น "'+st+'" ?',icon:'question',showCancelButton:true,confirmButtonText:'ยืนยัน'}).then(r=>{
+  (()=>{const o0=D.orders.find(x=>x.id===id)||{};let w='';
+    if(st==='ชำระเงินแล้ว'){if(!o0.slip)w='⚠ ยังไม่มีสลิปแนบในระบบ';else if(o0.slipResult&&o0.slipResult!=='ผ่าน')w='⚠ สลิปยังไม่ผ่านการตรวจอัตโนมัติ ('+o0.slipResult+(o0.slipNote?': '+o0.slipNote:'')+') — ตรวจสลิปด้วยตนเองก่อนยืนยัน'}
+    return Swal.fire({title:'เปลี่ยนสถานะ '+id,html:'เป็น <b>'+esc(st)+'</b> ?'+(w?'<div class="mt-2 p-2 rounded-3 small" style="background:#FDECEA;color:#9b1c1c">'+esc(w)+'</div>':''),icon:w?'warning':'question',showCancelButton:true,confirmButtonText:'ยืนยัน'})})().then(r=>{
     if(!r.isConfirmed){document.activeElement&&document.activeElement.blur();return refresh()}
     api('adminSetStatus',T,id,st).then(async r=>{
       if(!(r&&r.receipt)){ok('อัปเดตแล้ว');return refresh()}
