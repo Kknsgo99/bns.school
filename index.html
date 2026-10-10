@@ -2,10 +2,14 @@
 <html lang="th"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0B2E7A">
+<meta name="description" content="สั่งจองเสื้อโปโลที่ระลึก งานผ้าป่าศิษย์เก่า 2569 โรงเรียนบ้านนาสวรรค์">
+<meta property="og:title" content="สั่งจองเสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569"><meta property="og:description" content="เลือกไซส์ โอนเงิน แนบสลิป รับใบเสร็จเป็นรูปภาพ">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2748%27 fill=%27%23FFC21A%27/%3E%3Ctext x=%2750%27 y=%2764%27 font-size=%2742%27 text-anchor=%27middle%27 fill=%27%230B2E7A%27 font-family=%27sans-serif%27 font-weight=%27bold%27%3E69%3C/text%3E%3C/svg%3E">
 <title>สั่งจองเสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 :root{--navy:#0B2E7A;--navy2:#1546B3;--yellow:#FFC21A;--yellow-s:#FFF5D1;--green:#16833F;--green-h:#116b34;--green-s:#E7F6EC;
 --ink:#14213D;--mut:#667394;--line:#E4E9F4;--soft:#F5F8FD;--r:16px;
@@ -24,7 +28,6 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
 .btn-primary{--bs-btn-bg:var(--navy);--bs-btn-border-color:var(--navy);--bs-btn-hover-bg:var(--navy2);--bs-btn-hover-border-color:var(--navy2);--bs-btn-active-bg:var(--navy2)}
 .btn-outline-primary{--bs-btn-color:var(--navy);--bs-btn-border-color:var(--navy);--bs-btn-hover-bg:var(--navy);--bs-btn-hover-border-color:var(--navy);--bs-btn-active-bg:var(--navy)}
 .form-control,.form-select{border-radius:12px;border:1.5px solid var(--line);min-height:46px}
-.form-control-sm,.form-select-sm{min-height:38px}
 .form-control:focus,.form-select:focus{border-color:var(--navy2);box-shadow:0 0 0 .2rem rgba(21,70,179,.15)}
 .form-label{font-weight:500;font-size:.92rem;margin-bottom:4px}
 /* แถบบน */
@@ -76,28 +79,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
 .anav .nav-link{color:#fff!important;opacity:.85;border-radius:99px;padding:6px 16px}.anav .nav-link.active{opacity:1;background:var(--yellow)!important;color:var(--navy)!important;font-weight:600}
 .stat .v{font-size:1.6rem;font-weight:600;color:var(--navy)}.stat .l{font-size:.8rem;color:var(--mut)}
 .asec{display:none}.asec.on{display:block}
-.top{padding:12px 0}.top .container{max-width:1120px!important}.logo{font-size:1.05rem}.logo b{background:var(--navy);color:#fff;border-radius:12px;width:42px;height:42px}
-.hero{padding:64px 0 54px;background:linear-gradient(125deg,#09255f 0%,#103c9c 58%,#1a55b7 100%);color:#fff}
-.hero:before{width:420px;height:420px;right:-110px;top:-170px;background:#f4bd31;opacity:.17}.hero:after{width:260px;height:260px;right:28%;top:auto;bottom:-180px;background:#fff;opacity:.07}
-.hero .container{max-width:1120px}.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:52px;position:relative;z-index:1}
-.hero-copy{max-width:600px}.tag{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:7px 16px;letter-spacing:.02em}
-.hero h1{color:#fff;font-size:clamp(2.1rem,5vw,3.5rem);max-width:600px;line-height:1.12;letter-spacing:-.02em}.hero .sub{color:rgba(255,255,255,.78);font-size:1.08rem;max-width:520px;line-height:1.8}
-.hero .chip{background:rgba(255,255,255,.11);border-color:rgba(255,255,255,.19);color:#fff;padding:6px 14px}.hero .chip-y{background:#ffd15c;border-color:#ffd15c;color:#162e66}
-.hero .cta{margin-top:22px}.hero .btn-main{background:#f7c84b;color:#10285e!important;box-shadow:0 10px 24px rgba(0,0,0,.18)}.hero .btn-main:hover{background:#ffda75}.hero .btn-sub{background:transparent;border-color:rgba(255,255,255,.55);color:#fff!important}.hero .btn-sub:hover{background:#fff;color:var(--navy)!important}
-.hero-art{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:14px;border-radius:28px;box-shadow:0 24px 60px rgba(0,0,0,.22);transform:rotate(1.2deg)}
-.hero-art .design{display:block;max-width:none;max-height:440px;object-fit:contain;background:#fff;border:0;border-radius:18px;cursor:zoom-in}
-.hero-art-note{text-align:center;color:rgba(255,255,255,.8);font-size:.82rem;padding:11px 2px 1px}
-.steps{max-width:1120px;margin:-24px auto 0;padding:0 20px;gap:14px}.st{padding:16px;border-radius:18px;box-shadow:0 12px 32px rgba(11,46,122,.09)}.st i{width:40px;height:40px;background:#edf3ff;color:var(--navy)}.st b{font-size:1rem}.st span{font-size:.82rem;margin-top:3px}
-.wrap{max-width:1000px;padding-top:34px}.cardx{border-radius:22px;padding:26px;box-shadow:0 12px 36px rgba(11,46,122,.055)}.h{font-size:1.16rem}.h i{background:#edf3ff;color:var(--navy);box-shadow:none}
-#order .design{display:none}#order .small.text-muted.text-center{display:none}
-.size{border-radius:18px;padding:16px 10px}.size:hover{border-color:#a9bce9;transform:translateY(-2px)}.size .n{font-size:1.55rem}.step button{transition:.15s}.step button:hover{background:var(--navy);color:#fff}
-#track{background:#f7f9fd;border-color:#e8edf7}.bar{padding-top:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}.bar .container{max-width:1000px!important}.bar .tot{font-size:1.75rem}
-/* ไทม์ไลน์ติดตามสถานะ */
-.tl{display:flex;gap:4px;margin:12px 0}.tl div{flex:1;text-align:center;font-size:.78rem;color:var(--mut)}
-.tl span{display:flex;margin:0 auto 3px;width:30px;height:30px;border-radius:50%;background:#e9eef7;align-items:center;justify-content:center;font-weight:600}
-.tl .ok{color:var(--green)}.tl .ok span{background:var(--green);color:#fff}.tl .now{color:var(--navy);font-weight:600}.tl .now span{background:var(--yellow);color:var(--navy)}
-@media(max-width:767px){.hero{padding:42px 0 48px}.hero-grid{grid-template-columns:1fr;gap:26px}.hero-copy{max-width:none}.hero-art{max-width:520px;margin:0 auto;transform:none}.hero-art .design{max-height:330px}.hero h1{font-size:clamp(2rem,9vw,3rem)}.steps{padding:0 12px;margin-top:-20px}.st{padding:12px 10px}.wrap{padding-top:26px}}
-@media(max-width:575px){.steps{gap:6px;padding:0 8px}.st{flex-direction:column;text-align:center;padding:10px 6px;gap:6px}.hero:before{width:180px;height:180px;right:-60px;top:-60px}.cardx{padding:16px}.tl div{font-size:.72rem}}
+@media(max-width:575px){.steps{gap:6px;padding:0 8px}.st{flex-direction:column;text-align:center;padding:10px 6px;gap:6px}.hero:before{width:180px;height:180px;right:-60px;top:-60px}.cardx{padding:16px}}
 @media print{.anav,.noprint,#stats{display:none!important}.asec{display:none!important}#a_report{display:block!important}}
 </style></head><body>
 
@@ -106,32 +88,32 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
  <div class="top"><div class="container d-flex justify-content-between align-items-center" style="max-width:920px">
   <a class="logo" href="#"><b>👕</b><span>เสื้อที่ระลึก 2569</span></a>
   <div class="d-flex gap-2"><a class="btn-sub" href="#order">สั่งซื้อ</a><a class="btn-sub" href="#track">ติดตาม</a></div></div></div>
- <section class="hero"><div class="container"><div class="hero-grid">
-  <div class="hero-copy">
-   <span class="tag">งานผ้าป่าศิษย์เก่า · 2569</span>
-   <h1 id="proj">กำลังโหลด...</h1>
-   <p class="sub">เสื้อที่ระลึกโรงเรียนบ้านนาสวรรค์ สั่งรวมรุ่นได้ เลือกหลายไซส์ในคำสั่งซื้อเดียว</p>
-   <div id="chips"></div>
-   <div class="cta"><a class="btn-main" href="#order">เลือกไซส์และสั่งจอง <span aria-hidden="true">→</span></a><a class="btn-sub" href="#track">ติดตามออเดอร์</a></div>
-   <div class="alert-closed d-none" id="closed">⛔ ขณะนี้ปิดรับสั่งจองแล้ว</div>
-  </div>
-  <div class="hero-art"><img id="design" class="design" src="design.jpg" alt="แบบเสื้อและตารางไซส์"><div class="hero-art-note">FIELD NIX · กรุณาเทียบตารางไซส์ก่อนสั่งซื้อ</div></div>
- </div></div></section>
+ <section class="hero"><div class="container">
+  <span class="tag">ผ้าป่าศิษย์เก่า 2569</span>
+  <h1 id="proj">กำลังโหลด...</h1>
+  <p class="sub">โรงเรียนบ้านนาสวรรค์ · สั่งรวมรุ่นได้หลายไซส์ในออเดอร์เดียว</p>
+  <div id="chips"></div>
+  <div class="cta"><a class="btn-main" href="#order">สั่งจองเสื้อ</a><a class="btn-sub" href="#track">ติดตามออเดอร์ / แนบสลิป</a></div>
+  <div class="alert-closed d-none" id="closed">⛔ ขณะนี้ปิดรับสั่งจองแล้ว</div>
+ </div></section>
  <div class="steps">
-  <div class="st"><i>1</i><div><b>เลือกและสั่งจอง</b><span>เลือกไซส์ กรอกข้อมูลผู้สั่ง</span></div></div>
-  <div class="st"><i>2</i><div><b>ชำระเงิน</b><span>สแกน QR พร้อมเพย์</span></div></div>
-  <div class="st"><i>3</i><div><b>แจ้งโอน</b><span>แนบสลิป ติดตามผลได้จากหน้าเว็บ</span></div></div>
+  <div class="st"><i>1</i><div><b>เลือกไซส์</b><span>กรอกข้อมูลผู้สั่ง</span></div></div>
+  <div class="st"><i>2</i><div><b>โอนเงิน</b><span>สแกน QR พร้อมเพย์</span></div></div>
+  <div class="st"><i>3</i><div><b>แนบสลิป</b><span>รอยืนยันยอด</span></div></div>
  </div>
 
  <div class="wrap">
   <div class="cardx d-none" id="rounds_card"><div class="h" style="margin-bottom:10px">🗓 รอบการสั่งจอง</div><div id="rounds"></div></div>
   <div class="cardx" id="order">
-   <div class="h"><i>1</i>เลือกไซส์และจำนวน</div>
+   <div class="h"><i>1</i>แบบเสื้อ ราคา และตารางไซส์</div>
+   <img id="design" class="design d-block mx-auto mb-2" src="design.jpg" alt="แบบเสื้อและตารางไซส์">
+   <div class="small text-muted text-center mb-3">แตะรูปเพื่อขยาย · **วัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง**</div>
+   <div class="h"><i>2</i>เลือกไซส์และจำนวน</div>
    <div class="row g-2" id="sizes"><div class="text-center text-muted p-3">กำลังโหลดไซส์...</div></div>
   </div>
 
   <div class="cardx">
-   <div class="h"><i>2</i>ข้อมูลผู้สั่ง</div>
+   <div class="h"><i>3</i>ข้อมูลผู้สั่ง</div>
    <div class="row g-3">
     <div class="col-md-6"><label class="form-label">ชื่อ-นามสกุล / ตัวแทนรุ่น *</label><input id="f_name" class="form-control" autocomplete="name"></div>
     <div class="col-6 col-md-3"><label class="form-label">รุ่น (พ.ศ.)</label><input id="f_year" class="form-control" inputmode="numeric" placeholder="เช่น 2530"></div>
@@ -140,19 +122,17 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
     <div class="col-md-6"><label class="form-label">วิธีรับสินค้า</label>
      <select id="f_del" class="form-select"><option>รับที่โรงเรียนตามรอบนัด</option><option>จัดส่งไปรษณีย์</option></select></div>
     <div class="col-12 d-none" id="addrWrap"><label class="form-label">ที่อยู่จัดส่ง *</label><textarea id="f_addr" class="form-control" rows="2"></textarea></div>
-    <div class="col-12"><label class="form-label">อีเมล (ไม่บังคับ — ใช้รับใบสั่งซื้อ/ใบเสร็จอัตโนมัติ)</label><input id="f_email" type="email" class="form-control" autocomplete="email" inputmode="email"></div>
     <div class="col-12"><label class="form-label">หมายเหตุ</label><input id="f_note" class="form-control"></div>
    </div>
   </div>
 
   <div class="cardx" id="track">
-   <div class="h"><i>3</i>ติดตามสถานะ / แจ้งโอน / ใบสั่งซื้อ-ใบเสร็จ</div>
+   <div class="h"><i>4</i>ติดตามสถานะ / แนบสลิป / ใบสั่งซื้อ</div>
    <div class="row g-2">
-    <div class="col-md-5"><input id="t_id" class="form-control" autocapitalize="characters" placeholder="เลขที่ออเดอร์ (SH2569-0001 หรือพิมพ์แค่ 1)"></div>
+    <div class="col-md-5"><input id="t_id" class="form-control" placeholder="เลขที่ออเดอร์ เช่น SH2569-0001"></div>
     <div class="col-md-4"><input id="t_phone" class="form-control" inputmode="tel" placeholder="เบอร์โทรที่ใช้สั่ง"></div>
     <div class="col-md-3 d-grid"><button class="btn btn-outline-primary" id="btnTrack">ค้นหา</button></div>
    </div>
-   <div class="form-text">ลืมเลขที่ออเดอร์? ใส่เฉพาะเบอร์โทรเพื่อดูรายการทั้งหมดของเบอร์นี้</div>
    <div id="t_res" class="mt-3"></div>
   </div>
   <div class="text-center small"><a href="#admin" class="text-muted text-decoration-none">🔐 สำหรับผู้ดูแล</a></div>
@@ -193,7 +173,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
     <div class="cardx"><h6>ยอดแยกตามไซส์ (เรียลไทม์)</h6><div class="table-responsive"><table class="table table-sm align-middle" id="t_size"></table></div></div></div>
 
    <div class="asec" id="a_orders"><div class="cardx">
-    <div class="row g-2 mb-2"><div class="col-md-3"><input id="q" class="form-control" placeholder="ค้นหา เลขที่/ชื่อ/เบอร์/รุ่น/ใบเสร็จ/อีเมล"></div>
+    <div class="row g-2 mb-2"><div class="col-md-3"><input id="q" class="form-control" placeholder="ค้นหา เลขที่/ชื่อ/เบอร์/รุ่น"></div>
      <div class="col-md-3"><select id="fs" class="form-select"></select></div><div class="col-md-2"><select id="fr" class="form-select"></select></div><div class="col-md-2"><select id="fp" class="form-select"><option value="">รับเสื้อ: ทั้งหมด</option><option value="pending">รอรับเสื้อ (ชำระแล้ว)</option><option value="picked">รับเสื้อแล้ว</option></select></div>
      <div class="col-md-2"><button class="btn btn-outline-primary w-100" id="btnCsv">⬇ CSV (เปิดใน Excel)</button></div></div>
     <div class="table-responsive"><table class="table table-hover align-middle small"><thead><tr><th>เลขที่</th><th>ผู้สั่ง</th><th>รายการ</th><th class="text-end">ยอด</th><th>สถานะ</th><th>เอกสาร</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div></div>
@@ -217,17 +197,15 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
  </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 /* ===== ตั้งค่า: วาง URL ของ Web App (ลงท้ายด้วย /exec) หลัง Deploy Code.gs ===== */
-const API_URL='https://script.google.com/macros/s/AKfycbxk3Mk0bOuTYKorpD_TbRi2C6D5htoMP22UoRwHF9cbwyHcqVF7HYiXC1E6S_dZ55u9/exec';
+const API_URL='https://script.google.com/macros/s/AKfycbxrLGMFDrm9RPVufwT0eaBD2n1Q9odJvUk5oSw8C34CMCqtQKTC_pHyCEqCWMXkNXjN/exec';
 const DESIGN_IMG='design.jpg', QR_IMG='qr.jpg';   // ไฟล์รูปใน repo เดียวกัน
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=n=>Number(n||0).toLocaleString('th-TH');
 const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
-const dtl=d=>{const z=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`};
 
 function api(fn,...args){
   if(/PASTE_WEB_APP/.test(API_URL))return Promise.reject(new Error('ยังไม่ได้ตั้งค่า API_URL ใน index.html'));
@@ -244,25 +222,105 @@ function err(e){
 }
 const ok=t=>Swal.fire({icon:'success',title:t,timer:1400,showConfirmButton:false});
 const busy=t=>Swal.fire({title:t,allowOutsideClick:false,didOpen:()=>Swal.showLoading()});
+function saveFile(r){const a=document.createElement('a');a.href='data:application/pdf;base64,'+r.base64;a.download=r.name;a.click()}
+/* ===== สร้างรูป JPG ใบสั่งซื้อ/ใบเสร็จ (Canvas + ฟอนต์ Kanit) — A4 1240px กว้าง สูงตามเนื้อหา ===== */
+const IC={navy:'#0B2E7A',green:'#16833F',yellow:'#FFC21A',ys:'#FFF5D1',gs:'#E7F6EC',ink:'#14213D',mut:'#667394',line:'#D5DCEC',soft:'#F5F8FD'};
+const IW=1240,IM=70,IH=3400;
+const fnt=(w,s)=>`${w} ${s}px Kanit,Tahoma,sans-serif`;
+const fontsReady=()=>Promise.all([400,500,600].map(w=>document.fonts.load(`${w} 30px Kanit`,'กขคงจ ABC 123'))).catch(()=>{});
+const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
+function newCanvas(){const c=document.createElement('canvas');c.width=IW;c.height=IH;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,IW,IH);return{c,x}}
+function rrect(x,px,py,w,h,r){x.beginPath();x.moveTo(px+r,py);x.arcTo(px+w,py,px+w,py+h,r);x.arcTo(px+w,py+h,px,py+h,r);x.arcTo(px,py+h,px,py,r);x.arcTo(px,py,px+w,py,r);x.closePath()}
+function box(x,px,py,w,h,r,fill,stroke,lw,dash){rrect(x,px,py,w,h,r);if(fill){x.fillStyle=fill;x.fill()}if(stroke){x.lineWidth=lw||2;x.strokeStyle=stroke;x.setLineDash(dash||[]);x.stroke();x.setLineDash([])}}
+function tx(x,s,px,py,font,color,align){x.font=font;x.fillStyle=color;x.textAlign=align||'left';x.fillText(String(s),px,py)}
+function wrapT(x,t,maxW){const out=[];String(t==null?'':t).split('\n').forEach(par=>{let line='';
+  const put=w=>{if(x.measureText(line+w).width<=maxW){line+=w;return}
+    if(line.trim()){out.push(line.trimEnd());line=''}
+    if(x.measureText(w).width<=maxW){line=w;return}
+    for(const ch of w){if(x.measureText(line+ch).width>maxW&&line){out.push(line);line=ch}else line+=ch}};
+  (par.match(/\S+\s*|\s+/g)||['']).forEach(put);out.push(line.trimEnd())});return out}
+function para(x,t,px,y,maxW,lh,font,color){x.font=font;const ls=wrapT(x,t,maxW);ls.forEach((l,i)=>tx(x,l,px,y+i*lh,font,color));return y+ls.length*lh}
+function head(x,title,sub,right){
+  x.fillStyle=IC.navy;x.fillRect(0,0,IW,210);x.fillStyle=IC.yellow;x.fillRect(0,210,IW,10);
+  x.beginPath();x.arc(IM+50,105,46,0,7);x.fillStyle=IC.yellow;x.fill();tx(x,'69',IM+50,121,fnt(600,42),IC.navy,'center');
+  tx(x,title,IM+125,100,fnt(600,52),'#fff');
+  x.font=fnt(400,24);wrapT(x,sub,560).slice(0,2).forEach((l,i)=>tx(x,l,IM+125,142+i*32,fnt(400,24),'#C9D6FF'));
+  tx(x,right[0],IW-IM,66,fnt(400,24),'#C9D6FF','right');tx(x,right[1],IW-IM,124,fnt(600,48),IC.yellow,'right');tx(x,right[2]||'',IW-IM,168,fnt(400,24),'#fff','right');
+  return 280}
+function info(x,y,rows){rows=rows.filter(r=>r[1]!==''&&r[1]!=null);const lw=250,vw=IW-2*IM-lw-56;x.font=fnt(500,28);
+  const ls=rows.map(r=>wrapT(x,r[1],vw)),h=ls.reduce((a,l)=>a+l.length*40+10,0)+36;
+  box(x,IM,y,IW-2*IM,h,18,IC.soft,IC.line,2);let cy=y+54;
+  rows.forEach((r,i)=>{tx(x,r[0],IM+28,cy,fnt(400,26),IC.mut);ls[i].forEach((l,k)=>tx(x,l,IM+28+lw,cy+k*40,fnt(500,28),IC.ink));cy+=ls[i].length*40+10});
+  return y+h+34}
+function tbl(x,y,lines,total,qty){const cx=[IM+26,IW-IM-440,IW-IM-250,IW-IM-26],top=y;
+  box(x,IM,y,IW-2*IM,64,12,IC.navy);
+  [['รายการ',0,'left'],['ราคา/ตัว',1,'right'],['จำนวน',2,'right'],['รวม (บาท)',3,'right']].forEach(h=>tx(x,h[0],cx[h[1]],y+42,fnt(500,26),'#fff',h[2]));y+=64;
+  (lines||[]).forEach((l,i)=>{if(i%2===0){x.fillStyle=IC.soft;x.fillRect(IM,y,IW-2*IM,58)}
+    tx(x,'ไซส์ '+l.size,cx[0],y+40,fnt(500,28),IC.ink);tx(x,num(l.price),cx[1],y+40,fnt(400,28),IC.ink,'right');tx(x,l.qty,cx[2],y+40,fnt(400,28),IC.ink,'right');tx(x,num(l.qty*l.price),cx[3],y+40,fnt(500,28),IC.ink,'right');y+=58});
+  box(x,IM,y,IW-2*IM,70,0,IC.ys);tx(x,'รวมทั้งสิ้น',cx[0],y+47,fnt(600,30),IC.navy);tx(x,qty,cx[2],y+47,fnt(600,30),IC.navy,'right');tx(x,num(total),cx[3],y+47,fnt(600,34),IC.navy,'right');y+=70;
+  box(x,IM,top,IW-2*IM,y-top,12,null,IC.line,2);return y+34}
+function foot(x,y,lines){x.strokeStyle=IC.line;x.lineWidth=2;x.beginPath();x.moveTo(IM,y);x.lineTo(IW-IM,y);x.stroke();y+=44;
+  lines.forEach(l=>{y=para(x,l,IM,y,IW-2*IM,34,fnt(400,23),IC.mut)});return y}
+function done(c,y){const H=Math.min(IH,Math.max(1754,Math.ceil(y+50))),o=document.createElement('canvas');o.width=IW;o.height=H;const ox=o.getContext('2d');
+  ox.fillStyle='#fff';ox.fillRect(0,0,IW,H);ox.drawImage(c,0,0,IW,H,0,0,IW,H);return o.toDataURL('image/jpeg',0.92)}
 
-/* ===== ไฟล์ PDF: Blob + แชร์ได้ + รองรับเบราว์เซอร์ในแอป LINE/Facebook ===== */
-function b64blob(r){const b=atob(r.base64),u=new Uint8Array(b.length);for(let i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new Blob([u],{type:'application/pdf'})}
-function download(blob,name){
-  const url=URL.createObjectURL(blob);
-  if(/Line\/|FBAN|FBAV|Instagram/i.test(navigator.userAgent))
-    return Swal.fire({icon:'info',title:name,html:`<a class="btn-sub" href="${url}" target="_blank" rel="noopener">เปิดไฟล์ PDF</a><div class="small text-muted mt-2">ถ้าบันทึกไม่ได้ ให้เปิดหน้านี้ด้วย Chrome/Safari</div>`,confirmButtonColor:'#0B2E7A'});
-  const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
-  setTimeout(()=>URL.revokeObjectURL(url),60000);
+async function renderOrder(d){
+  await fontsReady();const qr=await loadImg(INIT.qr||QR_IMG),{c,x}=newCanvas();
+  let y=head(x,'ใบสั่งซื้อ / สั่งจอง',INIT.project||'',['เลขที่คำสั่งซื้อ',d.id,d.roundName||'']);
+  y=info(x,y,[['วันที่สั่งซื้อ',d.date],['ผู้สั่ง',d.name+(d.year?' (รุ่น '+d.year+')':'')],['เบอร์โทร',d.phone],['การรับสินค้า',d.delivery+(d.addr?' – '+d.addr:'')],['หมายเหตุ',d.note]]);
+  y=tbl(x,y,d.lines,d.total,d.qty);
+  tx(x,'ช่องทางชำระเงิน',IM,y+30,fnt(600,36),IC.navy);y+=64;
+  const qw=420,qh=qr?Math.round(qw*qr.height/qr.width):0,qx=IW-IM-qw,lw=qx-IM-36;let ly=y+34;
+  ly=para(x,'ชื่อบัญชี: '+(INIT.account||''),IM,ly,lw,40,fnt(500,30),IC.ink);
+  ly=para(x,INIT.bank||'',IM,ly,lw,36,fnt(400,26),IC.mut)+26;
+  tx(x,'ยอดที่ต้องชำระ',IM,ly,fnt(400,26),IC.mut);ly+=74;tx(x,num(d.total)+' บาท',IM,ly,fnt(600,70),IC.green);ly+=56;
+  ly=para(x,'สแกน QR ด้วยแอปธนาคารเพื่อโอนตามยอด แล้วแนบสลิปที่หน้าเว็บ (หัวข้อ "ติดตามสถานะ") โดยระบุเลขที่ '+d.id,IM,ly,lw,34,fnt(400,24),IC.mut);
+  let by=ly;
+  if(qr){box(x,qx-14,y-14,qw+28,qh+76,18,'#fff',IC.line,2);x.drawImage(qr,qx,y,qw,qh);tx(x,'สแกนจ่าย (Thai QR Payment / พร้อมเพย์)',qx+qw/2,y+qh+36,fnt(400,22),IC.mut,'center');by=Math.max(by,y+qh+76)}
+  else tx(x,'(ยังไม่ได้ตั้งค่า QR)',qx,y+40,fnt(400,26),IC.mut);
+  y=by+40;
+  return done(c,foot(x,y,['สถานะ: '+d.status,'ติดต่อสอบถาม: '+(INIT.contacts||'')]));
 }
-function saveFile(r,share){
-  const blob=b64blob(r);
-  if(share&&navigator.canShare){const f=new File([blob],r.name,{type:'application/pdf'});
-    if(navigator.canShare({files:[f]}))return navigator.share({files:[f],title:r.name}).catch(e=>{if(!e||e.name!=='AbortError')download(blob,r.name)})}
-  return download(blob,r.name);
+async function renderReceipt(d){
+  await fontsReady();const{c,x}=newCanvas(),post=d.delivery==='จัดส่งไปรษณีย์',lab=post?'จัดส่งแล้ว':'รับเสื้อแล้ว',who=post?'ผู้รับพัสดุ':'ผู้รับเสื้อ';
+  let y=head(x,'ใบเสร็จรับเงิน  RECEIPT',INIT.project||'',['เลขที่ใบเสร็จ',d.receiptNo,d.receiptDate||'']);
+  y=info(x,y,[['อ้างอิงใบสั่งซื้อ',d.id+(d.roundName?' ('+d.roundName+')':'')],['สั่งเมื่อ',d.date],['ได้รับเงินจาก',d.name+(d.year?' (รุ่น '+d.year+')':'')],['เบอร์โทร',d.phone]]);
+  y=tbl(x,y,d.lines,d.total,d.qty);
+  x.font=fnt(500,28);const bt=wrapT(x,'จำนวนเงินตัวอักษร:  ('+d.totalText+')',IW-2*IM-48),bh=bt.length*40+30;
+  box(x,IM,y-12,IW-2*IM,bh,12,IC.ys,IC.yellow,2);bt.forEach((l,i)=>tx(x,l,IM+24,y+30+i*40,fnt(500,28),IC.ink));y+=bh+28;
+  y=para(x,'ชำระโดย: โอนเงินผ่านพร้อมเพย์'+(d.payer?' · ผู้โอน '+d.payer:'')+(d.slipDate?' · แจ้งโอนเมื่อ '+d.slipDate:''),IM,y+20,IW-2*IM,40,fnt(400,27),IC.ink)+14;
+  box(x,IM,y,360,56,28,IC.gs,IC.green,2);tx(x,'สถานะ: ชำระเงินแล้ว',IM+180,y+38,fnt(600,28),IC.green,'center');y+=100;
+  if(d.picked){
+    box(x,IM,y,IW-2*IM,236,18,IC.gs,IC.green,4);
+    tx(x,lab,IM+32,y+68,fnt(600,46),IC.green);
+    tx(x,'วันที่'+(post?'จัดส่ง':'รับ')+': '+d.pickedAt,IM+32,y+118,fnt(500,30),IC.ink);
+    para(x,who+': '+(d.receiver||'-')+(d.pickNote?' ('+d.pickNote+')':''),IM+32,y+162,640,36,fnt(400,28),IC.ink);
+    tx(x,'ใบเสร็จนี้ใช้'+lab.replace('แล้ว','')+'แล้ว ไม่สามารถใช้ซ้ำได้',IM+32,y+212,fnt(400,23),IC.mut);
+    x.save();x.translate(IW-IM-230,y+118);x.rotate(-0.2);x.globalAlpha=.65;x.lineWidth=7;x.strokeStyle=IC.green;rrect(x,-185,-58,370,116,18);x.stroke();tx(x,lab,0,22,fnt(600,58),IC.green,'center');x.restore();
+    y+=236+40;
+  }else{
+    x.font=fnt(400,28);const l1=wrapT(x,'โปรดนำใบเสร็จนี้ (พิมพ์หรือแสดงในมือถือ) มาแสดงเมื่อรับเสื้อ',IW-2*IM-64),l2=wrapT(x,'วิธีรับสินค้า: '+d.delivery+(d.addr?' – '+d.addr:''),IW-2*IM-64),h=100+(l1.length+l2.length)*40;
+    box(x,IM,y,IW-2*IM,h,18,IC.soft,IC.navy,3,[12,9]);tx(x,'หลักฐานการรับเสื้อ',IM+32,y+56,fnt(600,34),IC.navy);
+    l1.concat(l2).forEach((l,i)=>tx(x,l,IM+32,y+104+i*40,fnt(400,28),IC.ink));y+=h+40;
+  }
+  y+=40;const dots='............................................';
+  tx(x,dots,IM+250,y,fnt(400,28),IC.ink,'center');tx(x,dots,IW-IM-250,y,fnt(400,28),IC.ink,'center');
+  tx(x,'ผู้รับเงิน',IM+250,y+40,fnt(500,26),IC.mut,'center');tx(x,who+' (ลงชื่อ)',IW-IM-250,y+40,fnt(500,26),IC.mut,'center');
+  tx(x,'วันที่ ........................',IM+250,y+82,fnt(400,24),IC.mut,'center');tx(x,'วันที่ ........................',IW-IM-250,y+82,fnt(400,24),IC.mut,'center');
+  y+=130;
+  return done(c,foot(x,y,['ติดต่อ: '+(INIT.contacts||''),'รหัสอ้างอิง '+d.id+' · '+d.receiptNo+' — ใบเสร็จออกโดยระบบ ตรวจสอบเลขที่ได้กับผู้ดูแล']));
 }
-function rc(id,phone,share){busy('กำลังสร้างใบเสร็จ...');api('getReceiptPdf',id,phone).then(r=>{Swal.close();saveFile(r,share)}).catch(err)}
-function dl(id,phone,share){busy('กำลังสร้าง PDF...');api('getOrderPdf',id,phone).then(r=>{Swal.close();saveFile(r,share)}).catch(err)}
-function mailDoc(kind){busy('กำลังส่งอีเมล...');api('emailDoc',CUR.id,CUR.phone,kind).then(()=>ok('ส่งอีเมลแล้ว')).catch(err)}
+const b64=u=>u.split(',')[1];
+const mimeOf=n=>({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',heic:'image/heic',pdf:'application/pdf'})[String(n).split('.').pop().toLowerCase()]||'';
+function dlImg(url,name){const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove()}
+function showDoc(url,name,title){
+  return Swal.fire({title,imageUrl:url,imageAlt:title,width:'min(96vw,760px)',padding:'1em',showCancelButton:true,showDenyButton:!!navigator.canShare,
+    confirmButtonText:'⬇ ดาวน์โหลด JPG',denyButtonText:'แชร์',cancelButtonText:'ปิด',confirmButtonColor:'#16833F',footer:'<span class="small text-muted">iPhone: แตะค้างที่รูป แล้วเลือก "เพิ่มลงในรูปภาพ"</span>'})
+  .then(async r=>{if(r.isConfirmed)dlImg(url,name);else if(r.isDenied){try{const f=new File([await (await fetch(url)).blob()],name,{type:'image/jpeg'});if(navigator.canShare({files:[f]}))await navigator.share({files:[f],title})}catch(e){}}})}
+function orderImg(o){busy('กำลังสร้างรูปใบสั่งซื้อ...');renderOrder(o).then(img=>{Swal.close();showDoc(img,o.id+'.jpg','ใบสั่งซื้อ '+o.id);
+  if(!o.hasImage&&CUR)api('saveOrderImage',{id:o.id,phone:CUR.phone,base64:b64(img)}).catch(()=>{})}).catch(err)}
+function rc(id,phone){busy('กำลังสร้างรูปใบเสร็จ...');api('getReceipt',id,phone).then(async d=>{const img=await renderReceipt(d);Swal.close();showDoc(img,d.receiptNo+'.jpg','ใบเสร็จรับเงิน '+d.receiptNo)}).catch(err)}
+async function adminReceipt(id,save){const d=await api('adminGetReceipt',T,id),img=await renderReceipt(d);if(save)await api('adminSaveReceiptImage',T,id,b64(img));return{d,img}}
 
 /* ===== router ===== */
 let timer=null;
@@ -324,10 +382,9 @@ $('f_del').onchange=e=>$('addrWrap').classList.toggle('d-none',e.target.value!==
 
 function submitOrder(){
   const items=INIT.sizes.map(s=>({size:s.size,qty:Q[s.size]||0,price:s.price})).filter(i=>i.qty>0);
-  const name=$('f_name').value.trim(),phone=$('f_phone').value.trim().replace(/[\s-]/g,''),email=$('f_email').value.trim();
+  const name=$('f_name').value.trim(),phone=$('f_phone').value.trim().replace(/[\s-]/g,'');
   if(!name)return err('กรุณากรอกชื่อ-นามสกุล');
   if(!/^0\d{8,9}$/.test(phone))return err('กรุณากรอกเบอร์โทร 9-10 หลัก เช่น 0812345678');
-  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))return err('รูปแบบอีเมลไม่ถูกต้อง');
   if(!items.length)return err('กรุณาเลือกไซส์อย่างน้อย 1 รายการ');
   const post=$('f_del').value==='จัดส่งไปรษณีย์';
   if(post&&!$('f_addr').value.trim())return err('กรุณากรอกที่อยู่จัดส่ง');
@@ -335,106 +392,57 @@ function submitOrder(){
     html:`<div class="text-start small">${items.map(i=>`<div class="d-flex justify-content-between"><span>ไซส์ ${esc(i.size)} × ${i.qty}</span><b>${num(i.qty*i.price)}</b></div>`).join('')}</div><hr class="my-2">${$('tq').textContent} ตัว รวม <b style="color:#16833F;font-size:1.2rem">${$('tp').textContent}</b> บาท`}).then(r=>{
     if(!r.isConfirmed)return;
     busy('กำลังบันทึก...');
-    api('submitOrder',{name,phone,email,year:$('f_year').value,line:$('f_line').value,delivery:$('f_del').value,addr:$('f_addr').value,note:$('f_note').value,items:items.map(i=>({size:i.size,qty:i.qty}))})
-    .then(o=>{
-      store.set('sh_buyer',{name,phone,email,year:$('f_year').value,line:$('f_line').value});store.set('sh_last',{id:o.id,phone});
+    api('submitOrder',{name,phone,year:$('f_year').value,line:$('f_line').value,delivery:$('f_del').value,addr:$('f_addr').value,note:$('f_note').value,items:items.map(i=>({size:i.size,qty:i.qty}))})
+    .then(async o=>{
+      store.set('sh_buyer',{name,phone,year:$('f_year').value,line:$('f_line').value});store.set('sh_last',{id:o.id,phone});
       $('t_id').value=o.id;$('t_phone').value=phone;Q={};load();
-      ['f_name','f_year','f_phone','f_line','f_addr','f_note','f_email'].forEach(i=>$(i).value='');
+      ['f_name','f_year','f_phone','f_line','f_addr','f_note'].forEach(i=>$(i).value='');
+      let img=null;try{img=await renderOrder(o.doc);api('saveOrderImage',{id:o.id,phone,base64:b64(img)}).catch(()=>{})}catch(e){console.error(e)}
       return Swal.fire({icon:'success',title:'สั่งจองสำเร็จ',confirmButtonColor:'#0B2E7A',showCancelButton:true,
-        confirmButtonText:'📄 ใบสั่งซื้อ (PDF)',cancelButtonText:'ปิด',
+        confirmButtonText:'🖼 ใบสั่งซื้อ (JPG)',cancelButtonText:'ปิด',
         html:`<div>เลขที่ <b style="color:#16833F;font-size:1.3rem">${esc(o.id)}</b></div>${o.round?`<div class="small text-muted">${esc(o.round)}</div>`:''}<div>${esc(o.items)} · <b>${num(o.total)}</b> บาท</div>
-        ${o.emailed?'<div class="small" style="color:#16833F">📧 ส่งใบสั่งซื้อเข้าอีเมลแล้ว</div>':''}
         <img src="${INIT.qr||QR_IMG}" style="max-width:230px;margin:10px auto;display:block;border-radius:10px">
         <a class="small" href="${INIT.qr||QR_IMG}" download="promptpay-qr">⬇ บันทึกรูป QR</a>
         <div class="small mt-1">ชื่อบัญชี: ${esc(INIT.account)}<br>${esc(INIT.bank)}</div>
         <div class="small text-muted mt-2">โอน ${num(o.total)} บาท แล้วแนบสลิปที่หัวข้อ "ติดตามสถานะ" · จดเลขที่ออเดอร์ไว้</div>`
-      }).then(x=>{if(x.isConfirmed)dl(o.id,phone);track();$('track').scrollIntoView({behavior:'smooth'})});
+      }).then(x=>{if(x.isConfirmed&&img)showDoc(img,o.id+'.jpg','ใบสั่งซื้อ '+o.id);track();$('track').scrollIntoView({behavior:'smooth'})});
     }).catch(err);
   });
 }
 $('btnSubmit').onclick=submitOrder;
-
-/* ===== ติดตามสถานะ ===== */
 const cls={'รอชำระเงิน':'bg-warning-subtle text-warning-emphasis','รอตรวจสอบการชำระเงิน':'bg-info-subtle text-info-emphasis','ชำระเงินแล้ว':'bg-success-subtle text-success-emphasis','ยกเลิก':'bg-danger-subtle text-danger-emphasis'};
-const cleanPh=v=>v.trim().replace(/[\s-]/g,'');
 function track(){
-  const id=$('t_id').value.trim(),ph=cleanPh($('t_phone').value);
-  if(!ph)return id?err('กรุณากรอกเบอร์โทรที่ใช้สั่ง'):undefined;
+  const id=$('t_id').value.trim().toUpperCase(),ph=$('t_phone').value.trim().replace(/[\s-]/g,'');
+  if(!id||!ph)return;
   $('t_res').innerHTML='<div class="text-muted">กำลังค้นหา...</div>';
-  if(!id)return api('lookupByPhone',ph).then(list=>{
-    $('t_res').innerHTML=`<div class="small text-muted mb-1">พบ ${list.length} รายการ</div>`+list.map(o=>`<div class="d-flex justify-content-between align-items-center border rounded-3 p-2 mb-1 gap-2"><div><b>${esc(o.id)}</b> <span class="pill ${cls[o.status]||''}">${esc(o.status)}</span><div class="small text-muted">${esc(o.date)} · ${esc(o.items)} · ${num(o.total)} บาท</div></div><button class="btn btn-sm btn-outline-primary" data-open="${esc(o.id)}">เปิด</button></div>`).join('');
+  api('lookupOrder',id,ph).then(o=>{
+    CUR={id:o.id,phone:ph,o};store.set('sh_last',{id:o.id,phone:ph});
+    const up=o.status==='รอชำระเงิน'||o.status==='รอตรวจสอบการชำระเงิน';
+    $('t_res').innerHTML=`<div class="border rounded-4 p-3"><div class="d-flex justify-content-between"><b>${esc(o.id)}</b><span class="pill ${cls[o.status]||''}">${esc(o.status)}</span></div>
+     <div class="small text-muted">${esc(o.name)} · รุ่น ${esc(o.year)} · ${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div><div class="mt-1">${esc(o.items)}</div><div><b>${num(o.total)} บาท</b> · ${esc(o.delivery)}</div>
+     <button class="btn btn-sm btn-outline-primary mt-2" id="b_dl">🖼 ใบสั่งซื้อ (JPG)</button>
+     ${o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-success mt-2 ms-1" id="b_rc">🧾 ใบเสร็จรับเงิน (JPG)</button><div class="small mt-2" style="color:var(--green)">✔ ชำระเงินแล้ว${o.receiptNo?' · เลขที่ใบเสร็จ <b>'+esc(o.receiptNo)+'</b>':''}<br>บันทึก/พิมพ์ใบเสร็จนี้ไว้เป็นหลักฐานแสดงเมื่อรับเสื้อ</div>`:''}
+     ${o.picked?`<div class="mt-2 p-2 rounded-3" style="background:var(--green-s);color:var(--green)">📦 <b>${o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว'}</b> เมื่อ ${esc(o.pickedAt)}${o.receiver?' · ผู้รับ '+esc(o.receiver):''}</div>`:''}
+     ${up?`<hr><div class="small mb-1">${o.status==='รอชำระเงิน'?'แนบสลิปโอนเงิน':'แนบสลิปใหม่ (ถ้าต้องการเปลี่ยน)'}</div>
+     <input id="s_payer" class="form-control form-control-sm mb-2" placeholder="ชื่อผู้โอน">
+     <input id="s_file" type="file" accept="image/*,application/pdf" class="form-control form-control-sm mb-2">
+     <button class="btn-o btn-sm" id="b_slip">ส่งสลิป</button>`:''}</div>`;
+    $('b_dl').onclick=()=>orderImg(CUR.o);
+    if($('b_rc'))$('b_rc').onclick=()=>rc(CUR.id,CUR.phone);
+    if($('b_slip'))$('b_slip').onclick=slip;
   }).catch(e=>{$('t_res').innerHTML='';err(e)});
-  api('lookupOrder',id,ph).then(showOrder).catch(e=>{$('t_res').innerHTML='';err(e)});
-}
-$('t_res').addEventListener('click',e=>{const b=e.target.closest('[data-open]');if(b){$('t_id').value=b.dataset.open;track()}});
-function showOrder(o){
-  const ph=cleanPh($('t_phone').value);
-  CUR={id:o.id,phone:ph,total:o.total};store.set('sh_last',{id:o.id,phone:ph});$('t_id').value=o.id;
-  const paid=o.status==='ชำระเงินแล้ว',wait=o.status==='รอตรวจสอบการชำระเงิน',unpaid=o.status==='รอชำระเงิน',canc=o.status==='ยกเลิก';
-  const done=canc?0:o.picked?4:paid?3:wait?2:1,post=o.delivery==='จัดส่งไปรษณีย์';
-  const tl=canc?'':`<div class="tl">${['สั่งจอง','แจ้งโอน','ยืนยันชำระ',post?'จัดส่งแล้ว':'รับเสื้อแล้ว'].map((s,i)=>`<div class="${i<done?'ok':''} ${i===done?'now':''}"><span>${i<done?'✔':i+1}</span>${s}</div>`).join('')}</div>`;
-  const qr=INIT.qr||QR_IMG;
-  const pay=unpaid?`<div class="p-3 rounded-4 mt-2" style="background:var(--yellow-s)"><div class="d-flex gap-3 align-items-center flex-wrap"><img src="${qr}" style="width:150px;border-radius:10px;background:#fff" alt="QR พร้อมเพย์"><div class="small">ยอดที่ต้องโอน<div style="font-size:1.6rem;font-weight:600;color:var(--green)">${num(o.total)} บาท</div>ชื่อบัญชี: ${esc(INIT.account)}<br>${esc(INIT.bank)}<br><a href="${qr}" download="promptpay-qr">⬇ บันทึกรูป QR</a></div></div></div>`:'';
-  const rej=unpaid&&o.rejectNote?`<div class="alert alert-danger py-2 mt-2 mb-0 small">↩ สลิปถูกส่งกลับ: <b>${esc(o.rejectNote)}</b><br>กรุณาแนบสลิปใหม่ด้านล่าง</div>`:'';
-  const sent=wait?`<div class="alert alert-info py-2 mt-2 mb-0 small">✔ แจ้งโอนแล้ว ${esc(o.slipDate)}${o.paidAmt?' · '+num(o.paidAmt)+' บาท':''}${o.paidAt?' · เวลาโอน '+tm(o.paidAt):''}${o.payer?' · ผู้โอน '+esc(o.payer):''}<br>รอผู้ดูแลตรวจสอบ (ถ้าส่งผิด แนบสลิปใหม่ได้)</div>`:'';
-  const sf=(unpaid||wait)?`<hr><div class="small fw-medium mb-2">${unpaid?'แจ้งโอน / แนบสลิป':'แนบสลิปใหม่ (ถ้าต้องการเปลี่ยน)'}</div>
-    <div class="row g-2"><div class="col-md-4"><input id="s_payer" class="form-control form-control-sm" placeholder="ชื่อผู้โอน"></div>
-    <div class="col-6 col-md-3"><input id="s_amt" type="number" inputmode="decimal" step="0.01" class="form-control form-control-sm" value="${o.total}" placeholder="ยอดที่โอน" aria-label="ยอดที่โอน"></div>
-    <div class="col-6 col-md-5"><input id="s_at" type="datetime-local" class="form-control form-control-sm" value="${dtl(new Date())}" aria-label="วัน-เวลาที่โอน"></div>
-    <div class="col-12"><input id="s_file" type="file" accept="image/*,application/pdf" class="form-control form-control-sm"></div>
-    <div class="col-12"><img id="s_pv" class="d-none" style="max-height:200px;border-radius:10px;border:1px solid var(--line)" alt="ตัวอย่างสลิป"></div>
-    <div class="col-12"><button class="btn-o btn-sm" id="b_slip">ส่งสลิป</button></div></div>`:'';
-  const sh=navigator.canShare?k=>`<button class="btn btn-sm btn-outline-secondary mt-2 ms-1" data-sh="${k}">↗ แชร์</button>`:()=>'';
-  const docs=canc?'':`<div class="mt-2"><button class="btn btn-sm btn-outline-primary" id="b_dl">📄 ใบสั่งซื้อ</button>${sh('o')}
-    ${paid?`<button class="btn btn-sm btn-success ms-1" id="b_rc">🧾 ใบเสร็จ</button>${sh('r')}`:''}</div>`;
-  const mailForm=hide=>`<div class="input-group input-group-sm mt-2 ${hide?'d-none':''}" id="mbox"><input id="s_mail" type="email" class="form-control" placeholder="อีเมลสำหรับรับใบสั่งซื้อ/ใบเสร็จ" aria-label="อีเมล"><button class="btn btn-outline-primary" id="b_mail">บันทึกอีเมล</button></div>`;
-  const mail=canc?'':o.emailMasked?`<div class="small mt-2 text-muted">📧 ${esc(o.emailMasked)} · <a href="#" data-em="order">ส่งใบสั่งซื้อซ้ำ</a>${paid?' · <a href="#" data-em="receipt">ส่งใบเสร็จซ้ำ</a>':''} · <a href="#" id="a_chmail">เปลี่ยนอีเมล</a></div>${mailForm(true)}`:mailForm(false);
-  $('t_res').innerHTML=`<div class="border rounded-4 p-3 bg-white"><div class="d-flex justify-content-between"><b>${esc(o.id)}</b><span class="pill ${cls[o.status]||''}">${esc(o.status)}</span></div>
-   <div class="small text-muted">${esc(o.name)} · รุ่น ${esc(o.year)} · ${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div>
-   <div class="mt-1">${esc(o.items)}</div><div><b>${num(o.total)} บาท</b> · ${esc(o.delivery)}</div>${tl}${rej}${sent}${pay}
-   ${paid?`<div class="small mt-2" style="color:var(--green)">✔ ชำระเงินแล้ว${o.receiptNo?' · ใบเสร็จเลขที่ <b>'+esc(o.receiptNo)+'</b>':''} — บันทึกใบเสร็จไว้แสดงเมื่อรับเสื้อ</div>`:''}
-   ${o.picked?`<div class="mt-2 p-2 rounded-3" style="background:var(--green-s);color:var(--green)">📦 <b>${post?'จัดส่งแล้ว':'รับเสื้อแล้ว'}</b> เมื่อ ${esc(o.pickedAt)}${o.receiver?' · ผู้รับ '+esc(o.receiver):''}</div>`:''}
-   ${docs}${mail}${sf}</div>`;
-  const R=$('t_res');
-  if($('b_dl'))$('b_dl').onclick=()=>dl(CUR.id,CUR.phone);
-  if($('b_rc'))$('b_rc').onclick=()=>rc(CUR.id,CUR.phone);
-  R.querySelectorAll('[data-sh]').forEach(b=>b.onclick=()=>b.dataset.sh==='r'?rc(CUR.id,CUR.phone,true):dl(CUR.id,CUR.phone,true));
-  R.querySelectorAll('[data-em]').forEach(a=>a.onclick=e=>{e.preventDefault();mailDoc(a.dataset.em)});
-  if($('a_chmail'))$('a_chmail').onclick=e=>{e.preventDefault();$('mbox').classList.toggle('d-none')};
-  if($('b_mail'))$('b_mail').onclick=()=>api('updateEmail',CUR.id,CUR.phone,$('s_mail').value).then(()=>{ok('บันทึกอีเมลแล้ว');track()}).catch(err);
-  if($('b_slip'))$('b_slip').onclick=slip;
-  if($('s_file'))$('s_file').onchange=()=>{const f=$('s_file').files[0],pv=$('s_pv');
-    if(f&&/^image\//.test(f.type)){pv.src=URL.createObjectURL(f);pv.classList.remove('d-none')}else pv.classList.add('d-none')};
 }
 $('btnTrack').onclick=track;
-$('t_phone').onkeydown=$('t_id').onkeydown=e=>{if(e.key==='Enter')track()};
-
-/* ย่อรูปสลิปจากมือถืออัตโนมัติ (ภาพถ่ายมักใหญ่เกิน 5 MB) */
-function shrink(f){return new Promise(res=>{
-  if(!/^image\/(jpeg|png|webp)$/.test(f.type)||f.size<1.5*1048576)return res({blob:f,type:f.type});
-  const im=new Image();
-  im.onload=()=>{const k=Math.min(1,1600/Math.max(im.width,im.height)),c=document.createElement('canvas');
-    c.width=Math.round(im.width*k);c.height=Math.round(im.height*k);c.getContext('2d').drawImage(im,0,0,c.width,c.height);
-    c.toBlob(b=>res(b?{blob:b,type:'image/jpeg'}:{blob:f,type:f.type}),'image/jpeg',.82)};
-  im.onerror=()=>res({blob:f,type:f.type});
-  im.src=URL.createObjectURL(f)})}
 function slip(){
-  const f=$('s_file').files[0],amt=Number($('s_amt').value),at=$('s_at').value;
-  if(!f)return err('กรุณาเลือกไฟล์สลิป');
-  if(!(amt>0))return err('กรุณากรอกยอดที่โอน');
-  if(!at)return err('กรุณาระบุวัน-เวลาที่โอน (ดูจากสลิป)');
-  const go=()=>{busy('กำลังส่งสลิป...');
-    shrink(f).then(s=>{
-      if(s.blob.size>5*1048576)return err('ไฟล์ใหญ่เกิน 5 MB');
-      const r=new FileReader();
-      r.onload=()=>api('attachSlip',{id:CUR.id,phone:CUR.phone,payer:$('s_payer').value,amount:amt,paidAt:at,filename:f.name,mimeType:s.type,base64:r.result.split(',')[1]})
-        .then(()=>{Swal.fire({icon:'success',title:'ส่งสลิปแล้ว',text:'รอผู้ดูแลตรวจสอบยอดเงิน',confirmButtonColor:'#0B2E7A'});track()}).catch(err);
-      r.readAsDataURL(s.blob)})};
-  if(amt!==CUR.total)Swal.fire({icon:'warning',title:'ยอดไม่ตรงกับคำสั่งซื้อ',text:`ยอดสั่งซื้อ ${num(CUR.total)} บาท แต่กรอก ${num(amt)} บาท ต้องการส่งต่อหรือไม่`,showCancelButton:true,confirmButtonText:'ส่งต่อ',cancelButtonText:'แก้ไข',confirmButtonColor:'#16833F'}).then(r=>r.isConfirmed&&go());
-  else go();
+  const f=$('s_file').files[0];if(!f)return err('กรุณาเลือกไฟล์สลิป');
+  if(f.size>5*1048576)return err('ไฟล์ใหญ่เกิน 5 MB');
+  busy('กำลังส่งสลิป...');
+  const r=new FileReader();r.onload=()=>api('attachSlip',{id:CUR.id,phone:CUR.phone,payer:$('s_payer').value,filename:f.name,mimeType:f.type||mimeOf(f.name),base64:r.result.split(',')[1]})
+    .then(()=>{Swal.fire({icon:'success',title:'ส่งสลิปแล้ว',text:'รอครูตรวจสอบยอดเงิน',confirmButtonColor:'#0B2E7A'});track()}).catch(err);
+  r.readAsDataURL(f);
 }
 (function init(){
-  const b=store.get('sh_buyer');if(b){$('f_name').value=b.name||'';$('f_phone').value=b.phone||'';$('f_year').value=b.year||'';$('f_line').value=b.line||'';$('f_email').value=b.email||''}
+  const b=store.get('sh_buyer');if(b){$('f_name').value=b.name||'';$('f_phone').value=b.phone||'';$('f_year').value=b.year||'';$('f_line').value=b.line||''}
   const l=store.get('sh_last');if(l){$('t_id').value=l.id;$('t_phone').value=l.phone}
   load();
 })();
@@ -444,15 +452,14 @@ let D=null;
 const col={'รอชำระเงิน':'warning','รอตรวจสอบการชำระเงิน':'info','ชำระเงินแล้ว':'success','ยกเลิก':'danger'};
 function login(){api('adminLogin',$('pass').value).then(t=>{T=t;sessionStorage.setItem('tk',t);$('pass').value='';start()}).catch(err)}
 function logout(){sessionStorage.removeItem('tk');T=null;D=null;clearInterval(timer);$('a_dash').classList.add('d-none');$('a_login').classList.remove('d-none')}
-function start(){$('a_login').classList.add('d-none');$('a_dash').classList.remove('d-none');refresh();clearInterval(timer);timer=setInterval(()=>refresh(true),20000)}
+function start(){$('a_login').classList.add('d-none');$('a_dash').classList.remove('d-none');refresh();clearInterval(timer);timer=setInterval(refresh,20000)}
 $('btnLogin').onclick=login;$('pass').onkeydown=e=>{if(e.key==='Enter')login()};$('btnLogout').onclick=logout;
 document.querySelectorAll('a[data-s]').forEach(a=>{a.onclick=e=>{e.preventDefault();
   document.querySelectorAll('a[data-s]').forEach(x=>x.classList.toggle('active',x===a));
-  document.querySelectorAll('.asec').forEach(s=>s.classList.toggle('on',s.id==='a_'+a.dataset.s))}});
+  document.querySelectorAll('.asec').forEach(s=>s.classList.toggle('on',s.id==='a_'+a.dataset.s));
+  const nv=$('nv');if(nv.classList.contains('show')&&window.bootstrap)bootstrap.Collapse.getOrCreateInstance(nv).hide()}});
 
-function refresh(silent){
-  // รีเฟรชอัตโนมัติ: ข้ามถ้าแอดมินกำลังเลือกสถานะ/พิมพ์ในตาราง กันดรอปดาวน์ถูกปิด
-  if(silent===true&&document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#tb'))return;
+function refresh(){
   api('adminDashboard',T).then(d=>{
     const first=!D;D=d;if(first)$('op').checked=d.master;
     $('live').textContent='● อัปเดต '+d.report.at;
@@ -464,26 +471,21 @@ function refresh(silent){
     const rv=$('fr').value;$('fr').innerHTML='<option value="">ทุกรอบ</option>'+[...new Set(d.orders.map(o=>o.roundName).concat(d.rounds.map(r=>r.name)))].filter(Boolean).map(n=>`<option>${esc(n)}</option>`).join('');$('fr').value=rv;
     $('t_rnd').innerHTML=d.rounds.length?'<thead><tr><th>รอบ</th><th>ช่วงเวลา</th><th>สถานะ</th><th class="text-end">จอง</th><th class="text-end">เหลือ</th></tr></thead><tbody>'+d.rounds.map(r=>{const st=RST[r.state]||RST.off;return `<tr><td><b>${esc(r.name)}</b></td><td class="small">${tm(r.start)} – ${tm(r.end)}</td><td><span class="pill ${st[1]}">${st[0]}</span></td><td class="text-end">${r.booked}${r.limit?' / '+r.limit:''}</td><td class="text-end">${r.remaining==null?'∞':r.remaining}</td></tr>`}).join('')+'</tbody>':'<tbody><tr><td class="text-muted">ยังไม่ได้กำหนดรอบ (รับสั่งตามสวิตช์หลัก)</td></tr></tbody>';
     if(first)$('fs').innerHTML='<option value="">ทุกสถานะ</option>'+d.statuses.map(s=>`<option>${s}</option>`).join('');
-    drawOrders();drawReport();
+    const ae=document.activeElement;if(!(ae&&ae.tagName==='SELECT'&&ae.closest('#tb')))drawOrders();
+    drawReport();
     $('qrst').textContent=d.qr?'มีรูป QR ที่อัปโหลดไว้ในระบบ (อัปโหลดใหม่เพื่อแทนที่)':'ยังไม่ได้อัปโหลด – ระบบใช้ไฟล์ qr.jpg ใน repo';
-    if(first||!document.activeElement.closest('#sz'))drawSz();
-    if(first||!document.activeElement.closest('#rd'))drawRd();
-  }).catch(e=>{if(silent!==true)err(e)});
+    if(first||!(document.activeElement&&document.activeElement.closest('#sz')))drawSz();
+    if(first||!(document.activeElement&&document.activeElement.closest('#rd')))drawRd();
+  }).catch(err);
 }
-const plabel=o=>o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว';
 function drawOrders(){
   const q=$('q').value.toLowerCase(),s=$('fs').value,rr=$('fr').value,pp=$('fp').value;
-  $('tb').innerHTML=D.orders.filter(o=>(!s||o.status===s)&&(!rr||o.roundName===rr)&&(!pp||(pp==='picked'?o.picked:(!o.picked&&o.status==='ชำระเงินแล้ว')))&&(!q||[o.id,o.name,o.phone,o.year,o.receiptNo,o.email].join(' ').toLowerCase().includes(q))).map(o=>`
-   <tr><td><b>${esc(o.id)}</b><div class="text-muted">${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div></td><td>${esc(o.name)}<div class="text-muted">รุ่น ${esc(o.year)} · ${esc(o.phone)}${o.email?'<br>'+esc(o.email):''}</div></td>
+  $('tb').innerHTML=D.orders.filter(o=>(!s||o.status===s)&&(!rr||o.roundName===rr)&&(!pp||(pp==='picked'?o.picked:(!o.picked&&o.status==='ชำระเงินแล้ว')))&&(!q||[o.id,o.name,o.phone,o.year].join(' ').toLowerCase().includes(q))).map(o=>`
+   <tr><td><b>${esc(o.id)}</b><div class="text-muted">${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div></td><td>${esc(o.name)}<div class="text-muted">รุ่น ${esc(o.year)} · ${esc(o.phone)}</div></td>
    <td>${esc(o.items)}<div class="text-muted">${esc(o.delivery)}</div></td><td class="text-end">${num(o.total)}</td>
    <td><select class="form-select form-select-sm border-${col[o.status]}" data-st="${esc(o.id)}">${D.statuses.map(x=>`<option ${x===o.status?'selected':''}>${x}</option>`).join('')}</select>
      ${o.picked?`<div class="mt-1"><span class="pill bg-success-subtle text-success-emphasis">📦 ${plabel(o)}</span><div class="text-muted">${esc(o.pickedAt)}<br>ผู้รับ: ${esc(o.receiver)}${o.pickNote?' · '+esc(o.pickNote):''}</div><a href="#" class="small text-danger" data-unpk="${esc(o.id)}">ยกเลิกการบันทึก</a></div>`:o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-outline-success py-0 mt-1" data-pk="${esc(o.id)}">📦 ${o.delivery==='จัดส่งไปรษณีย์'?'บันทึกจัดส่ง':'บันทึกรับเสื้อ'}</button>`:''}</td>
-   <td>${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">PDF</a>`:''}
-     ${o.slip&&o.paidAmt?`<div class="small">💳 ${num(o.paidAmt)} บาท${o.paidAt?' · '+tm(o.paidAt):''}${o.payer?'<br>ผู้โอน: '+esc(o.payer):''}</div>`:''}
-     ${o.amtDiff?`<div class="small text-danger">⚠ ยอดโอนไม่ตรงยอดสั่ง (${num(o.total)})</div>`:''}
-     ${o.dup&&o.dup.length?`<div class="small text-danger">⚠ สลิปซ้ำกับ ${o.dup.map(esc).join(', ')}</div>`:''}
-     ${o.status==='รอชำระเงิน'&&o.rejectNote?`<div class="small text-muted">↩ ส่งกลับ: ${esc(o.rejectNote)}</div>`:''}
-     ${o.status==='รอตรวจสอบการชำระเงิน'?`<div class="mt-1"><button class="btn btn-sm btn-outline-warning py-0" data-rej="${esc(o.id)}">↩ ส่งสลิปกลับ</button></div>`:''}
+   <td>${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">ใบสั่งซื้อ</a>`:''}
      ${o.status==='ชำระเงินแล้ว'?`<div class="mt-1"><button class="btn btn-sm btn-success py-0" data-rc="${esc(o.id)}">🧾 ${esc(o.receiptNo||'ใบเสร็จ')}</button>${o.receiptDate?`<div class="text-muted">${esc(o.receiptDate)}</div>`:''}</div>`:''}</td>
    <td><button class="btn btn-sm btn-outline-danger" data-del="${esc(o.id)}">ลบ</button></td></tr>`).join('')||'<tr><td colspan="7" class="text-center text-muted">ไม่พบข้อมูล</td></tr>';
 }
@@ -492,26 +494,31 @@ $('tb').onchange=e=>{if(e.target.dataset.st)setSt(e.target.dataset.st,e.target.v
 $('tb').onclick=e=>{const b=e.target.closest('[data-del]');if(b)return del(b.dataset.del);
   const k=e.target.closest('[data-pk]');if(k)return pickDlg(k.dataset.pk);
   const u=e.target.closest('[data-unpk]');if(u){e.preventDefault();return unpick(u.dataset.unpk)}
-  const j=e.target.closest('[data-rej]');if(j)return rejDlg(j.dataset.rej);
-  const r=e.target.closest('[data-rc]');if(r){busy('กำลังสร้างใบเสร็จ...');api('adminGetReceipt',T,r.dataset.rc).then(x=>{Swal.close();saveFile(x);refresh()}).catch(err)}};
-function rejDlg(id){Swal.fire({title:'ส่งสลิปกลับ '+id,input:'text',inputPlaceholder:'เหตุผล เช่น ยอดไม่ตรง / สลิปไม่ชัด',showCancelButton:true,confirmButtonText:'ส่งกลับ',cancelButtonText:'ยกเลิก',confirmButtonColor:'#d33',inputValidator:v=>!v.trim()&&'กรุณาระบุเหตุผล'})
-  .then(r=>{if(r.isConfirmed)api('adminRejectSlip',T,id,r.value).then(()=>{ok('ส่งกลับแล้ว ลูกค้าจะเห็นเหตุผลในหน้าติดตาม');refresh()}).catch(e=>{err(e);refresh()})})}
+  const r=e.target.closest('[data-rc]');if(r){const id=r.dataset.rc,o0=D.orders.find(x=>x.id===id);busy('กำลังสร้างรูปใบเสร็จ...');
+    adminReceipt(id,!(o0&&o0.receiptUrl)).then(({d,img})=>{Swal.close();showDoc(img,d.receiptNo+'.jpg','ใบเสร็จรับเงิน '+d.receiptNo);refresh()}).catch(err)}};
+const plabel=o=>o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว';
 function pickDlg(id){const o=D.orders.find(x=>x.id===id);if(!o)return;const post=o.delivery==='จัดส่งไปรษณีย์',lb=post?'จัดส่ง':'รับเสื้อ';
   Swal.fire({title:'บันทึก'+lb+' '+id,showCancelButton:true,confirmButtonText:'บันทึก',cancelButtonText:'ยกเลิก',confirmButtonColor:'#16833F',
     html:`<div class="text-start small mb-2">${esc(o.name)} · <b>${esc(o.items)}</b><br>ตรวจไซส์/จำนวนให้ตรงก่อนส่งมอบ · ใบเสร็จ ${esc(o.receiptNo||'(จะออกให้อัตโนมัติ)')}</div>
-    <input id="pk_n" class="swal2-input" placeholder="ชื่อผู้${post?'รับพัสดุ':'รับเสื้อ'}" value="${esc(o.name)}"><input id="pk_t" type="datetime-local" class="swal2-input" value="${dtl(new Date())}"><input id="pk_m" class="swal2-input" placeholder="หมายเหตุ (เช่น เลขพัสดุ / ผู้รับแทน)">`,
+    <div class="text-start small fw-semibold mt-2">ชื่อผู้${post?'รับพัสดุ':'รับเสื้อ'}</div><input id="pk_n" class="swal2-input mt-1" placeholder="ชื่อผู้${post?'รับพัสดุ':'รับเสื้อ'}" value="${esc(o.name)}">
+    <div class="text-start small fw-semibold mt-2">วัน-เวลาที่${post?'จัดส่ง':'รับ'}</div><input id="pk_t" type="datetime-local" class="swal2-input mt-1" value="${dtl(new Date())}"><div id="pk_th" class="text-start small text-muted">${tm(dtl(new Date()))}</div>
+    <div class="text-start small fw-semibold mt-2">หมายเหตุ</div><input id="pk_m" class="swal2-input mt-1" placeholder="เช่น เลขพัสดุ / ผู้รับแทน">`,
+    didOpen:()=>{$('pk_t').oninput=e=>{$('pk_th').textContent=e.target.value?tm(e.target.value):''}},
     preConfirm:()=>({receiver:$('pk_n').value.trim(),at:$('pk_t').value,note:$('pk_m').value})}).then(r=>{if(!r.isConfirmed)return;
-    api('adminSetPickup',T,id,true,r.value).then(()=>{ok('บันทึก'+lb+'แล้ว');refresh()}).catch(e=>{err(e);refresh()})})}
+    api('adminSetPickup',T,id,true,r.value).then(()=>{ok('บันทึก'+lb+'แล้ว');refresh();adminReceipt(id,true).catch(()=>Swal.fire({toast:true,position:'top',icon:'warning',title:'บันทึกแล้ว แต่ยังไม่ได้อัปเดตรูปใบเสร็จ — กดปุ่ม 🧾 เพื่อลองใหม่',timer:4000,showConfirmButton:false}))}).catch(err)})}
 function unpick(id){Swal.fire({title:'ยกเลิกการบันทึก '+id+'?',text:'ใช้เมื่อบันทึกผิดพลาดเท่านั้น (ระบบเก็บประวัติไว้ในชีต)',icon:'warning',showCancelButton:true,confirmButtonColor:'#d33',confirmButtonText:'ยกเลิกการบันทึก',cancelButtonText:'ปิด'}).then(r=>{
-  if(r.isConfirmed)api('adminSetPickup',T,id,false).then(()=>{ok('ยกเลิกแล้ว');refresh()}).catch(e=>{err(e);refresh()})})}
+  if(r.isConfirmed)api('adminSetPickup',T,id,false).then(()=>{ok('ยกเลิกแล้ว');refresh();adminReceipt(id,true).catch(()=>{})}).catch(err)})}
 function setSt(id,st){
   Swal.fire({title:'เปลี่ยนสถานะ '+id,text:'เป็น "'+st+'" ?',icon:'question',showCancelButton:true,confirmButtonText:'ยืนยัน'}).then(r=>{
-    if(!r.isConfirmed)return refresh();
-    api('adminSetStatus',T,id,st).then(r=>{
-      if(r&&r.receiptError)Swal.fire({icon:'warning',title:'เปลี่ยนสถานะแล้ว แต่ออกใบเสร็จไม่สำเร็จ',text:r.receiptError+' (กดปุ่มใบเสร็จในรายการเพื่อลองใหม่)'});
-      else if(r&&r.receipt)Swal.fire({icon:'success',title:'ยืนยันรับเงิน + ออกใบเสร็จแล้ว',html:`เลขที่ <b>${esc(r.receipt.no)}</b><br><span class="small text-muted">บันทึกใน Drive แล้ว · ส่งอีเมลให้ลูกค้าถ้ามีอีเมล · กดปุ่ม 🧾 ในรายการเพื่อดาวน์โหลด</span>`,timer:3000,showConfirmButton:false});
-      else ok('อัปเดตแล้ว');
-      refresh()}).catch(e=>{err(e);refresh()})});
+    if(!r.isConfirmed){document.activeElement&&document.activeElement.blur();return refresh()}
+    api('adminSetStatus',T,id,st).then(async r=>{
+      if(!(r&&r.receipt)){ok('อัปเดตแล้ว');return refresh()}
+      busy('กำลังสร้างรูปใบเสร็จ (JPG)...');
+      try{const o0=D.orders.find(x=>x.id===id),{d,img}=await adminReceipt(id,!(o0&&o0.receiptUrl));refresh();
+        const x=await Swal.fire({icon:'success',title:'ยืนยันรับเงิน + ออกใบเสร็จแล้ว',html:`เลขที่ <b>${esc(d.receiptNo)}</b><br><span class="small text-muted">บันทึกรูป JPG ลง Drive แล้ว</span>`,showCancelButton:true,confirmButtonText:'🖼 ดู/ดาวน์โหลดใบเสร็จ',cancelButtonText:'ปิด',confirmButtonColor:'#16833F'});
+        if(x.isConfirmed)showDoc(img,d.receiptNo+'.jpg','ใบเสร็จรับเงิน '+d.receiptNo)}
+      catch(e){refresh();Swal.fire({icon:'warning',title:'เปลี่ยนสถานะแล้ว แต่สร้างรูปใบเสร็จไม่สำเร็จ',text:(e.message||e)+' (กดปุ่ม 🧾 ในรายการเพื่อลองใหม่)'})}
+    }).catch(err)});
 }
 function del(id){Swal.fire({title:'ลบออเดอร์ '+id+'?',text:'ลบถาวร (แนะนำให้ใช้สถานะ "ยกเลิก" แทน)',icon:'warning',showCancelButton:true,confirmButtonColor:'#d33',confirmButtonText:'ลบ'}).then(r=>{
   if(r.isConfirmed)api('adminDeleteOrder',T,id).then(()=>{ok('ลบแล้ว');refresh()}).catch(err)})}
@@ -520,6 +527,7 @@ function drawSz(){$('sz').innerHTML=D.sizes.map(s=>szRow(s)).join('')}
 $('btnAddSz').onclick=()=>$('sz').insertAdjacentHTML('beforeend',szRow());
 $('btnSaveSz').onclick=()=>{const rows=[...$('sz').rows].map(r=>{const i=r.querySelectorAll('input');return{size:i[0].value,price:i[1].value,quota:i[2].value,chest:i[3].value}});
   api('adminSaveSizes',T,rows).then(()=>{ok('บันทึกแล้ว');refresh()}).catch(err)};
+const dtl=d=>{const z=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`};
 function rdRow(r){if(!r){const a=new Date();a.setMinutes(0,0,0);const b=new Date(a.getTime()+7*864e5);b.setHours(23,59,0,0);r={id:'',name:'รอบที่ '+($('rd').rows.length+1),start:dtl(a),end:dtl(b),limit:0,active:true}}
   const st=RST[r.state];return `<tr data-id="${esc(r.id)}"><td><input class="form-control form-control-sm" style="min-width:130px" value="${esc(r.name)}"></td>
   <td><input type="datetime-local" class="form-control form-control-sm" value="${esc(String(r.start).replace(' ','T'))}"><div class="small text-muted th">${tm(r.start)}</div></td>
@@ -546,8 +554,8 @@ function drawReport(){
 }
 $('btnPdf').onclick=()=>{busy('กำลังสร้าง PDF...');api('adminReportPdf',T).then(r=>{Swal.close();saveFile(r)}).catch(err)};
 $('btnCsv').onclick=()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
-  const h=['เลขที่','วันที่','ชื่อ','รุ่น','เบอร์','รายการ','จำนวน','ยอด','รับสินค้า','สถานะ','รอบ','เลขที่ใบเสร็จ','วันที่รับเสื้อ','ผู้รับเสื้อ','ยอดโอน','เวลาโอน','อีเมล'];
-  const t=[h.map(q).join(',')].concat(D.orders.map(o=>[o.id,o.date,o.name,o.year,'\t'+o.phone,o.items,o.qty,o.total,o.delivery,o.status,o.roundName,o.receiptNo,o.pickedAt,o.receiver,o.paidAmt||'',o.paidAt,o.email].map(q).join(','))).join('\r\n');
+  const h=['เลขที่','วันที่','ชื่อ','รุ่น','เบอร์','รายการ','จำนวน','ยอด','รับสินค้า','สถานะ','รอบ','เลขที่ใบเสร็จ','วันที่รับเสื้อ','ผู้รับเสื้อ'];
+  const t=[h.map(q).join(',')].concat(D.orders.map(o=>[o.id,o.date,o.name,o.year,'\t'+o.phone,o.items,o.qty,o.total,o.delivery,o.status,o.roundName,o.receiptNo,o.pickedAt,o.receiver].map(q).join(','))).join('\r\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/csv'}));a.download='orders.csv';a.click()};
 $('btnQr').onclick=()=>{const f=$('qf').files[0];if(!f)return err('กรุณาเลือกไฟล์รูป QR');const r=new FileReader();
   r.onload=()=>api('adminUploadQr',T,{mimeType:f.type,base64:r.result.split(',')[1]}).then(()=>{ok('อัปโหลด QR แล้ว');refresh()}).catch(err);r.readAsDataURL(f)};
