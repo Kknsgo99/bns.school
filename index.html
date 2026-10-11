@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="th"><head><meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0B2E7A">
+<meta name="theme-color" content="#0B2E7A"><meta name="color-scheme" content="light"><meta name="format-detection" content="telephone=no">
+<meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="เสื้อที่ระลึก">
+<script>/* ตรวจเบราว์เซอร์รุ่นเก่ามาก (ไม่รองรับ async/await ฯลฯ) แล้วแจ้งให้อัปเดต แทนที่จะเห็นหน้าว่าง */
+(function(){try{new Function('var f=async function(){await 0;for(const x of [1]){}};var g=(...r)=>r;return `${1}`')}catch(e){window.__old=1;
+document.addEventListener('DOMContentLoaded',function(){var d=document.createElement('div');d.style.cssText='padding:24px;margin:20px;border:2px solid #FFC21A;background:#FFF5D1;border-radius:12px;font:18px/1.6 sans-serif;color:#14213D';
+d.innerHTML='<b>เบราว์เซอร์รุ่นเก่าเกินไป</b><br>กรุณาอัปเดต Chrome / Safari / Edge / Firefox เป็นรุ่นล่าสุด หรือเปิดลิงก์นี้ด้วยเบราว์เซอร์อื่น';document.body.insertBefore(d,document.body.firstChild)})}})();</script>
 <meta name="description" content="สั่งจองเสื้อโปโลที่ระลึก งานผ้าป่าศิษย์เก่า 2569 โรงเรียนบ้านนาสวรรค์">
 <meta property="og:title" content="สั่งจองเสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569"><meta property="og:description" content="เลือกไซส์ โอนเงิน แนบสลิป รับใบเสร็จเป็นรูปภาพ">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ccircle cx=%2750%27 cy=%2750%27 r=%2748%27 fill=%27%23FFC21A%27/%3E%3Ctext x=%2750%27 y=%2764%27 font-size=%2742%27 text-anchor=%27middle%27 fill=%27%230B2E7A%27 font-family=%27sans-serif%27 font-weight=%27bold%27%3E69%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="manifest" href="manifest.webmanifest">
 <title>สั่งจองเสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -97,8 +102,39 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
 #track{background:#f7f9fd;border-color:#e8edf7}.bar{padding-top:12px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}.bar .container{max-width:1000px!important}.bar .tot{font-size:1.75rem}
 @media(max-width:767px){.hero{padding:42px 0 48px}.hero-grid{grid-template-columns:1fr;gap:26px}.hero-copy{max-width:none}.hero-art{max-width:520px;margin:0 auto;transform:none}.hero-art .design{max-height:330px}.hero h1{font-size:clamp(2rem,9vw,3rem)}.steps{padding:0 12px;margin-top:-20px}.st{padding:12px 10px}.wrap{padding-top:26px}}
 @media(max-width:575px){.steps{gap:6px;padding:0 8px}.st{flex-direction:column;text-align:center;padding:10px 6px;gap:6px}.hero:before{width:180px;height:180px;right:-60px;top:-60px}.cardx{padding:16px}}
+/* ตัวเลือกวิธีรับสินค้า + กล่องที่อยู่จัดส่ง */
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;border:2px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;background:#fff;transition:.15s;margin:0}
+.opt:hover{border-color:#a9bce9}.opt.on{border-color:var(--green);background:var(--green-s);box-shadow:0 4px 14px rgba(22,131,63,.14)}
+.opt input{margin-top:5px;width:20px;height:20px;accent-color:var(--green);flex:none}.opt b{display:block;color:var(--navy);line-height:1.3}.opt small{color:var(--mut);display:block;line-height:1.35}
+.ship-box{border:2px dashed #a9bce9;background:#f7f9fd;border-radius:18px;padding:18px}
+.ship-tip{background:var(--yellow-s);border:1px solid #f1dc93;color:#5c4300;border-radius:12px;padding:10px 14px;font-size:.9rem;margin-bottom:14px}
+.hint{font-size:.78rem;color:var(--mut);margin-top:3px;line-height:1.35}
+@media(max-width:575px){.opts{grid-template-columns:1fr}}
+/* ===== รองรับทุกอุปกรณ์/เบราว์เซอร์/แอป ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;color-scheme:light}
+button,a,label.opt,select,input[type=radio],input[type=checkbox]{touch-action:manipulation}
+.top{-webkit-backdrop-filter:blur(8px)}
+.top .container{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+.bar{padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right))}
+.kb .bar{display:none}
+#inapp{background:var(--yellow-s);border-bottom:1px solid #f1dc93;color:#5c4300;padding:10px 14px;font-size:.9rem;display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center;text-align:center}
+#inapp .btn-sub{min-height:34px;padding:0 12px;font-size:.85rem;border-width:1.5px}#inapp .x{border:0;background:transparent;font-size:1.2rem;line-height:1;color:#5c4300}
+@media(max-width:767px){
+ .form-control,.form-select,.form-control-sm,.form-select-sm{font-size:16px!important}
+ .step button{width:44px;height:44px}.btn-sm{min-height:38px}
+ .tbl-stack thead{display:none}
+ .tbl-stack,.tbl-stack tbody,.tbl-stack tr,.tbl-stack td{display:block;width:100%}
+ .tbl-stack tr{border:1px solid var(--line);border-radius:14px;padding:8px 12px;margin-bottom:12px;background:#fff}
+ .tbl-stack td{border:0!important;position:relative;padding:6px 0 6px 92px!important;min-height:30px;text-align:left!important}
+ .tbl-stack td:before{content:attr(data-l);position:absolute;left:0;top:7px;width:86px;color:var(--mut);font-size:.8rem}
+ .tbl-stack td select{max-width:100%}
+ .anav .navbar-collapse{padding-top:8px}
+}
 @media print{.anav,.noprint,#stats{display:none!important}.asec{display:none!important}#a_report{display:block!important}}
 </style></head><body>
+<div id="inapp" class="d-none" role="alert"><span id="inappTxt"></span><button type="button" class="btn-sub" id="inappBtn"></button><button type="button" class="x" id="inappX" aria-label="ปิดข้อความ">✕</button></div>
+<noscript><div style="padding:20px;text-align:center;font-family:sans-serif">กรุณาเปิดใช้งาน JavaScript เพื่อใช้งานระบบสั่งจอง</div></noscript>
 
 <!-- ============ หน้าบ้าน ============ -->
 <div id="front">
@@ -140,23 +176,37 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
     <div class="col-6 col-md-3"><label class="form-label">รุ่น (พ.ศ.)</label><input id="f_year" class="form-control" inputmode="numeric" placeholder="เช่น 2530"></div>
     <div class="col-6 col-md-3"><label class="form-label">เบอร์โทร *</label><input id="f_phone" class="form-control" inputmode="tel" autocomplete="tel"></div>
     <div class="col-md-6"><label class="form-label">Line / Facebook</label><input id="f_line" class="form-control"></div>
-    <div class="col-md-6"><label class="form-label">วิธีรับสินค้า</label>
-     <select id="f_del" class="form-select"><option>รับที่โรงเรียนตามรอบนัด</option><option>จัดส่งไปรษณีย์</option></select></div>
-    <div class="col-12 d-none" id="addrWrap"><label class="form-label">ที่อยู่จัดส่ง *</label><textarea id="f_addr" class="form-control" rows="2"></textarea></div>
+    <div class="col-12"><label class="form-label">วิธีรับสินค้า *</label>
+     <div class="opts">
+      <label class="opt on"><input type="radio" name="f_del" value="รับที่โรงเรียนตามรอบนัด" checked><span><b>รับที่โรงเรียน</b><small>รับเสื้อตามรอบนัดที่ครูแจ้ง</small></span></label>
+      <label class="opt"><input type="radio" name="f_del" value="จัดส่งไปรษณีย์"><span><b>จัดส่งไปรษณีย์</b><small>กรอกที่อยู่สำหรับจัดส่งด้านล่าง</small></span></label>
+     </div></div>
+    <div class="col-12 d-none" id="addrWrap"><div class="ship-box">
+     <div class="ship-tip">📮 <b>ข้อมูลจัดส่งไปรษณีย์</b> — กรอกชื่อและที่อยู่ของ <b>ผู้รับพัสดุ</b> ให้ตรงกับที่ต้องการเขียนหน้าซอง ข้อมูลนี้ผู้ดูแลระบบเท่านั้นที่เห็น</div>
+     <div class="row g-3">
+      <div class="col-md-7"><label class="form-label">ชื่อผู้รับพัสดุ *</label><input id="a_name" class="form-control" autocomplete="off"><div class="hint">ชื่อ-นามสกุลตามที่ต้องการให้ระบุหน้าซอง</div></div>
+      <div class="col-md-5"><label class="form-label">เบอร์ผู้รับ</label><input id="a_tel" class="form-control" inputmode="tel" autocomplete="off"><div class="hint">ไว้ให้ไปรษณีย์ติดต่อ — เว้นว่างได้ถ้าใช้เบอร์เดียวกับผู้สั่ง</div></div>
+      <div class="col-12"><label class="form-label">ที่อยู่ *</label><input id="a_l1" class="form-control" autocomplete="off"><div class="hint">บ้านเลขที่ หมู่ที่ ซอย ถนน หมู่บ้าน/อาคาร</div></div>
+      <div class="col-md-6"><label class="form-label">ตำบล / แขวง *</label><input id="a_sub" class="form-control" autocomplete="off"></div>
+      <div class="col-md-6"><label class="form-label">อำเภอ / เขต *</label><input id="a_dis" class="form-control" autocomplete="off"></div>
+      <div class="col-md-6"><label class="form-label">จังหวัด *</label><input id="a_pro" class="form-control" autocomplete="off"></div>
+      <div class="col-md-6"><label class="form-label">รหัสไปรษณีย์ *</label><input id="a_zip" class="form-control" inputmode="numeric" maxlength="5" autocomplete="off"><div class="hint">ตัวเลข 5 หลัก</div></div>
+     </div></div></div>
     <div class="col-12"><label class="form-label">หมายเหตุ</label><input id="f_note" class="form-control"></div>
    </div>
   </div>
 
-  <div class="cardx" id="track">
-   <div class="h"><i>3</i>ติดตามสถานะ / แนบสลิป / ใบสั่งซื้อ</div>
+  <div class="cardx d-none" id="track">
+   <div class="h"><i>3</i>ติดตามสถานะ / แจ้งโอน / ใบสั่งซื้อ-ใบเสร็จ<button type="button" class="btn btn-sm btn-outline-secondary ms-auto" id="btnTrackClose">✕ ปิด/ล้างข้อมูล</button></div>
+   <div class="small text-muted mb-2">กรอกเลขที่ออเดอร์และเบอร์โทรที่ใช้สั่ง เพื่อดูสถานะ แจ้งโอน และดาวน์โหลดใบสั่งซื้อ/ใบเสร็จ — ข้อมูลจะแสดงเมื่อค้นหาเท่านั้น และถูกล้างเมื่อปิดหรือไม่ได้ใช้งาน 5 นาที</div>
    <div class="row g-2">
-    <div class="col-md-5"><input id="t_id" class="form-control" placeholder="เลขที่ออเดอร์ เช่น SH2569-0001"></div>
-    <div class="col-md-4"><input id="t_phone" class="form-control" inputmode="tel" placeholder="เบอร์โทรที่ใช้สั่ง"></div>
+    <div class="col-md-5"><input id="t_id" class="form-control" autocomplete="off" placeholder="เลขที่ออเดอร์ เช่น SH2569-0001"></div>
+    <div class="col-md-4"><input id="t_phone" class="form-control" inputmode="tel" autocomplete="off" placeholder="เบอร์โทรที่ใช้สั่ง"></div>
     <div class="col-md-3 d-grid"><button class="btn btn-outline-primary" id="btnTrack">ค้นหา</button></div>
    </div>
    <div id="t_res" class="mt-3"></div>
   </div>
-  <div class="text-center small"><a href="#admin" class="text-muted text-decoration-none">🔐 สำหรับผู้ดูแล</a></div>
+  <div class="text-center small"><a href="#" id="btnInstall" class="text-muted text-decoration-none">📲 ติดตั้งเป็นแอป</a> <span class="text-muted">·</span> <a href="#admin" class="text-muted text-decoration-none">🔐 สำหรับผู้ดูแล</a></div>
  </div>
 
  <div class="bar"><div class="container d-flex justify-content-between align-items-center" style="max-width:920px">
@@ -197,7 +247,7 @@ body{font-family:Kanit,sans-serif;background:#fff;color:var(--ink);font-size:1re
     <div class="row g-2 mb-2"><div class="col-md-3"><input id="q" class="form-control" placeholder="ค้นหา เลขที่/ชื่อ/เบอร์/รุ่น"></div>
      <div class="col-md-3"><select id="fs" class="form-select"></select></div><div class="col-md-2"><select id="fr" class="form-select"></select></div><div class="col-md-2"><select id="fp" class="form-select"><option value="">รับเสื้อ: ทั้งหมด</option><option value="pending">รอรับเสื้อ (ชำระแล้ว)</option><option value="picked">รับเสื้อแล้ว</option></select></div>
      <div class="col-md-2"><button class="btn btn-outline-primary w-100" id="btnCsv">⬇ CSV (เปิดใน Excel)</button></div></div>
-    <div class="table-responsive"><table class="table table-hover align-middle small"><thead><tr><th>เลขที่</th><th>ผู้สั่ง</th><th>รายการ</th><th class="text-end">ยอด</th><th>สถานะ</th><th>เอกสาร</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div></div>
+    <div class="table-responsive"><table class="table table-hover align-middle small tbl-stack"><thead><tr><th>เลขที่</th><th>ผู้สั่ง</th><th>รายการ</th><th class="text-end">ยอด</th><th>สถานะ</th><th>เอกสาร</th><th></th></tr></thead><tbody id="tb"></tbody></table></div></div></div>
 
    <div class="asec" id="a_rounds"><div class="cardx"><h6>กำหนดรอบการสั่งจอง</h6>
     <div class="small text-muted mb-2">กำหนดช่วงเวลาเปิด–ปิดรับ และจำกัดจำนวนเสื้อ <b>รวมทุกไซส์</b> ต่อรอบ (0 = ไม่จำกัด) · รอบที่เปิดใช้ห้ามมีช่วงเวลาซ้อนกัน · ออเดอร์ที่ยกเลิกจะคืนโควต้าให้รอบอัตโนมัติ · ถ้าไม่มีรอบเลย ระบบจะรับสั่งตามสวิตช์หลักอย่างเดียว</div>
@@ -224,7 +274,16 @@ const API_URL='https://script.google.com/macros/s/AKfycbxk3Mk0bOuTYKorpD_TbRi2C6
 const DESIGN_IMG='design.jpg', QR_IMG='qr.jpg';   // ไฟล์รูปใน repo เดียวกัน
 
 const $=id=>document.getElementById(id);
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* ตรวจชนิดอุปกรณ์/แอปที่เปิดลิงก์ (LINE, Facebook ฯลฯ ใช้เบราว์เซอร์ในแอปที่ดาวน์โหลดไฟล์ไม่ได้บางกรณี) */
+const UA=navigator.userAgent,IS_LINE=/Line\//i.test(UA),IN_APP=/Line\/|FBAN|FBAV|FB_IAB|Instagram|MicroMessenger|Messenger/i.test(UA),
+  IS_IOS=/iPad|iPhone|iPod/.test(UA)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1),
+  NO_DL=!('download' in HTMLAnchorElement.prototype)||(IN_APP&&IS_IOS),
+  STANDALONE=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true;
+function dataBlob(u,type){const bin=atob(u.indexOf(',')>=0?u.split(',')[1]:u),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);return new Blob([a],{type:type||(u.match(/^data:([^;]+)/)||[])[1]||'application/octet-stream'})}
+function saveBlob(blob,name){const u=URL.createObjectURL(blob);
+  if(NO_DL){if(!window.open(u,'_blank'))Swal.fire({icon:'info',title:'บันทึกไฟล์',text:'เบราว์เซอร์นี้ดาวน์โหลดอัตโนมัติไม่ได้ กรุณาเปิดลิงก์ด้วย Safari/Chrome หรือแตะค้างที่รูปเพื่อบันทึก',confirmButtonColor:'#0B2E7A'});return}
+  const a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),60000)}
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=n=>Number(n||0).toLocaleString('th-TH');
 const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 
@@ -243,12 +302,12 @@ function err(e){
 }
 const ok=t=>Swal.fire({icon:'success',title:t,timer:1400,showConfirmButton:false});
 const busy=t=>Swal.fire({title:t,allowOutsideClick:false,didOpen:()=>Swal.showLoading()});
-function saveFile(r){const a=document.createElement('a');a.href='data:application/pdf;base64,'+r.base64;a.download=r.name;a.click()}
+function saveFile(r){saveBlob(dataBlob(r.base64,'application/pdf'),r.name)}
 /* ===== สร้างรูป JPG ใบสั่งซื้อ/ใบเสร็จ (Canvas + ฟอนต์ Kanit) — A4 1240px กว้าง สูงตามเนื้อหา ===== */
 const IC={navy:'#0B2E7A',green:'#16833F',yellow:'#FFC21A',ys:'#FFF5D1',gs:'#E7F6EC',ink:'#14213D',mut:'#667394',line:'#D5DCEC',soft:'#F5F8FD'};
 const IW=1240,IM=70,IH=3400;
 const fnt=(w,s)=>`${w} ${s}px Kanit,Tahoma,sans-serif`;
-const fontsReady=()=>Promise.all([400,500,600].map(w=>document.fonts.load(`${w} 30px Kanit`,'กขคงจ ABC 123'))).catch(()=>{});
+const fontsReady=()=>{try{return Promise.all([400,500,600].map(w=>document.fonts.load(`${w} 30px Kanit`,'กขคงจ ABC 123'))).catch(()=>{})}catch(e){return Promise.resolve()}};
 const loadImg=src=>new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src});
 function newCanvas(){const c=document.createElement('canvas');c.width=IW;c.height=IH;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,IW,IH);return{c,x}}
 function rrect(x,px,py,w,h,r){x.beginPath();x.moveTo(px+r,py);x.arcTo(px+w,py,px+w,py+h,r);x.arcTo(px+w,py+h,px,py+h,r);x.arcTo(px,py+h,px,py,r);x.arcTo(px,py,px+w,py,r);x.closePath()}
@@ -333,11 +392,11 @@ async function renderReceipt(d){
 }
 const b64=u=>u.split(',')[1];
 const mimeOf=n=>({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',heic:'image/heic',pdf:'application/pdf'})[String(n).split('.').pop().toLowerCase()]||'';
-function dlImg(url,name){const a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove()}
+function dlImg(url,name){saveBlob(dataBlob(url,'image/jpeg'),name)}
 function showDoc(url,name,title){
-  return Swal.fire({title,imageUrl:url,imageAlt:title,width:'min(96vw,760px)',padding:'1em',showCancelButton:true,showDenyButton:!!navigator.canShare,
+  return Swal.fire({title,imageUrl:url,imageAlt:title,width:Math.min(Math.round(innerWidth*.96),760),padding:'1em',showCancelButton:true,showDenyButton:!!navigator.canShare,
     confirmButtonText:'⬇ ดาวน์โหลด JPG',denyButtonText:'แชร์',cancelButtonText:'ปิด',confirmButtonColor:'#16833F',footer:'<span class="small text-muted">iPhone: แตะค้างที่รูป แล้วเลือก "เพิ่มลงในรูปภาพ"</span>'})
-  .then(async r=>{if(r.isConfirmed)dlImg(url,name);else if(r.isDenied){try{const f=new File([await (await fetch(url)).blob()],name,{type:'image/jpeg'});if(navigator.canShare({files:[f]}))await navigator.share({files:[f],title})}catch(e){}}})}
+  .then(async r=>{if(r.isConfirmed)dlImg(url,name);else if(r.isDenied){try{const f=new File([dataBlob(url,'image/jpeg')],name,{type:'image/jpeg'});if(navigator.canShare({files:[f]}))await navigator.share({files:[f],title})}catch(e){}}})}
 function orderImg(o){busy('กำลังสร้างรูปใบสั่งซื้อ...');renderOrder(o).then(img=>{Swal.close();showDoc(img,o.id+'.jpg','ใบสั่งซื้อ '+o.id);
   if(!o.hasImage&&CUR)api('saveOrderImage',{id:o.id,phone:CUR.phone,base64:b64(img)}).catch(()=>{})}).catch(err)}
 function rc(id,phone){busy('กำลังสร้างรูปใบเสร็จ...');api('getReceipt',id,phone).then(async d=>{const img=await renderReceipt(d);Swal.close();showDoc(img,d.receiptNo+'.jpg','ใบเสร็จรับเงิน '+d.receiptNo)}).catch(err)}
@@ -373,9 +432,9 @@ function load(){
        <div class="n">${esc(s.size)}</div><div class="s">${esc(s.chest||'')}</div>
        <div class="p">${num(s.price)} บาท</div>
        <div class="s">${s.remaining==null?'ไม่จำกัด':out?'<b class="text-danger">หมด</b>':'เหลือ '+s.remaining}</div>
-       <div class="step"><button data-s="${esc(s.size)}" data-d="-1" ${out?'disabled':''}>−</button>
+       <div class="step"><button data-s="${esc(s.size)}" data-d="-1" aria-label="ลดจำนวนไซส์ ${esc(s.size)}" ${out?'disabled':''}>−</button>
        <input id="q_${i}" data-q="${esc(s.size)}" value="${Q[s.size]||0}" inputmode="numeric" ${out?'disabled':''}>
-       <button data-s="${esc(s.size)}" data-d="1" ${out?'disabled':''}>+</button></div></div></div>`}).join('')||'<div class="text-muted text-center p-3">ยังไม่ได้ตั้งค่าไซส์</div>';
+       <button data-s="${esc(s.size)}" data-d="1" aria-label="เพิ่มจำนวนไซส์ ${esc(s.size)}" ${out?'disabled':''}>+</button></div></div></div>`}).join('')||'<div class="text-muted text-center p-3">ยังไม่ได้ตั้งค่าไซส์</div>';
     calc();
   }).catch(e=>{$('sizes').innerHTML='<div class="text-center p-3"><div class="text-danger mb-2">โหลดข้อมูลไม่สำเร็จ</div><button class="btn btn-sm btn-outline-primary" onclick="load()">ลองใหม่</button></div>';err(e)});
 }
@@ -390,17 +449,38 @@ const totalQ=()=>Object.values(Q).reduce((a,b)=>a+b,0);
 function lim(s){const z=INIT.sizes[idx(s)];let m=z&&z.remaining!=null?z.remaining:500;const R=INIT.round;
   if(R&&R.limit)m=Math.min(m,R.remaining-(totalQ()-(Q[s]||0)));return Math.max(0,m)}
 function setq(s,v){const want=parseInt(v)||0,n=Math.max(0,Math.min(lim(s),want));
-  if(want>n&&INIT.round&&INIT.round.limit&&n<(INIT.sizes[idx(s)].remaining??500))Swal.fire({toast:true,position:'top',icon:'info',title:`${INIT.round.name} เหลือ ${INIT.round.remaining} ตัว (รวมทุกไซส์)`,timer:2500,showConfirmButton:false});
+  if(want>n&&INIT.round&&INIT.round.limit&&n<(INIT.sizes[idx(s)].remaining==null?500:INIT.sizes[idx(s)].remaining))Swal.fire({toast:true,position:'top',icon:'info',title:`${INIT.round.name} เหลือ ${INIT.round.remaining} ตัว (รวมทุกไซส์)`,timer:2500,showConfirmButton:false});
   Q[s]=n;$('q_'+idx(s)).value=n;calc()}
 function calc(){
-  let q=0,p=0;INIT.sizes.forEach((s,i)=>{const n=Q[s.size]||0;q+=n;p+=n*s.price;$('c_'+i)?.classList.toggle('on',n>0)});
+  let q=0,p=0;INIT.sizes.forEach((s,i)=>{const n=Q[s.size]||0;q+=n;p+=n*s.price;(function(el){if(el)el.classList.toggle('on',n>0)})($('c_'+i))});
   $('tq').textContent=q;$('tp').textContent=num(p);
 }
 $('sizes').onclick=e=>{const b=e.target.closest('button[data-d]');if(b)setq(b.dataset.s,(Q[b.dataset.s]||0)+ +b.dataset.d)};
 $('sizes').oninput=e=>{if(e.target.dataset.q)setq(e.target.dataset.q,e.target.value)};
 $('btnTable').onclick=()=>$('design').click();
-$('design').onclick=()=>Swal.fire({imageUrl:$('design').src,imageAlt:'แบบเสื้อ',width:'min(96vw,900px)',padding:'.5em',showConfirmButton:false,showCloseButton:true});
-$('f_del').onchange=e=>$('addrWrap').classList.toggle('d-none',e.target.value!=='จัดส่งไปรษณีย์');
+$('design').onclick=()=>Swal.fire({imageUrl:$('design').src,imageAlt:'แบบเสื้อ',width:Math.min(Math.round(innerWidth*.96),900),padding:'.5em',showConfirmButton:false,showCloseButton:true});
+const delVal=()=>document.querySelector('input[name=f_del]:checked').value;
+function syncDel(){const post=delVal()==='จัดส่งไปรษณีย์';$('addrWrap').classList.toggle('d-none',!post);
+  document.querySelectorAll('.opt').forEach(l=>l.classList.toggle('on',l.querySelector('input').checked));
+  if(post&&!$('a_name').value)$('a_name').value=$('f_name').value.trim()}
+document.querySelectorAll('input[name=f_del]').forEach(r=>r.onchange=syncDel);
+function addrVal(){const g=i=>$(i).value.trim(),name=g('a_name'),tel=g('a_tel').replace(/[\s-]/g,''),l1=g('a_l1'),sub=g('a_sub'),dis=g('a_dis'),pro=g('a_pro'),zip=g('a_zip');
+  if(!name||!l1||!sub||!dis||!pro)return{err:'กรุณากรอกข้อมูลจัดส่งให้ครบทุกช่องที่มีเครื่องหมาย *'};
+  if(!/^\d{5}$/.test(zip))return{err:'รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก'};
+  if(tel&&!/^0\d{8,9}$/.test(tel))return{err:'เบอร์ผู้รับไม่ถูกต้อง (9–10 หลัก)'};
+  return{addr:`ผู้รับ: ${name} โทร ${tel||g('f_phone').replace(/[\s-]/g,'')} | ${l1}, ต./แขวง ${sub}, อ./เขต ${dis}, จ.${pro} ${zip}`}}
+function resetOrderForm(){ // ล้างข้อมูลส่วนบุคคลทั้งหมดหลังสั่งซื้อสำเร็จ
+  ['f_name','f_year','f_phone','f_line','f_note','a_name','a_tel','a_l1','a_sub','a_dis','a_pro','a_zip'].forEach(i=>$(i).value='');
+  document.querySelector('input[name=f_del][value="รับที่โรงเรียนตามรอบนัด"]').checked=true;syncDel();Q={};calc()}
+/* ติดตามสถานะ: ซ่อนไว้จนกว่าจะกดเมนู + ล้างข้อมูลเมื่อปิด/ไม่ใช้งาน 5 นาที */
+let idleT=null;
+function armIdle(){clearTimeout(idleT);idleT=setTimeout(()=>{if(!$('track').classList.contains('d-none'))closeTrack(true)},5*60*1000)}
+function openTrack(id){const c=$('track');c.classList.remove('d-none');if(id)$('t_id').value=id;armIdle();c.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$(id?'t_phone':'t_id').focus({preventScroll:true}),450)}
+function closeTrack(auto){clearTimeout(idleT);['t_id','t_phone'].forEach(i=>$(i).value='');$('t_res').innerHTML='';CUR=null;$('track').classList.add('d-none');
+  if(auto===true)Swal.fire({toast:true,position:'top',icon:'info',title:'ล้างข้อมูลการค้นหาแล้ว (ไม่มีการใช้งาน 5 นาที)',timer:3500,showConfirmButton:false})}
+document.addEventListener('click',e=>{const a=e.target.closest('a[href="#track"]');if(a){e.preventDefault();openTrack()}});
+['t_id','t_phone'].forEach(i=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter')track()}));
+$('track').addEventListener('input',armIdle);$('track').addEventListener('click',armIdle);$('btnTrackClose').onclick=()=>closeTrack();
 
 function submitOrder(){
   const items=INIT.sizes.map(s=>({size:s.size,qty:Q[s.size]||0,price:s.price})).filter(i=>i.qty>0);
@@ -408,26 +488,24 @@ function submitOrder(){
   if(!name)return err('กรุณากรอกชื่อ-นามสกุล');
   if(!/^0\d{8,9}$/.test(phone))return err('กรุณากรอกเบอร์โทร 9-10 หลัก เช่น 0812345678');
   if(!items.length)return err('กรุณาเลือกไซส์อย่างน้อย 1 รายการ');
-  const post=$('f_del').value==='จัดส่งไปรษณีย์';
-  if(post&&!$('f_addr').value.trim())return err('กรุณากรอกที่อยู่จัดส่ง');
+  const post=delVal()==='จัดส่งไปรษณีย์';let addr='';
+  if(post){const a=addrVal();if(a.err)return err(a.err);addr=a.addr}
   Swal.fire({title:'ตรวจสอบคำสั่งซื้อ',icon:'question',showCancelButton:true,confirmButtonText:'ยืนยันสั่งจอง',cancelButtonText:'แก้ไข',confirmButtonColor:'#16833F',
     html:`<div class="text-start small">${items.map(i=>`<div class="d-flex justify-content-between"><span>ไซส์ ${esc(i.size)} × ${i.qty}</span><b>${num(i.qty*i.price)}</b></div>`).join('')}</div><hr class="my-2">${$('tq').textContent} ตัว รวม <b style="color:#16833F;font-size:1.2rem">${$('tp').textContent}</b> บาท`}).then(r=>{
     if(!r.isConfirmed)return;
     busy('กำลังบันทึก...');
-    api('submitOrder',{name,phone,year:$('f_year').value,line:$('f_line').value,delivery:$('f_del').value,addr:$('f_addr').value,note:$('f_note').value,items:items.map(i=>({size:i.size,qty:i.qty}))})
+    api('submitOrder',{name,phone,year:$('f_year').value,line:$('f_line').value,delivery:delVal(),addr,note:$('f_note').value,items:items.map(i=>({size:i.size,qty:i.qty}))})
     .then(async o=>{
-      store.set('sh_buyer',{name,phone,year:$('f_year').value,line:$('f_line').value});store.set('sh_last',{id:o.id,phone});
-      $('t_id').value=o.id;$('t_phone').value=phone;Q={};load();
-      ['f_name','f_year','f_phone','f_line','f_addr','f_note'].forEach(i=>$(i).value='');
+      resetOrderForm();closeTrack();load(); // ล้างข้อมูลผู้สั่งทั้งหมด ไม่เก็บลงเครื่อง
       let img=null;try{img=await renderOrder(o.doc);api('saveOrderImage',{id:o.id,phone,base64:b64(img)}).catch(()=>{})}catch(e){console.error(e)}
-      return Swal.fire({icon:'success',title:'สั่งจองสำเร็จ',confirmButtonColor:'#0B2E7A',showCancelButton:true,
+      return Swal.fire({icon:'success',title:'สั่งจองสำเร็จ',confirmButtonColor:'#0B2E7A',showCancelButton:true,showDenyButton:true,denyButtonText:'📎 แนบสลิปโอนเงิน',denyButtonColor:'#16833F',
         confirmButtonText:'🖼 ใบสั่งซื้อ (JPG)',cancelButtonText:'ปิด',
         html:`<div>เลขที่ <b style="color:#16833F;font-size:1.3rem">${esc(o.id)}</b></div>${o.round?`<div class="small text-muted">${esc(o.round)}</div>`:''}<div>${esc(o.items)} · <b>${num(o.total)}</b> บาท</div>
         <img src="${INIT.qr||QR_IMG}" style="max-width:230px;margin:10px auto;display:block;border-radius:10px">
         <a class="small" href="${INIT.qr||QR_IMG}" download="promptpay-qr">⬇ บันทึกรูป QR</a>
         <div class="small mt-1">ชื่อบัญชี: ${esc(INIT.account)}<br>${esc(INIT.bank)}</div>
-        <div class="small text-muted mt-2">โอน ${num(o.total)} บาท แล้วแนบสลิปที่หัวข้อ "ติดตามสถานะ" · จดเลขที่ออเดอร์ไว้</div>`
-      }).then(x=>{if(x.isConfirmed&&img)showDoc(img,o.id+'.jpg','ใบสั่งซื้อ '+o.id);track();$('track').scrollIntoView({behavior:'smooth'})});
+        <div class="small text-muted mt-2">โอน ${num(o.total)} บาท แล้วแนบสลิปที่เมนู "ติดตาม" (กรอกเลขที่ออเดอร์ + เบอร์โทร) · จดเลขที่ออเดอร์ไว้ เพราะระบบจะไม่เก็บข้อมูลของคุณไว้ในเครื่อง</div>`
+      }).then(x=>{if(x.isConfirmed&&img)showDoc(img,o.id+'.jpg','ใบสั่งซื้อ '+o.id);else if(x.isDenied)openTrack(o.id)});
     }).catch(err);
   });
 }
@@ -438,7 +516,7 @@ function track(){
   if(!id||!ph)return;
   $('t_res').innerHTML='<div class="text-muted">กำลังค้นหา...</div>';
   api('lookupOrder',id,ph).then(o=>{
-    CUR={id:o.id,phone:ph,o};store.set('sh_last',{id:o.id,phone:ph});
+    CUR={id:o.id,phone:ph,o};armIdle();
     const up=o.status==='รอชำระเงิน'||o.status==='รอตรวจสอบการชำระเงิน';
     $('t_res').innerHTML=`<div class="border rounded-4 p-3"><div class="d-flex justify-content-between"><b>${esc(o.id)}</b><span class="pill ${cls[o.status]||''}">${esc(o.status)}</span></div>
      <div class="small text-muted">${esc(o.name)} · รุ่น ${esc(o.year)} · ${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div><div class="mt-1">${esc(o.items)}</div><div><b>${num(o.total)} บาท</b> · ${esc(o.delivery)}</div>
@@ -482,8 +560,7 @@ async function slip(){
   catch(e){err(e)}
 }
 (function init(){
-  const b=store.get('sh_buyer');if(b){$('f_name').value=b.name||'';$('f_phone').value=b.phone||'';$('f_year').value=b.year||'';$('f_line').value=b.line||''}
-  const l=store.get('sh_last');if(l){$('t_id').value=l.id;$('t_phone').value=l.phone}
+  try{localStorage.removeItem('sh_buyer');localStorage.removeItem('sh_last')}catch(e){} // ล้างข้อมูลส่วนบุคคลที่เวอร์ชันเก่าเคยจำไว้
   load();
 })();
 
@@ -521,13 +598,13 @@ function refresh(){
 function drawOrders(){
   const q=$('q').value.toLowerCase(),s=$('fs').value,rr=$('fr').value,pp=$('fp').value;
   $('tb').innerHTML=D.orders.filter(o=>(!s||o.status===s)&&(!rr||o.roundName===rr)&&(!pp||(pp==='picked'?o.picked:(!o.picked&&o.status==='ชำระเงินแล้ว')))&&(!q||[o.id,o.name,o.phone,o.year].join(' ').toLowerCase().includes(q))).map(o=>`
-   <tr><td><b>${esc(o.id)}</b><div class="text-muted">${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div></td><td>${esc(o.name)}<div class="text-muted">รุ่น ${esc(o.year)} · ${esc(o.phone)}</div></td>
-   <td>${esc(o.items)}<div class="text-muted">${esc(o.delivery)}</div></td><td class="text-end">${num(o.total)}</td>
-   <td><select class="form-select form-select-sm border-${col[o.status]}" data-st="${esc(o.id)}">${D.statuses.map(x=>`<option ${x===o.status?'selected':''}>${x}</option>`).join('')}</select>
+   <tr><td data-l="เลขที่"><b>${esc(o.id)}</b><div class="text-muted">${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div></td><td data-l="ผู้สั่ง">${esc(o.name)}<div class="text-muted">รุ่น ${esc(o.year)} · ${esc(o.phone)}</div></td>
+   <td data-l="รายการ">${esc(o.items)}<div class="text-muted">${esc(o.delivery)}</div></td><td class="text-end" data-l="ยอด (บาท)">${num(o.total)}</td>
+   <td data-l="สถานะ"><select class="form-select form-select-sm border-${col[o.status]}" data-st="${esc(o.id)}">${D.statuses.map(x=>`<option ${x===o.status?'selected':''}>${x}</option>`).join('')}</select>
      ${o.picked?`<div class="mt-1"><span class="pill bg-success-subtle text-success-emphasis">📦 ${plabel(o)}</span><div class="text-muted">${esc(o.pickedAt)}<br>ผู้รับ: ${esc(o.receiver)}${o.pickNote?' · '+esc(o.pickNote):''}</div><a href="#" class="small text-danger" data-unpk="${esc(o.id)}">ยกเลิกการบันทึก</a></div>`:o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-outline-success py-0 mt-1" data-pk="${esc(o.id)}">📦 ${o.delivery==='จัดส่งไปรษณีย์'?'บันทึกจัดส่ง':'บันทึกรับเสื้อ'}</button>`:''}</td>
-   <td>${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">ใบสั่งซื้อ</a>`:''}${slipBadge(o)}
+   <td data-l="เอกสาร">${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">ใบสั่งซื้อ</a>`:''}${slipBadge(o)}
      ${o.status==='ชำระเงินแล้ว'?`<div class="mt-1"><button class="btn btn-sm btn-success py-0" data-rc="${esc(o.id)}">🧾 ${esc(o.receiptNo||'ใบเสร็จ')}</button>${o.receiptDate?`<div class="text-muted">${esc(o.receiptDate)}</div>`:''}</div>`:''}</td>
-   <td><button class="btn btn-sm btn-outline-danger" data-del="${esc(o.id)}">ลบ</button></td></tr>`).join('')||'<tr><td colspan="7" class="text-center text-muted">ไม่พบข้อมูล</td></tr>';
+   <td data-l=""><button class="btn btn-sm btn-outline-danger" data-del="${esc(o.id)}">ลบ</button></td></tr>`).join('')||'<tr><td colspan="7" class="text-center text-muted">ไม่พบข้อมูล</td></tr>';
 }
 $('q').oninput=drawOrders;$('fs').onchange=drawOrders;$('fr').onchange=drawOrders;$('fp').onchange=drawOrders;
 $('tb').onchange=e=>{if(e.target.dataset.st)setSt(e.target.dataset.st,e.target.value)};
@@ -575,8 +652,8 @@ $('btnSaveSz').onclick=()=>{const rows=[...$('sz').rows].map(r=>{const i=r.query
 const dtl=d=>{const z=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${z(d.getMonth()+1)}-${z(d.getDate())}T${z(d.getHours())}:${z(d.getMinutes())}`};
 function rdRow(r){if(!r){const a=new Date();a.setMinutes(0,0,0);const b=new Date(a.getTime()+7*864e5);b.setHours(23,59,0,0);r={id:'',name:'รอบที่ '+($('rd').rows.length+1),start:dtl(a),end:dtl(b),limit:0,active:true}}
   const st=RST[r.state];return `<tr data-id="${esc(r.id)}"><td><input class="form-control form-control-sm" style="min-width:130px" value="${esc(r.name)}"></td>
-  <td><input type="datetime-local" class="form-control form-control-sm" value="${esc(String(r.start).replace(' ','T'))}"><div class="small text-muted th">${tm(r.start)}</div></td>
-  <td><input type="datetime-local" class="form-control form-control-sm" value="${esc(String(r.end).replace(' ','T'))}"><div class="small text-muted th">${tm(r.end)}</div></td>
+  <td><input type="datetime-local" placeholder="2026-10-31 23:59" class="form-control form-control-sm" value="${esc(String(r.start).replace(' ','T'))}"><div class="small text-muted th">${tm(r.start)}</div></td>
+  <td><input type="datetime-local" placeholder="2026-10-31 23:59" class="form-control form-control-sm" value="${esc(String(r.end).replace(' ','T'))}"><div class="small text-muted th">${tm(r.end)}</div></td>
   <td><input type="number" min="0" class="form-control form-control-sm" style="width:90px" value="${r.limit||0}"></td>
   <td class="text-center"><input type="checkbox" class="form-check-input" ${r.active?'checked':''}></td>
   <td class="small">${r.id?`${r.booked} / ${r.remaining==null?'∞':r.remaining} ${st?`<span class="pill ${st[1]}">${st[0]}</span>`:''}`:'<span class="text-muted">ใหม่</span>'}</td>
@@ -598,12 +675,35 @@ function drawReport(){
    <h6>แยกตามสถานะ</h6>${tb(['สถานะ','ออเดอร์','ยอด'],D.statuses.map(k=>`<tr><td>${k}</td><td>${r.byStatus[k].n}</td><td>${num(r.byStatus[k].amt)}</td></tr>`).join(''))}`;
 }
 $('btnPdf').onclick=()=>{busy('กำลังสร้าง PDF...');api('adminReportPdf',T).then(r=>{Swal.close();saveFile(r)}).catch(err)};
-$('btnCsv').onclick=()=>{const q=v=>'"'+String(v??'').replace(/"/g,'""')+'"';
+$('btnCsv').onclick=()=>{const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
   const h=['เลขที่','วันที่','ชื่อ','รุ่น','เบอร์','รายการ','จำนวน','ยอด','รับสินค้า','สถานะ','รอบ','เลขที่ใบเสร็จ','วันที่รับเสื้อ','ผู้รับเสื้อ'];
   const t=[h.map(q).join(',')].concat(D.orders.map(o=>[o.id,o.date,o.name,o.year,'\t'+o.phone,o.items,o.qty,o.total,o.delivery,o.status,o.roundName,o.receiptNo,o.pickedAt,o.receiver].map(q).join(','))).join('\r\n');
   const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+t],{type:'text/csv'}));a.download='orders.csv';a.click()};
 $('btnQr').onclick=()=>{const f=$('qf').files[0];if(!f)return err('กรุณาเลือกไฟล์รูป QR');const r=new FileReader();
   r.onload=()=>api('adminUploadQr',T,{mimeType:f.type,base64:r.result.split(',')[1]}).then(()=>{ok('อัปโหลด QR แล้ว');refresh()}).catch(err);r.readAsDataURL(f)};
+
+/* ===== แอป/เบราว์เซอร์ทุกระบบ: แบนเนอร์เปิดนอกแอป, ติดตั้งเป็นแอป (PWA), ซ่อนแถบยอดตอนพิมพ์, Service Worker ===== */
+if(IN_APP&&!sessionStorage.getItem('inappX')){
+  $('inapp').classList.remove('d-none');
+  $('inappTxt').textContent='คุณเปิดผ่านแอป'+(IS_LINE?' LINE':'')+' — การดาวน์โหลดใบสั่งซื้อ/ใบเสร็จและแนบสลิปอาจทำงานไม่เต็มที่ แนะนำให้เปิดในเบราว์เซอร์';
+  $('inappBtn').textContent=IS_LINE?'เปิดในเบราว์เซอร์':'คัดลอกลิงก์';
+  $('inappBtn').onclick=()=>{const u=location.href.split('#')[0];
+    if(IS_LINE){location.href=u+(u.indexOf('?')>=0?'&':'?')+'openExternalBrowser=1';return}
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(u).then(()=>Swal.fire({toast:true,position:'top',icon:'success',title:'คัดลอกลิงก์แล้ว นำไปเปิดใน Chrome/Safari',timer:3000,showConfirmButton:false}),()=>prompt('คัดลอกลิงก์นี้ไปเปิดในเบราว์เซอร์',u));
+    else prompt('คัดลอกลิงก์นี้ไปเปิดในเบราว์เซอร์',u)};
+  $('inappX').onclick=()=>{$('inapp').classList.add('d-none');try{sessionStorage.setItem('inappX','1')}catch(e){}};
+}
+let DEF=null;addEventListener('beforeinstallprompt',e=>{e.preventDefault();DEF=e});
+if(STANDALONE)$('btnInstall').classList.add('d-none');
+$('btnInstall').onclick=e=>{e.preventDefault();
+  if(DEF){DEF.prompt();DEF.userChoice.then(()=>{DEF=null},()=>{});return}
+  const msg=IS_IOS?'แตะปุ่ม <b>แชร์</b> (ไอคอนสี่เหลี่ยมมีลูกศรชี้ขึ้น) ใน <b>Safari</b> แล้วเลือก <b>เพิ่มลงในหน้าจอโฮม</b>'
+    :/Android/.test(UA)?'แตะเมนู <b>⋮</b> ใน <b>Chrome</b> แล้วเลือก <b>ติดตั้งแอป</b> หรือ <b>เพิ่มไปยังหน้าจอหลัก</b>'
+    :'ใน <b>Chrome / Edge</b> คลิกไอคอน <b>ติดตั้ง</b> ที่ช่องที่อยู่เว็บ (หรือเมนู ⋮ → ติดตั้ง)';
+  Swal.fire({icon:'info',title:'ติดตั้งเป็นแอป',confirmButtonColor:'#0B2E7A',html:`<div class="text-start">${msg}<div class="small text-muted mt-2">เปิดจากหน้าจอโฮมได้ทันทีเหมือนแอปทั่วไป${IN_APP?' · ถ้าเปิดผ่าน LINE/Facebook อยู่ ให้เปิดในเบราว์เซอร์ก่อน':''}</div></div>`})};
+document.addEventListener('focusin',e=>{if(innerWidth<768&&/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)&&e.target.closest('#front'))document.body.classList.add('kb')});
+document.addEventListener('focusout',()=>document.body.classList.remove('kb'));
+if('serviceWorker' in navigator&&location.protocol==='https:')addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 
 route();
 </script></body></html>
