@@ -132,6 +132,36 @@ button,a,label.opt,select,input[type=radio],input[type=checkbox]{touch-action:ma
  .anav .navbar-collapse{padding-top:8px}
 }
 #btnTrackClose{white-space:nowrap;flex:none}.h{flex-wrap:wrap}
+/* ===== เมนูแท็บด้านบน + เมนูสไลด์ด้านซ้าย + สรุป/ยืนยันอยู่ล่างสุด ===== */
+html{scroll-padding-top:120px}
+.top{padding:0}
+.topin{display:flex;align-items:center;gap:12px;padding-top:10px;padding-bottom:8px}
+.menu-btn{width:44px;height:44px;border:1.5px solid var(--line);background:#fff;border-radius:12px;font-size:1.3rem;line-height:1;color:var(--navy);flex:none}
+.menu-btn:hover{background:var(--soft)}
+.tabs{border-top:1px solid var(--line);background:#fff}
+.tabs-in{display:flex;gap:4px;overflow-x:auto;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-top:4px;padding-bottom:0}
+.tabs-in::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;scroll-snap-align:center;border:0;background:transparent;padding:10px 16px 11px;font-weight:500;color:var(--mut);border-bottom:3px solid transparent;white-space:nowrap;font-size:.98rem;font-family:inherit}
+.tab:hover{color:var(--navy)}.tab.on{color:var(--navy);border-bottom-color:var(--yellow);font-weight:600}
+@media(min-width:768px){.tabs-in{justify-content:center}.tab{padding:12px 26px 13px;font-size:1.02rem}}
+.scrim{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(10,25,60,.45);opacity:0;pointer-events:none;transition:opacity .25s;z-index:60}
+.scrim.open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;bottom:0;left:0;width:84vw;max-width:320px;background:#fff;z-index:61;transform:translateX(-105%);transition:transform .28s ease;box-shadow:8px 0 30px rgba(0,0,0,.22);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top);visibility:hidden}
+.drawer.open{transform:none;visibility:visible}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);color:var(--navy)}
+.dh button{border:0;background:transparent;font-size:1.3rem;width:44px;height:44px;border-radius:12px}
+.dn{padding:8px}.dn a{display:flex;gap:10px;align-items:center;padding:14px 12px;border-radius:12px;color:var(--ink);text-decoration:none;font-weight:500}
+.dn a:hover{background:var(--soft)}.dn a.on{background:var(--green-s);color:var(--green);font-weight:600}
+.df{margin-top:auto;padding:16px;border-top:1px solid var(--line);font-size:.88rem;color:var(--mut)}.df a{color:var(--navy)}
+body.noscroll{overflow:hidden}
+.minibar{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom));background:var(--navy);color:#fff;border:0;border-radius:99px;padding:11px 22px;font-weight:500;box-shadow:0 10px 28px rgba(11,46,122,.38);z-index:25;white-space:nowrap;font-family:inherit}
+.minibar b{color:var(--yellow);font-weight:600}.kb .minibar{display:none}
+.sumcard{border:2px solid var(--green);background:linear-gradient(180deg,#fff 0%,var(--green-s) 100%)}
+.sumlines>div{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line)}
+.sumcard .tot{font-size:1.9rem;font-weight:600;color:var(--navy);line-height:1.1}.sumcard .tot small{font-size:.95rem;font-weight:400}
+.sumcard .btn-main{min-height:58px;font-size:1.2rem}
+.howto{padding-left:1.2rem}.howto li{margin-bottom:8px}
+.wrap{padding-bottom:70px}
 @media print{.anav,.noprint,#stats{display:none!important}.asec{display:none!important}#a_report{display:block!important}}
 </style></head><body>
 <div id="inapp" class="d-none" role="alert"><span id="inappTxt"></span><button type="button" class="btn-sub" id="inappBtn"></button><button type="button" class="x" id="inappX" aria-label="ปิดข้อความ">✕</button></div>
@@ -139,9 +169,30 @@ button,a,label.opt,select,input[type=radio],input[type=checkbox]{touch-action:ma
 
 <!-- ============ หน้าบ้าน ============ -->
 <div id="front">
- <div class="top"><div class="container d-flex justify-content-between align-items-center" style="max-width:920px">
-  <a class="logo" href="#"><b>👕</b><span>เสื้อที่ระลึก 2569</span></a>
-  <div class="d-flex gap-2"><a class="btn-sub" href="#order">สั่งซื้อ</a><a class="btn-sub" href="#track">ติดตาม</a></div></div></div>
+ <div class="top">
+  <div class="container topin">
+   <button type="button" class="menu-btn" id="btnMenu" aria-label="เปิดเมนู" aria-controls="drawer" aria-expanded="false">☰</button>
+   <a class="logo" href="#" data-tab="order"><b>👕</b><span>เสื้อที่ระลึก 2569</span></a>
+  </div>
+  <nav class="tabs" aria-label="เมนูหลัก"><div class="container tabs-in" role="tablist">
+   <button type="button" role="tab" class="tab on" data-tab="order" aria-selected="true">🛒 สั่งซื้อ</button>
+   <button type="button" role="tab" class="tab" data-tab="track" aria-selected="false">🔎 ติดตาม / แจ้งโอน</button>
+   <button type="button" role="tab" class="tab" data-tab="info" aria-selected="false">👕 แบบเสื้อ / ไซส์</button>
+  </div></nav>
+ </div>
+ <div class="scrim" id="scrim"></div>
+ <aside class="drawer" id="drawer" aria-hidden="true" aria-label="เมนู">
+  <div class="dh"><b>👕 เสื้อที่ระลึก 2569</b><button type="button" id="dClose" aria-label="ปิดเมนู">✕</button></div>
+  <nav class="dn">
+   <a href="#" data-tab="order" class="on">🛒 สั่งซื้อเสื้อ</a>
+   <a href="#" data-tab="track">🔎 ติดตามสถานะ / แจ้งโอน</a>
+   <a href="#" data-tab="info">👕 แบบเสื้อ / ตารางไซส์</a>
+   <a href="#" id="btnInstall">📲 ติดตั้งเป็นแอป</a>
+   <a href="#admin">🔐 สำหรับผู้ดูแล</a>
+  </nav>
+  <div class="df"><div class="mb-1">ติดต่อสอบถาม</div><div id="dContact"></div></div>
+ </aside>
+ <div id="pgOrder">
  <section class="hero"><div class="container"><div class="hero-grid">
   <div class="hero-copy">
    <span class="tag">ผ้าป่าศิษย์เก่า 2569</span>
@@ -197,7 +248,19 @@ button,a,label.opt,select,input[type=radio],input[type=checkbox]{touch-action:ma
    </div>
   </div>
 
-  <div class="cardx d-none" id="track">
+    <div class="cardx sumcard" id="summary">
+   <div class="h"><i>3</i>สรุปและยืนยันคำสั่งซื้อ</div>
+   <div class="sumlines small" id="sumLines"><div class="text-muted">ยังไม่ได้เลือกไซส์</div></div>
+   <div class="d-flex justify-content-between align-items-end mt-3">
+    <div><div class="small text-muted">รวม <span id="tq">0</span> ตัว</div><div class="tot"><span id="tp">0</span> <small>บาท</small></div></div>
+   </div>
+   <button type="button" class="btn-main w-100 mt-3" id="btnSubmit">ยืนยันคำสั่งซื้อ</button>
+   <div class="hint text-center mt-2">ตรวจสอบรายการและข้อมูลผู้สั่งให้ครบ แล้วกดยืนยัน — ระบบจะออกเลขที่ใบสั่งซื้อและ QR ชำระเงินให้ทันที</div>
+  </div>
+ </div>
+ </div>
+ <div id="pgTrack" class="d-none"><div class="wrap">
+  <div class="cardx" id="track">
    <div class="h"><i>3</i>ติดตามสถานะ / แจ้งโอน / ใบสั่งซื้อ-ใบเสร็จ<button type="button" class="btn btn-sm btn-outline-secondary ms-auto" id="btnTrackClose">✕ ปิด/ล้างข้อมูล</button></div>
    <div class="small text-muted mb-2">กรอก <b>รหัสใบสั่งซื้อ</b> หรือ <b>เบอร์โทรที่ใช้สั่ง</b> อย่างใดอย่างหนึ่ง เพื่อดูสถานะและแจ้งโอน — ผลค้นหาจะปิดบังชื่อ/เบอร์บางส่วน หากต้องการดูใบสั่งซื้อ/ใบเสร็จฉบับเต็ม ให้ยืนยันตัวตนอีกขั้น · ข้อมูลแสดงเมื่อค้นหาเท่านั้น และถูกล้างเมื่อปิดหรือไม่ได้ใช้งาน 10 นาที</div>
    <div class="row g-2">
@@ -206,12 +269,17 @@ button,a,label.opt,select,input[type=radio],input[type=checkbox]{touch-action:ma
    </div>
    <div id="t_res" class="mt-3"></div>
   </div>
-  <div class="text-center small"><a href="#" id="btnInstall" class="text-muted text-decoration-none">📲 ติดตั้งเป็นแอป</a> <span class="text-muted">·</span> <a href="#admin" class="text-muted text-decoration-none">🔐 สำหรับผู้ดูแล</a></div>
- </div>
-
- <div class="bar"><div class="container d-flex justify-content-between align-items-center" style="max-width:920px">
-  <div><div class="small text-muted">รวม <span id="tq">0</span> ตัว</div><div class="tot"><span id="tp">0</span> <small>บาท</small></div></div>
-  <button class="btn-main" id="btnSubmit">ยืนยันคำสั่งซื้อ</button></div></div>
+  </div></div>
+ <div id="pgInfo" class="d-none"><div class="wrap">
+  <div class="cardx"><div class="h">👕 ตารางไซส์และราคา</div>
+   <div class="table-responsive"><table class="table table-sm align-middle mb-2"><thead><tr><th>ไซส์</th><th>รอบอก / ความยาว (นิ้ว)</th><th class="text-end">ราคา (บาท)</th></tr></thead><tbody id="infoSizes"></tbody></table></div>
+   <div class="small text-muted mb-2">วัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง</div>
+   <button type="button" class="btn-sub" id="btnTable2">🔍 ดูรูปแบบเสื้อ</button></div>
+  <div class="cardx"><div class="h">📋 ขั้นตอนการสั่งซื้อ</div>
+   <ol class="howto mb-0"><li><b>เลือกไซส์และจำนวน</b> ได้หลายไซส์ในออเดอร์เดียว แล้วกรอกข้อมูลผู้สั่ง</li><li><b>กดยืนยันคำสั่งซื้อ</b> ระบบออกเลขที่ใบสั่งซื้อพร้อม QR พร้อมเพย์</li><li><b>โอนเงินตามยอด</b> แล้วไปที่แท็บ "ติดตาม / แจ้งโอน" เพื่อแนบสลิป — ระบบตรวจยอดให้ทันที</li><li>ครูยืนยันยอด ระบบออก <b>ใบเสร็จรับเงิน (JPG)</b> ไว้แสดงเมื่อรับเสื้อ</li></ol></div>
+  <div class="cardx"><div class="h">📞 ติดต่อสอบถาม</div><div id="infoContact"></div></div>
+ </div></div>
+ <button type="button" class="minibar d-none" id="minibar" aria-label="ไปที่สรุปคำสั่งซื้อ">🛒 รวม <b id="tq2">0</b> ตัว · <b id="tp2">0</b> บาท ▾</button>
 </div>
 
 <!-- ============ หลังบ้าน (#admin) ============ -->
@@ -412,7 +480,8 @@ async function adminReceipt(id,save){const d=await api('adminGetReceipt',T,id),i
 /* ===== router ===== */
 let timer=null;
 function route(){
-  const adm=location.hash==='#admin';
+  const adm=location.hash==='#admin';closeDrawer();
+  if(!adm){if(location.hash==='#track')showTab('track',{nopush:true,keepScroll:true});else if(location.hash==='#info')showTab('info',{nopush:true,keepScroll:true})}
   $('front').classList.toggle('d-none',adm);$('admin').classList.toggle('d-none',!adm);
   document.title=adm?'หลังบ้าน – เสื้อที่ระลึก':'สั่งจองเสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569';
   clearInterval(timer);
@@ -433,6 +502,9 @@ function load(){
     $('chips').innerHTML=(mn?`<span class="chip chip-y">ราคา ${num(mn)} บาท/ตัว</span>`:'')+(R?`<span class="chip">🗓 ${esc(R.name)} · ปิดรับ ${tm(R.end)}</span>`+(R.limit?`<span class="chip">เหลือ ${R.remaining} จาก ${R.limit} ตัว</span>`:''):'')+(d.contacts?`<span class="chip">📞 ${esc(d.contacts)}</span>`:'');
     $('closed').textContent='⛔ '+(d.msg||'');$('closed').classList.toggle('d-none',d.open);$('btnSubmit').disabled=!d.open;
     drawRounds(d.rounds||[]);
+    $('infoSizes').innerHTML=d.sizes.map(s=>`<tr><td><b>${esc(s.size)}</b></td><td>${esc(s.chest||'-')}</td><td class="text-end">${num(s.price)}</td></tr>`).join('')||'<tr><td colspan="3" class="text-muted">ยังไม่ได้ตั้งค่าไซส์</td></tr>';
+    $('infoContact').innerHTML=d.contacts?String(d.contacts).split(/\s*·\s*/).map(c=>{const m=/0\d{2}-?\d{3}-?\d{4}/.exec(c);return `<div class="py-1">${m?`<a href="tel:${m[0].replace(/-/g,'')}" class="text-decoration-none">📞 ${esc(c)}</a>`:esc(c)}</div>`}).join(''):'<div class="text-muted">—</div>';
+    $('dContact').innerHTML=$('infoContact').innerHTML;
     $('sizes').innerHTML=d.sizes.map((s,i)=>{
       const out=s.remaining!=null&&s.remaining<=0;
       return `<div class="col-6 col-md-4 col-lg-3"><div class="size" id="c_${i}">
@@ -458,10 +530,13 @@ function lim(s){const z=INIT.sizes[idx(s)];let m=z&&z.remaining!=null?z.remainin
 function setq(s,v){const want=parseInt(v)||0,n=Math.max(0,Math.min(lim(s),want));
   if(want>n&&INIT.round&&INIT.round.limit&&n<(INIT.sizes[idx(s)].remaining==null?500:INIT.sizes[idx(s)].remaining))Swal.fire({toast:true,position:'top',icon:'info',title:`${INIT.round.name} เหลือ ${INIT.round.remaining} ตัว (รวมทุกไซส์)`,timer:2500,showConfirmButton:false});
   Q[s]=n;$('q_'+idx(s)).value=n;calc()}
+let QTY=0,SUMVIS=false;
 function calc(){
-  let q=0,p=0;INIT.sizes.forEach((s,i)=>{const n=Q[s.size]||0;q+=n;p+=n*s.price;(function(el){if(el)el.classList.toggle('on',n>0)})($('c_'+i))});
-  $('tq').textContent=q;$('tp').textContent=num(p);
+  let q=0,p=0,rows=[];INIT.sizes.forEach((s,i)=>{const n=Q[s.size]||0;q+=n;p+=n*s.price;if(n>0)rows.push(`<div><span>ไซส์ ${esc(s.size)} × ${n}</span><b>${num(n*s.price)} บาท</b></div>`);(function(el){if(el)el.classList.toggle('on',n>0)})($('c_'+i))});
+  QTY=q;$('tq').textContent=q;$('tp').textContent=num(p);$('tq2').textContent=q;$('tp2').textContent=num(p);
+  $('sumLines').innerHTML=rows.join('')||'<div class="text-muted">ยังไม่ได้เลือกไซส์</div>';minibarUpdate();
 }
+function minibarUpdate(){$('minibar').classList.toggle('d-none',!(TAB==='order'&&QTY>0&&!SUMVIS))}
 $('sizes').onclick=e=>{const b=e.target.closest('button[data-d]');if(b)setq(b.dataset.s,(Q[b.dataset.s]||0)+ +b.dataset.d)};
 $('sizes').oninput=e=>{if(e.target.dataset.q)setq(e.target.dataset.q,e.target.value)};
 $('btnTable').onclick=()=>$('design').click();
@@ -480,30 +555,58 @@ function resetOrderForm(){ // ล้างข้อมูลส่วนบุ�
   ['f_name','f_year','f_phone','f_line','f_note','a_name','a_tel','a_l1','a_sub','a_dis','a_pro','a_zip'].forEach(i=>$(i).value='');
   document.querySelector('input[name=f_del][value="รับที่โรงเรียนตามรอบนัด"]').checked=true;syncDel();Q={};calc()}
 /* ติดตามสถานะ: ซ่อนไว้จนกว่าจะกดเมนู + ล้างข้อมูลเมื่อปิด/ไม่ใช้งาน 5 นาที */
-let idleT=null;
-function armIdle(){clearTimeout(idleT);idleT=setTimeout(()=>{if(!$('track').classList.contains('d-none'))closeTrack(true)},10*60*1000)}
+let idleT=null,TAB='order',tpush=false,hideTs=0;
 /* กันหน้า "เด้งออก/หายเอง": จำคำค้นไว้ชั่วคราวในแท็บนี้ (sessionStorage ≤30 นาที ล้างเมื่อกดปิด/แนบสลิปสำเร็จ) เผื่อเบราว์เซอร์รีโหลดตอนเปิดกล้อง/แอปธนาคาร */
 const RK='sh_resume';
 function saveResume(q){try{sessionStorage.setItem(RK,JSON.stringify({q,ts:Date.now()}))}catch(e){}}
 function clearResume(){try{sessionStorage.removeItem(RK)}catch(e){}}
 function readResume(){try{const r=JSON.parse(sessionStorage.getItem(RK)||'null');if(r&&r.q&&Date.now()-r.ts<30*60*1000)return r}catch(e){}clearResume();return null}
-let tpush=false,hideTs=0;
+const trackOpen=()=>TAB==='track';
+function armIdle(){clearTimeout(idleT);idleT=setTimeout(()=>{if(trackOpen())closeTrack(true)},10*60*1000)}
+let NORESUME=false;
+function wipeTrack(){NORESUME=false;clearTimeout(idleT);clearResume();$('t_q').value='';LASTQ='';$('t_res').innerHTML='';CUR=null}
+/* ----- เมนู: แท็บด้านบน + เมนูสไลด์ซ้าย ----- */
+function openDrawer(){$('drawer').classList.add('open');$('scrim').classList.add('open');$('drawer').setAttribute('aria-hidden','false');$('btnMenu').setAttribute('aria-expanded','true');document.body.classList.add('noscroll');setTimeout(()=>$('dClose').focus({preventScroll:true}),280)}
+function closeDrawer(){if(!$('drawer').classList.contains('open'))return;$('drawer').classList.remove('open');$('scrim').classList.remove('open');$('drawer').setAttribute('aria-hidden','true');$('btnMenu').setAttribute('aria-expanded','false');document.body.classList.remove('noscroll')}
+function showTab(t,opt){opt=opt||{};if(t!=='track'&&t!=='info')t='order';
+  if(TAB==='track'&&t!=='track')wipeTrack(); // ออกจากหน้าติดตาม = ล้างผลค้นหา (ความเป็นส่วนตัว)
+  TAB=t;
+  ['order','track','info'].forEach(k=>$('pg'+k.charAt(0).toUpperCase()+k.slice(1)).classList.toggle('d-none',k!==t));
+  document.querySelectorAll('[data-tab]').forEach(b=>{const on=b.dataset.tab===t;b.classList.toggle('on',on);if(b.classList.contains('tab'))b.setAttribute('aria-selected',on?'true':'false')});
+  const act=document.querySelector('.tab.on');if(act&&act.scrollIntoView)try{act.scrollIntoView({inline:'center',block:'nearest'})}catch(e){}
+  closeDrawer();
+  if(t==='track')armIdle();else clearTimeout(idleT);
+  if(t==='order'&&tpush&&!opt.fromPop){tpush=false;try{history.back()}catch(e){}}
+  else if(t!=='order'&&!tpush&&!opt.nopush){try{history.pushState({tab:t},'');tpush=true}catch(e){}}
+  if(!opt.keepScroll)window.scrollTo({top:0,behavior:'auto'});
+  minibarUpdate();
+}
+addEventListener('popstate',()=>{if(tpush){tpush=false;if(TAB!=='order')showTab('order',{fromPop:true})}}); // ปุ่ม Back กลับหน้าสั่งซื้อ ไม่ใช่ออกจากเว็บ
 document.addEventListener('visibilitychange',()=>{ // ออกไปโอนเงิน/ถ่ายรูปแล้วกลับมา ต้องไม่ถูกล้างทันที
   if(document.hidden){hideTs=Date.now();clearTimeout(idleT);return}
-  if($('track').classList.contains('d-none')){hideTs=0;return}
+  if(!trackOpen()){hideTs=0;return}
   if(hideTs&&Date.now()-hideTs>30*60*1000)closeTrack(true);else armIdle();hideTs=0});
-addEventListener('popstate',()=>{if(tpush){tpush=false;if(!$('track').classList.contains('d-none'))closeTrack()}}); // ปุ่ม Back ปิดส่วนติดตาม ไม่ใช่ออกจากเว็บ
 addEventListener('beforeunload',e=>{if(typeof SLIPBUSY!=='undefined'&&SLIPBUSY){e.preventDefault();e.returnValue=''}});
 document.addEventListener('change',e=>{const t=e.target;if(t&&/^s_file/.test(t.id||'')){const f=t.files[0],i=$('s_info'+t.id.slice(6));armIdle();
   if(i)i.innerHTML=f?`📎 ${esc(f.name)} · ${Math.round(f.size/1024)} KB ${f.size>15*1048576?'<b class="text-danger">(ใหญ่เกินไป)</b>':'— กด "ส่งสลิป" เพื่อตรวจสอบ'}`:''}});
-document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.ext')){e.preventDefault();if($('inappBtn').onclick)$('inappBtn').onclick()}});
-function openTrack(id){const c=$('track');c.classList.remove('d-none');if(id)$('t_q').value=id;armIdle();
-  if(!tpush){try{history.pushState({tr:1},'');tpush=true}catch(e){}}c.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$('t_q').focus({preventScroll:true}),450)}
-function closeTrack(auto){clearTimeout(idleT);clearResume();if(tpush){tpush=false;try{history.back()}catch(e){}}$('t_q').value='';LASTQ='';$('t_res').innerHTML='';CUR=null;$('track').classList.add('d-none');
+document.addEventListener('click',e=>{const t=e.target;if(!t.closest)return;
+  if(t.closest('.ext')){e.preventDefault();if($('inappBtn').onclick)$('inappBtn').onclick();return}
+  const tb=t.closest('[data-tab]');if(tb&&!tb.closest('#admin')){e.preventDefault();showTab(tb.dataset.tab);return}
+  const a=t.closest('a[href="#track"]');if(a){e.preventDefault();openTrack();return}
+  const o=t.closest('a[href="#order"]');if(o){e.preventDefault();showTab('order',{keepScroll:true});setTimeout(()=>{const x=$('order');if(x)x.scrollIntoView({behavior:'smooth',block:'start'})},60);return}
+  if(t.closest('#drawer a[href="#admin"]'))closeDrawer()});
+$('btnMenu').onclick=openDrawer;$('scrim').onclick=closeDrawer;$('dClose').onclick=closeDrawer;
+addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+(function(){let x0=null,y0=0;const d=$('drawer');d.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;y0=e.touches[0].clientY},{passive:true});
+  d.addEventListener('touchend',e=>{if(x0===null)return;const dx=e.changedTouches[0].clientX-x0,dy=Math.abs(e.changedTouches[0].clientY-y0);x0=null;if(dx<-60&&dy<50)closeDrawer()},{passive:true})})(); // ปัดซ้ายเพื่อปิดเมนู
+$('minibar').onclick=()=>$('summary').scrollIntoView({behavior:'smooth',block:'center'});
+if('IntersectionObserver' in window)new IntersectionObserver(en=>{SUMVIS=en[0].isIntersecting;minibarUpdate()},{threshold:.2}).observe($('summary'));
+function openTrack(id){showTab('track');if(id)$('t_q').value=id;armIdle();setTimeout(()=>$('t_q').focus({preventScroll:true}),350)}
+function closeTrack(auto){wipeTrack();if(TAB==='track')showTab('order');
   if(auto===true)Swal.fire({toast:true,position:'top',icon:'info',title:'ล้างข้อมูลการค้นหาแล้ว (ไม่มีการใช้งาน 10 นาที)',timer:3500,showConfirmButton:false})}
-document.addEventListener('click',e=>{const a=e.target.closest('a[href="#track"]');if(a){e.preventDefault();openTrack()}});
 $('t_q').addEventListener('keydown',e=>{if(e.key==='Enter')track()});
 $('track').addEventListener('input',armIdle);$('track').addEventListener('click',armIdle);$('btnTrackClose').onclick=()=>closeTrack();
+$('btnTable2').onclick=()=>{showTab('order',{keepScroll:true});$('design').click()};
 
 function submitOrder(){
   const items=INIT.sizes.map(s=>({size:s.size,qty:Q[s.size]||0,price:s.price})).filter(i=>i.qty>0);
@@ -548,8 +651,8 @@ let LASTQ='';
 function track(re){
   const q=re===true?LASTQ:$('t_q').value.trim();
   if(!q)return err('กรุณากรอกรหัสใบสั่งซื้อ หรือ เบอร์โทร อย่างใดอย่างหนึ่ง');
-  LASTQ=q;armIdle();if(re!==true)$('t_res').innerHTML='<div class="text-muted">กำลังค้นหา...</div>'; // รีเฟรชแบบเงียบ: ไม่ล้างผลเดิม หน้าไม่กระโดด
-  api('searchOrders',q).then(r=>{saveResume(q);showMasked(r)}).catch(e=>{if(re!==true)$('t_res').innerHTML='';err(e)});
+  LASTQ=q;armIdle();if(re!==true)NORESUME=false;if(re!==true)$('t_res').innerHTML='<div class="text-muted">กำลังค้นหา...</div>'; // รีเฟรชแบบเงียบ: ไม่ล้างผลเดิม หน้าไม่กระโดด
+  api('searchOrders',q).then(r=>{if(!NORESUME)saveResume(q);showMasked(r)}).catch(e=>{if(re!==true)$('t_res').innerHTML='';err(e)});
 }
 function showMasked(r){ // ผลค้นหาแบบปิดบังข้อมูลบางส่วน (ยังไม่ยืนยันตัวตน)
   CUR=null;
@@ -615,14 +718,15 @@ async function slip(sx,who,after){
     if(p.base64.length*.75>5*1048576){Swal.close();return err('ไฟล์ใหญ่เกิน 5 MB หลังย่อ กรุณาใช้รูปอื่น')}
     const t=Swal.getTitle();if(t)t.textContent='กำลังตรวจสอบสลิป... (ประมาณ 5–20 วินาที อย่าปิดหน้านี้)';
     const r=await api('attachSlip',Object.assign({payer:$('s_payer'+sx).value,filename:f.name,mimeType:p.mimeType,base64:p.base64},who));
-    await slipResult(r);if(r.accepted)clearResume();after()}
+    await slipResult(r);if(r.accepted){NORESUME=true;clearResume()}after()}
   catch(e){err(e)}
   finally{SLIPBUSY=false;if(btn)btn.disabled=false;armIdle()}
 }
 (function init(){
   try{localStorage.removeItem('sh_buyer');localStorage.removeItem('sh_last')}catch(e){} // ล้างข้อมูลส่วนบุคคลที่เวอร์ชันเก่าเคยจำไว้
   load();
-  const rs=readResume();if(rs){openTrack();$('t_q').value=rs.q;LASTQ=rs.q;track(true);Swal.fire({toast:true,position:'top',icon:'info',title:'กลับมาที่ผลค้นหาเดิมแล้ว — เลือกไฟล์สลิปได้เลย',timer:3500,showConfirmButton:false})}
+  const rs=readResume();if(rs){tpush=!!(history.state&&history.state.tab);showTab('track',{nopush:true}); // รีโหลดหน้าที่เคย push แท็บไว้: ให้ปุ่ม Back ยังกลับหน้าสั่งซื้อได้
+    $('t_q').value=rs.q;LASTQ=rs.q;track(true);Swal.fire({toast:true,position:'top',icon:'info',title:'กลับมาที่ผลค้นหาเดิมแล้ว — เลือกไฟล์สลิปได้เลย',timer:3500,showConfirmButton:false})}
 })();
 
 /* ===================== หลังบ้าน ===================== */
