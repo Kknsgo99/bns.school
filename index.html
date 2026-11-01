@@ -131,6 +131,7 @@ button,a,label.opt,select,input[type=radio],input[type=checkbox]{touch-action:ma
  .tbl-stack td select{max-width:100%}
  .anav .navbar-collapse{padding-top:8px}
 }
+#btnTrackClose{white-space:nowrap;flex:none}.h{flex-wrap:wrap}
 @media print{.anav,.noprint,#stats{display:none!important}.asec{display:none!important}#a_report{display:block!important}}
 </style></head><body>
 <div id="inapp" class="d-none" role="alert"><span id="inappTxt"></span><button type="button" class="btn-sub" id="inappBtn"></button><button type="button" class="x" id="inappX" aria-label="ปิดข้อความ">✕</button></div>
@@ -198,11 +199,10 @@ button,a,label.opt,select,input[type=radio],input[type=checkbox]{touch-action:ma
 
   <div class="cardx d-none" id="track">
    <div class="h"><i>3</i>ติดตามสถานะ / แจ้งโอน / ใบสั่งซื้อ-ใบเสร็จ<button type="button" class="btn btn-sm btn-outline-secondary ms-auto" id="btnTrackClose">✕ ปิด/ล้างข้อมูล</button></div>
-   <div class="small text-muted mb-2">กรอกเลขที่ออเดอร์และเบอร์โทรที่ใช้สั่ง เพื่อดูสถานะ แจ้งโอน และดาวน์โหลดใบสั่งซื้อ/ใบเสร็จ — ข้อมูลจะแสดงเมื่อค้นหาเท่านั้น และถูกล้างเมื่อปิดหรือไม่ได้ใช้งาน 5 นาที</div>
+   <div class="small text-muted mb-2">กรอก <b>รหัสใบสั่งซื้อ</b> หรือ <b>เบอร์โทรที่ใช้สั่ง</b> อย่างใดอย่างหนึ่ง เพื่อดูสถานะและแจ้งโอน — ผลค้นหาจะปิดบังชื่อ/เบอร์บางส่วน หากต้องการดูใบสั่งซื้อ/ใบเสร็จฉบับเต็ม ให้ยืนยันตัวตนอีกขั้น · ข้อมูลแสดงเมื่อค้นหาเท่านั้น และถูกล้างเมื่อปิดหรือไม่ได้ใช้งาน 10 นาที</div>
    <div class="row g-2">
-    <div class="col-md-5"><input id="t_id" class="form-control" autocomplete="off" placeholder="เลขที่ออเดอร์ เช่น SH2569-0001"></div>
-    <div class="col-md-4"><input id="t_phone" class="form-control" inputmode="tel" autocomplete="off" placeholder="เบอร์โทรที่ใช้สั่ง"></div>
-    <div class="col-md-3 d-grid"><button class="btn btn-outline-primary" id="btnTrack">ค้นหา</button></div>
+    <div class="col-md-9"><input id="t_q" class="form-control" autocomplete="off" autocapitalize="characters" placeholder="รหัสใบสั่งซื้อ (เช่น SH2569-0001) หรือ เบอร์โทร"></div>
+    <div class="col-md-3 d-grid"><button class="btn btn-outline-primary" id="btnTrack">🔍 ค้นหา</button></div>
    </div>
    <div id="t_res" class="mt-3"></div>
   </div>
@@ -287,11 +287,18 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;'
 const num=n=>Number(n||0).toLocaleString('th-TH');
 const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
 
+const TO={attachSlip:90000,def:45000}; // เวลารอสูงสุด (มิลลิวินาที) ต่อคำสั่ง
 function api(fn,...args){
   if(/PASTE_WEB_APP/.test(API_URL))return Promise.reject(new Error('ยังไม่ได้ตั้งค่า API_URL ใน index.html'));
+  const ctl=typeof AbortController!=='undefined'?new AbortController():null,tmo=setTimeout(()=>{if(ctl)ctl.abort()},TO[fn]||TO.def);
   // text/plain = "simple request" ไม่ต้อง preflight → ใช้ข้าม GitHub Pages → Apps Script ได้
-  return fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn,args})})
-    .then(r=>r.json()).then(j=>{if(!j.ok)throw new Error(j.error||'เกิดข้อผิดพลาด');return j.data});
+  return fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({fn,args}),signal:ctl?ctl.signal:undefined})
+    .then(r=>r.text()).then(t=>{clearTimeout(tmo);let j;
+      try{j=JSON.parse(t)}catch(e){throw new Error('เซิร์ฟเวอร์ตอบกลับไม่ถูกต้อง (อาจกำลังทำงานหนัก) กรุณาลองใหม่อีกครั้ง')}
+      if(!j.ok)throw new Error(j.error||'เกิดข้อผิดพลาด');return j.data})
+    .catch(e=>{clearTimeout(tmo);
+      if(e&&e.name==='AbortError')throw new Error(fn==='attachSlip'?'เซิร์ฟเวอร์ตอบช้า — หากกดส่งสลิปไปแล้ว ให้ตรวจสถานะที่เมนูติดตามก่อนส่งซ้ำ':'เซิร์ฟเวอร์ตอบช้า กรุณาลองใหม่');
+      throw e});
 }
 let T=sessionStorage.getItem('tk');
 function err(e){
@@ -474,12 +481,28 @@ function resetOrderForm(){ // ล้างข้อมูลส่วนบุ�
   document.querySelector('input[name=f_del][value="รับที่โรงเรียนตามรอบนัด"]').checked=true;syncDel();Q={};calc()}
 /* ติดตามสถานะ: ซ่อนไว้จนกว่าจะกดเมนู + ล้างข้อมูลเมื่อปิด/ไม่ใช้งาน 5 นาที */
 let idleT=null;
-function armIdle(){clearTimeout(idleT);idleT=setTimeout(()=>{if(!$('track').classList.contains('d-none'))closeTrack(true)},5*60*1000)}
-function openTrack(id){const c=$('track');c.classList.remove('d-none');if(id)$('t_id').value=id;armIdle();c.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$(id?'t_phone':'t_id').focus({preventScroll:true}),450)}
-function closeTrack(auto){clearTimeout(idleT);['t_id','t_phone'].forEach(i=>$(i).value='');$('t_res').innerHTML='';CUR=null;$('track').classList.add('d-none');
-  if(auto===true)Swal.fire({toast:true,position:'top',icon:'info',title:'ล้างข้อมูลการค้นหาแล้ว (ไม่มีการใช้งาน 5 นาที)',timer:3500,showConfirmButton:false})}
+function armIdle(){clearTimeout(idleT);idleT=setTimeout(()=>{if(!$('track').classList.contains('d-none'))closeTrack(true)},10*60*1000)}
+/* กันหน้า "เด้งออก/หายเอง": จำคำค้นไว้ชั่วคราวในแท็บนี้ (sessionStorage ≤30 นาที ล้างเมื่อกดปิด/แนบสลิปสำเร็จ) เผื่อเบราว์เซอร์รีโหลดตอนเปิดกล้อง/แอปธนาคาร */
+const RK='sh_resume';
+function saveResume(q){try{sessionStorage.setItem(RK,JSON.stringify({q,ts:Date.now()}))}catch(e){}}
+function clearResume(){try{sessionStorage.removeItem(RK)}catch(e){}}
+function readResume(){try{const r=JSON.parse(sessionStorage.getItem(RK)||'null');if(r&&r.q&&Date.now()-r.ts<30*60*1000)return r}catch(e){}clearResume();return null}
+let tpush=false,hideTs=0;
+document.addEventListener('visibilitychange',()=>{ // ออกไปโอนเงิน/ถ่ายรูปแล้วกลับมา ต้องไม่ถูกล้างทันที
+  if(document.hidden){hideTs=Date.now();clearTimeout(idleT);return}
+  if($('track').classList.contains('d-none')){hideTs=0;return}
+  if(hideTs&&Date.now()-hideTs>30*60*1000)closeTrack(true);else armIdle();hideTs=0});
+addEventListener('popstate',()=>{if(tpush){tpush=false;if(!$('track').classList.contains('d-none'))closeTrack()}}); // ปุ่ม Back ปิดส่วนติดตาม ไม่ใช่ออกจากเว็บ
+addEventListener('beforeunload',e=>{if(typeof SLIPBUSY!=='undefined'&&SLIPBUSY){e.preventDefault();e.returnValue=''}});
+document.addEventListener('change',e=>{const t=e.target;if(t&&/^s_file/.test(t.id||'')){const f=t.files[0],i=$('s_info'+t.id.slice(6));armIdle();
+  if(i)i.innerHTML=f?`📎 ${esc(f.name)} · ${Math.round(f.size/1024)} KB ${f.size>15*1048576?'<b class="text-danger">(ใหญ่เกินไป)</b>':'— กด "ส่งสลิป" เพื่อตรวจสอบ'}`:''}});
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('.ext')){e.preventDefault();if($('inappBtn').onclick)$('inappBtn').onclick()}});
+function openTrack(id){const c=$('track');c.classList.remove('d-none');if(id)$('t_q').value=id;armIdle();
+  if(!tpush){try{history.pushState({tr:1},'');tpush=true}catch(e){}}c.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$('t_q').focus({preventScroll:true}),450)}
+function closeTrack(auto){clearTimeout(idleT);clearResume();if(tpush){tpush=false;try{history.back()}catch(e){}}$('t_q').value='';LASTQ='';$('t_res').innerHTML='';CUR=null;$('track').classList.add('d-none');
+  if(auto===true)Swal.fire({toast:true,position:'top',icon:'info',title:'ล้างข้อมูลการค้นหาแล้ว (ไม่มีการใช้งาน 10 นาที)',timer:3500,showConfirmButton:false})}
 document.addEventListener('click',e=>{const a=e.target.closest('a[href="#track"]');if(a){e.preventDefault();openTrack()}});
-['t_id','t_phone'].forEach(i=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter')track()}));
+$('t_q').addEventListener('keydown',e=>{if(e.key==='Enter')track()});
 $('track').addEventListener('input',armIdle);$('track').addEventListener('click',armIdle);$('btnTrackClose').onclick=()=>closeTrack();
 
 function submitOrder(){
@@ -505,43 +528,75 @@ function submitOrder(){
         <a class="small" href="${INIT.qr||QR_IMG}" download="promptpay-qr">⬇ บันทึกรูป QR</a>
         <div class="small mt-1">ชื่อบัญชี: ${esc(INIT.account)}<br>${esc(INIT.bank)}</div>
         <div class="small text-muted mt-2">โอน ${num(o.total)} บาท แล้วแนบสลิปที่เมนู "ติดตาม" (กรอกเลขที่ออเดอร์ + เบอร์โทร) · จดเลขที่ออเดอร์ไว้ เพราะระบบจะไม่เก็บข้อมูลของคุณไว้ในเครื่อง</div>`
-      }).then(x=>{if(x.isConfirmed&&img)showDoc(img,o.id+'.jpg','ใบสั่งซื้อ '+o.id);else if(x.isDenied)openTrack(o.id)});
+      }).then(x=>{if(x.isConfirmed&&img)showDoc(img,o.id+'.jpg','ใบสั่งซื้อ '+o.id);else if(x.isDenied){openTrack(o.id);track()}});
     }).catch(err);
   });
 }
 $('btnSubmit').onclick=submitOrder;
 const cls={'รอชำระเงิน':'bg-warning-subtle text-warning-emphasis','รอตรวจสอบการชำระเงิน':'bg-info-subtle text-info-emphasis','ชำระเงินแล้ว':'bg-success-subtle text-success-emphasis','ยกเลิก':'bg-danger-subtle text-danger-emphasis'};
-function track(){
-  const id=$('t_id').value.trim().toUpperCase(),ph=$('t_phone').value.trim().replace(/[\s-]/g,'');
-  if(!id||!ph)return;
-  $('t_res').innerHTML='<div class="text-muted">กำลังค้นหา...</div>';
-  api('lookupOrder',id,ph).then(o=>{
-    CUR={id:o.id,phone:ph,o};armIdle();
-    const up=o.status==='รอชำระเงิน'||o.status==='รอตรวจสอบการชำระเงิน';
-    $('t_res').innerHTML=`<div class="border rounded-4 p-3"><div class="d-flex justify-content-between"><b>${esc(o.id)}</b><span class="pill ${cls[o.status]||''}">${esc(o.status)}</span></div>
-     <div class="small text-muted">${esc(o.name)} · รุ่น ${esc(o.year)} · ${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div><div class="mt-1">${esc(o.items)}</div><div><b>${num(o.total)} บาท</b> · ${esc(o.delivery)}</div>
-     <button class="btn btn-sm btn-outline-primary mt-2" id="b_dl">🖼 ใบสั่งซื้อ (JPG)</button>
-     ${o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-success mt-2 ms-1" id="b_rc">🧾 ใบเสร็จรับเงิน (JPG)</button><div class="small mt-2" style="color:var(--green)">✔ ชำระเงินแล้ว${o.receiptNo?' · เลขที่ใบเสร็จ <b>'+esc(o.receiptNo)+'</b>':''}<br>บันทึก/พิมพ์ใบเสร็จนี้ไว้เป็นหลักฐานแสดงเมื่อรับเสื้อ</div>`:''}
-     ${o.picked?`<div class="mt-2 p-2 rounded-3" style="background:var(--green-s);color:var(--green)">📦 <b>${o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว'}</b> เมื่อ ${esc(o.pickedAt)}${o.receiver?' · ผู้รับ '+esc(o.receiver):''}</div>`:''}
-     ${o.status==='รอชำระเงิน'&&['ยอดไม่ตรง','ไม่ใช่สลิป','ซ้ำ'].includes(o.slipResult)?`<div class="mt-2 p-2 rounded-3" style="background:#FDECEA;color:#9b1c1c">⚠ <b>สลิปล่าสุดไม่ผ่านการตรวจสอบ</b>: ${esc(o.slipNote)}<br><span class="small">กรุณาโอนใหม่ให้ถูกต้องแล้วแนบสลิปอีกครั้ง หรือติดต่อ</span> ${telLink(o.contact)}</div>`:''}
-     ${o.status==='รอตรวจสอบการชำระเงิน'?`<div class="mt-2 p-2 rounded-3" style="background:${o.slipResult==='ผ่าน'?'var(--green-s)':'var(--yellow-s)'}">${o.slipResult==='ผ่าน'?'✔ ตรวจสลิปเบื้องต้นผ่านแล้ว (ยอดตรง) รอครูยืนยัน':'🔎 รอครูตรวจสอบสลิปด้วยตนเอง'}${o.slipNote?'<br><span class="small">'+esc(o.slipNote)+'</span>':''}</div>`:''}
-     ${up?`<hr><div class="small mb-1">${o.status==='รอชำระเงิน'?'แนบสลิปโอนเงิน':'แนบสลิปใหม่ (ถ้าต้องการเปลี่ยน)'}</div>
-     <input id="s_payer" class="form-control form-control-sm mb-2" placeholder="ชื่อผู้โอน">
-     <input id="s_file" type="file" accept="image/*,application/pdf" class="form-control form-control-sm mb-2">
-     <button class="btn-o btn-sm" id="b_slip">ส่งสลิป</button>`:''}</div>`;
-    $('b_dl').onclick=()=>orderImg(CUR.o);
-    if($('b_rc'))$('b_rc').onclick=()=>rc(CUR.id,CUR.phone);
-    if($('b_slip'))$('b_slip').onclick=slip;
-  }).catch(e=>{$('t_res').innerHTML='';err(e)});
+const REJ=['ยอดไม่ตรง','ไม่ใช่สลิป','ซ้ำ'];
+function notices(o){return `${o.status==='รอชำระเงิน'&&REJ.includes(o.slipResult)?`<div class="mt-2 p-2 rounded-3" style="background:#FDECEA;color:#9b1c1c">⚠ <b>สลิปล่าสุดไม่ผ่านการตรวจสอบ</b>: ${esc(o.slipNote)}<br><span class="small">กรุณาโอนใหม่ให้ถูกต้องแล้วแนบสลิปอีกครั้ง หรือติดต่อ</span> ${telLink(o.contact)}</div>`:''}
+  ${o.status==='รอตรวจสอบการชำระเงิน'?`<div class="mt-2 p-2 rounded-3" style="background:${o.slipResult==='ผ่าน'?'var(--green-s)':'var(--yellow-s)'}">${o.slipResult==='ผ่าน'?'✔ ตรวจสลิปเบื้องต้นผ่านแล้ว (ยอดตรง) รอครูยืนยัน':'🔎 รอครูตรวจสอบสลิปด้วยตนเอง'}${o.slipNote?'<br><span class="small">'+esc(o.slipNote)+'</span>':''}</div>`:''}`}
+const pickedBox=o=>o.picked?`<div class="mt-2 p-2 rounded-3" style="background:var(--green-s);color:var(--green)">📦 <b>${o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว'}</b> เมื่อ ${esc(o.pickedAt)}${o.receiver?' · ผู้รับ '+esc(o.receiver):''}</div>`:'';
+const canSlip=o=>o.status==='รอชำระเงิน'||o.status==='รอตรวจสอบการชำระเงิน';
+const slipForm=(o,sx)=>`<hr><div class="small mb-1">${o.status==='รอชำระเงิน'?'แนบสลิปโอนเงิน':'แนบสลิปใหม่ (ถ้าต้องการเปลี่ยน)'}</div>
+  <input id="s_payer${sx}" class="form-control form-control-sm mb-2" placeholder="ชื่อผู้โอน" autocomplete="off">
+  <input id="s_file${sx}" type="file" accept="image/*,application/pdf" class="form-control form-control-sm mb-1">
+  <div class="small text-muted mb-2" id="s_info${sx}"></div>${IN_APP?`<div class="small mb-2 p-2 rounded-3" style="background:var(--yellow-s);color:#5c4300">⚠ เปิดผ่านแอป LINE/Facebook อาจเด้งออกตอนเลือกรูป แนะนำ <a href="#" class="ext fw-semibold">เปิดในเบราว์เซอร์</a> ก่อนแนบสลิป</div>`:''}
+  <button class="btn-o btn-sm" id="b_slip${sx}">ส่งสลิป</button>`;
+let LASTQ='';
+function track(re){
+  const q=re===true?LASTQ:$('t_q').value.trim();
+  if(!q)return err('กรุณากรอกรหัสใบสั่งซื้อ หรือ เบอร์โทร อย่างใดอย่างหนึ่ง');
+  LASTQ=q;armIdle();if(re!==true)$('t_res').innerHTML='<div class="text-muted">กำลังค้นหา...</div>'; // รีเฟรชแบบเงียบ: ไม่ล้างผลเดิม หน้าไม่กระโดด
+  api('searchOrders',q).then(r=>{saveResume(q);showMasked(r)}).catch(e=>{if(re!==true)$('t_res').innerHTML='';err(e)});
+}
+function showMasked(r){ // ผลค้นหาแบบปิดบังข้อมูลบางส่วน (ยังไม่ยืนยันตัวตน)
+  CUR=null;
+  $('t_res').innerHTML=(r.total>1?`<div class="small text-muted mb-2">พบ ${r.total} รายการ${r.total>r.orders.length?' (แสดง '+r.orders.length+' รายการล่าสุด)':''}</div>`:'')+r.orders.map((o,i)=>`
+   <div class="border rounded-4 p-3 mb-3"><div class="d-flex justify-content-between gap-2"><b>${esc(o.id)}</b><span class="pill ${cls[o.status]||''}">${esc(o.status)}</span></div>
+    <div class="small text-muted">${esc(o.name)} · โทร ${esc(o.phone)} · ${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div>
+    <div class="mt-1">${esc(o.items)}</div><div><b>${num(o.total)} บาท</b> · ${esc(o.delivery)}</div>
+    ${notices(o)}${pickedBox(o)}
+    <button class="btn btn-sm btn-outline-primary mt-2" id="v_${i}">🔓 ยืนยัน${o.by==='id'?'เบอร์โทร':'รหัสใบสั่งซื้อ'}เพื่อดูใบสั่งซื้อ / ใบเสร็จ (JPG)</button>
+    ${canSlip(o)?slipForm(o,'_'+i):''}</div>`).join('');
+  r.orders.forEach((o,i)=>{$('v_'+i).onclick=()=>verify(o);if($('b_slip_'+i))$('b_slip_'+i).onclick=()=>slip('_'+i,{tk:o.tk},()=>track(true))});
+}
+function verify(o){const byId=o.by==='id';
+  Swal.fire({title:'ยืนยันตัวตน',confirmButtonText:'ยืนยัน',cancelButtonText:'ยกเลิก',showCancelButton:true,confirmButtonColor:'#16833F',
+    html:`<div class="small text-start">เพื่อปกป้องข้อมูลส่วนบุคคล กรุณากรอก${byId?'<b>เบอร์โทรเต็ม</b>ที่ใช้สั่ง':'<b>รหัสใบสั่งซื้อเต็ม</b>'}ของออเดอร์นี้ เพื่อดูรายละเอียดฉบับเต็มและดาวน์โหลดใบสั่งซื้อ/ใบเสร็จ</div>`,
+    input:'text',inputPlaceholder:byId?'เช่น 0812345678':'เช่น SH2569-0001',inputAttributes:{autocomplete:'off',inputmode:byId?'tel':'text',autocapitalize:'characters'},
+    preConfirm:v=>{if(!String(v||'').trim()){Swal.showValidationMessage('กรุณากรอกข้อมูลยืนยัน');return false}
+      return api('verifyOrder',o.tk,v).catch(e=>{Swal.showValidationMessage(String(e.message||e).replace(/^Error: /,''));return false})}
+  }).then(r=>{if(r.isConfirmed&&r.value)showFull(r.value)})}
+function refreshFull(){api('lookupOrder',CUR.id,CUR.phone).then(showFull).catch(err)}
+function showFull(o){ // ฉบับเต็ม (ยืนยันตัวตนแล้ว): ใบสั่งซื้อ/ใบเสร็จ JPG
+  CUR={id:o.id,phone:String(o.phone).replace(/\D/g,''),o};armIdle();
+  $('t_res').innerHTML=`<div class="border rounded-4 p-3"><div class="d-flex justify-content-between gap-2"><b>${esc(o.id)}</b><span class="pill ${cls[o.status]||''}">${esc(o.status)}</span></div>
+   <div class="small text-muted">${esc(o.name)} · รุ่น ${esc(o.year)} · ${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div><div class="mt-1">${esc(o.items)}</div><div><b>${num(o.total)} บาท</b> · ${esc(o.delivery)}</div>
+   <div class="d-flex flex-wrap gap-2 mt-2"><button class="btn btn-sm btn-outline-primary" id="b_dl">🖼 ใบสั่งซื้อ (JPG)</button>
+   ${o.status==='ชำระเงินแล้ว'?'<button class="btn btn-sm btn-success" id="b_rc">🧾 ใบเสร็จรับเงิน (JPG)</button>':''}
+   ${LASTQ?'<button class="btn btn-sm btn-outline-secondary" id="b_back">← กลับผลค้นหา</button>':''}</div>
+   ${o.status==='ชำระเงินแล้ว'?`<div class="small mt-2" style="color:var(--green)">✔ ชำระเงินแล้ว${o.receiptNo?' · เลขที่ใบเสร็จ <b>'+esc(o.receiptNo)+'</b>':''}<br>บันทึก/พิมพ์ใบเสร็จนี้ไว้เป็นหลักฐานแสดงเมื่อรับเสื้อ</div>`:''}
+   ${pickedBox(o)}${notices(o)}${canSlip(o)?slipForm(o,''):''}</div>`;
+  $('b_dl').onclick=()=>orderImg(CUR.o);
+  if($('b_rc'))$('b_rc').onclick=()=>rc(CUR.id,CUR.phone);
+  if($('b_back'))$('b_back').onclick=()=>track(true);
+  if($('b_slip'))$('b_slip').onclick=()=>slip('',{id:CUR.id,phone:CUR.phone},refreshFull);
 }
 $('btnTrack').onclick=track;
 const fileB64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.onerror=no;r.readAsDataURL(f)});
-async function slipPrep(f){ // ย่อรูปสลิป ≤1600px เป็น JPEG: อัปโหลดไว + OCR อ่านยอดแม่นขึ้น
+async function slipPrep(f){ // ย่อรูปสลิป ≤1600px เป็น JPEG: อัปโหลดไว + OCR อ่านยอดแม่นขึ้น + ไม่กินหน่วยความจำมือถือ
   const raw=async()=>({mimeType:f.type||mimeOf(f.name),base64:await fileB64(f)});
   if(!/^image\/(jpeg|png|webp)$/.test(f.type||''))return raw();
-  try{const bm=await createImageBitmap(f),k=Math.min(1,1600/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
-    c.width=Math.round(bm.width*k);c.height=Math.round(bm.height*k);const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(bm,0,0,c.width,c.height);
-    return{mimeType:'image/jpeg',base64:c.toDataURL('image/jpeg',0.88).split(',')[1]}}catch(e){return raw()}}
+  let bm=null,c=null;
+  try{bm=await createImageBitmap(f);
+    const k=Math.min(1,1600/Math.max(bm.width,bm.height));
+    c=document.createElement('canvas');c.width=Math.max(1,Math.round(bm.width*k));c.height=Math.max(1,Math.round(bm.height*k));
+    const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(bm,0,0,c.width,c.height);
+    return{mimeType:'image/jpeg',base64:c.toDataURL('image/jpeg',0.85).split(',')[1]}}
+  catch(e){if(f.size<=4*1048576)return raw();throw new Error('ย่อรูปไม่สำเร็จ (รูปใหญ่เกินไป) กรุณาถ่ายภาพหน้าจอสลิปแล้วแนบใหม่')}
+  finally{if(bm&&bm.close)bm.close();if(c){c.width=c.height=0}}}
 const telLink=s=>{const m=/0\d{2}-?\d{3}-?\d{4}/.exec(s||'');return m?`<a class="btn btn-success btn-sm mt-1" href="tel:${m[0].replace(/-/g,'')}">📞 โทร ${esc(s)}</a>`:esc(s||'ผู้ดูแล')};
 function slipResult(r){
   if(r.accepted)return Swal.fire({icon:r.result==='ผ่าน'?'success':'info',title:r.result==='ผ่าน'?'ส่งสลิปแล้ว ✔ ยอดตรงกับคำสั่งซื้อ':'ส่งสลิปแล้ว รอครูตรวจสอบ',
@@ -549,19 +604,25 @@ function slipResult(r){
   return Swal.fire({icon:'error',title:'สลิปไม่ผ่านการตรวจสอบ',confirmButtonText:'เข้าใจแล้ว',confirmButtonColor:'#0B2E7A',
     html:`<div class="text-start"><div class="p-2 rounded-3 mb-2" style="background:#FDECEA;color:#9b1c1c">⚠ ${esc(r.message||'')}</div>
     <b>กรุณาทำรายการโอนใหม่ให้ถูกต้อง แล้วแนบสลิปอีกครั้ง</b><br>หรือติดต่อสอบถาม<br>${telLink(r.contact)}</div>`})}
-async function slip(){
-  const f=$('s_file').files[0];if(!f)return err('กรุณาเลือกไฟล์สลิป');
-  if(f.size>10*1048576)return err('ไฟล์ใหญ่เกิน 10 MB');
-  busy('กำลังตรวจสอบสลิป... (ประมาณ 5–10 วินาที)');
+let SLIPBUSY=false;
+async function slip(sx,who,after){
+  if(SLIPBUSY)return; // กันกดซ้ำ
+  const f=$('s_file'+sx).files[0];if(!f)return err('กรุณาเลือกไฟล์สลิป (แตะที่ช่อง "เลือกไฟล์")');
+  if(f.size>15*1048576)return err('ไฟล์ใหญ่เกิน 15 MB กรุณาเลือกรูปอื่น หรือถ่ายภาพหน้าจอสลิปแทน');
+  SLIPBUSY=true;const btn=$('b_slip'+sx);if(btn)btn.disabled=true;armIdle();
+  busy('กำลังเตรียมรูปสลิป...');
   try{const p=await slipPrep(f);
-    if(p.base64.length*.75>5*1048576){Swal.close();return err('ไฟล์ใหญ่เกิน 5 MB กรุณาใช้รูปอื่น')}
-    const r=await api('attachSlip',{id:CUR.id,phone:CUR.phone,payer:$('s_payer').value,filename:f.name,mimeType:p.mimeType,base64:p.base64});
-    await slipResult(r);track()}
+    if(p.base64.length*.75>5*1048576){Swal.close();return err('ไฟล์ใหญ่เกิน 5 MB หลังย่อ กรุณาใช้รูปอื่น')}
+    const t=Swal.getTitle();if(t)t.textContent='กำลังตรวจสอบสลิป... (ประมาณ 5–20 วินาที อย่าปิดหน้านี้)';
+    const r=await api('attachSlip',Object.assign({payer:$('s_payer'+sx).value,filename:f.name,mimeType:p.mimeType,base64:p.base64},who));
+    await slipResult(r);if(r.accepted)clearResume();after()}
   catch(e){err(e)}
+  finally{SLIPBUSY=false;if(btn)btn.disabled=false;armIdle()}
 }
 (function init(){
   try{localStorage.removeItem('sh_buyer');localStorage.removeItem('sh_last')}catch(e){} // ล้างข้อมูลส่วนบุคคลที่เวอร์ชันเก่าเคยจำไว้
   load();
+  const rs=readResume();if(rs){openTrack();$('t_q').value=rs.q;LASTQ=rs.q;track(true);Swal.fire({toast:true,position:'top',icon:'info',title:'กลับมาที่ผลค้นหาเดิมแล้ว — เลือกไฟล์สลิปได้เลย',timer:3500,showConfirmButton:false})}
 })();
 
 /* ===================== หลังบ้าน ===================== */
