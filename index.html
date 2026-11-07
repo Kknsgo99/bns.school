@@ -228,9 +228,8 @@ body.noscroll{overflow:hidden}
     <div class="col-6 col-md-3"><label class="form-label">รุ่น (พ.ศ.)</label><input id="f_year" class="form-control" inputmode="numeric" placeholder="เช่น 2530"></div>
     <div class="col-6 col-md-3"><label class="form-label">เบอร์โทร *</label><input id="f_phone" class="form-control" inputmode="tel" autocomplete="tel"></div>
     <div class="col-md-6"><label class="form-label">Line / Facebook</label><input id="f_line" class="form-control"></div>
-    <div class="col-md-6"><label class="form-label">อีเมล <span class="text-muted small">(รับใบสั่งซื้อ/ใบเสร็จ/แจ้งสถานะ)</span></label><input id="f_email" type="email" class="form-control" inputmode="email" autocomplete="email" placeholder="ไม่บังคับ"></div>
-    <div class="col-md-6 d-none" id="f_smsWrap"><label class="form-label">แจ้งทาง SMS</label><label class="opt" style="display:flex"><input type="checkbox" id="f_sms"><span><b>รับ SMS แจ้งสถานะ</b><small>ส่งไปที่เบอร์โทรที่กรอก</small></span></label></div>
-    <div class="col-12 d-none" id="f_lineHint"><div class="small p-2 rounded-3" style="background:var(--green-s,#e8f5ec)">💬 รับแจ้งสถานะ+ใบเสร็จทาง LINE: เพิ่มเพื่อน <b id="f_lineOA"></b> แล้วพิมพ์ <b>เลขที่ออเดอร์ เบอร์โทร</b> (เช่น SH2569-0001 0812345678) หลังสั่งซื้อเสร็จ</div></div>
+    <div class="col-md-6"><label class="form-label">อีเมล <span class="text-muted small">(รับใบสั่งซื้อ/ใบเสร็จเป็นไฟล์รูป)</span></label><input id="f_email" type="email" class="form-control" inputmode="email" autocomplete="email" placeholder="ไม่บังคับ"><div class="hint">ระบบแจ้งสถานะและแนบรูปใบสั่งซื้อ/ใบเสร็จให้ทางอีเมลนี้</div></div>
+    <div class="col-12 d-none" id="smsWrap"><div class="form-check"><input class="form-check-input" type="checkbox" id="f_sms"><label class="form-check-label" for="f_sms">รับ SMS แจ้งสถานะที่เบอร์โทรด้านบน</label></div></div>
     <div class="col-12"><label class="form-label">วิธีรับสินค้า *</label>
      <div class="opts">
       <label class="opt on"><input type="radio" name="f_del" value="รับที่โรงเรียนตามรอบนัด" checked><span><b>รับที่โรงเรียน</b><small>รับเสื้อตามรอบนัดที่ครูแจ้ง</small></span></label>
@@ -299,7 +298,7 @@ body.noscroll{overflow:hidden}
    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nv"><span class="navbar-toggler-icon"></span></button>
    <div class="collapse navbar-collapse" id="nv"><div class="navbar-nav me-auto gap-1">
     <a class="nav-link active" data-s="overview" href="#admin">ภาพรวม</a><a class="nav-link" data-s="orders" href="#admin">ออเดอร์</a>
-    <a class="nav-link" data-s="rounds" href="#admin">รอบสั่งจอง</a><a class="nav-link" data-s="sizes" href="#admin">ไซส์/ราคา/โควต้า</a><a class="nav-link" data-s="report" href="#admin">รายงาน</a><a class="nav-link" data-s="qr" href="#admin">QR</a><a class="nav-link" data-s="notify" href="#admin">แจ้งเตือน</a></div>
+    <a class="nav-link" data-s="rounds" href="#admin">รอบสั่งจอง</a><a class="nav-link" data-s="sizes" href="#admin">ไซส์/ราคา/โควต้า</a><a class="nav-link" data-s="report" href="#admin">รายงาน</a><a class="nav-link" data-s="qr" href="#admin">QR</a><a class="nav-link" data-s="notify" href="#admin">แจ้งเตือน/ตรวจสลิป</a></div>
     <span class="text-white-50 small me-3" id="live">●</span><a class="btn btn-sm btn-outline-light me-2" href="#">หน้าบ้าน</a>
     <button class="btn btn-sm btn-light" id="btnLogout">ออก</button></div></div></nav>
 
@@ -333,9 +332,10 @@ body.noscroll{overflow:hidden}
     <div><button class="btn btn-sm btn-outline-primary" onclick="window.print()">🖨 พิมพ์</button> <button class="btn btn-sm btn-primary" id="btnPdf">⬇ PDF (บันทึกใน Drive)</button></div></div>
     <div id="rep"></div></div></div>
 
-   <div class="asec" id="a_notify"><div class="cardx"><div class="d-flex justify-content-between align-items-center mb-2"><h6 class="mb-0">สถานะช่องทางแจ้งเตือน</h6><button class="btn btn-sm btn-primary" id="btnNtTest">🔔 ส่งข้อความทดสอบหาแอดมิน</button></div>
-    <div id="ntst" class="small"></div>
-    <div class="small text-muted mt-3">ตั้งค่าที่ Apps Script → Project Settings → Script properties: <code>TEACHER_EMAIL</code> (อีเมลแอดมิน คั่นหลายอีเมลด้วย ,) · <code>LINE_TOKEN</code> + <code>LINE_TO</code> (LINE Messaging API: userId/groupId ของแอดมิน) · <code>LINE_OA</code> (ชื่อ @บัญชี LINE ที่ให้ลูกค้าเพิ่มเพื่อน) · <code>SITE_URL</code> (ลิงก์เว็บ) · <code>SMS_PROVIDER=twilio</code>, <code>TWILIO_SID/TOKEN/FROM</code>, <code>ADMIN_SMS_TO</code> · <code>PUBLIC_IMAGES=1</code> (ส่งรูปใน LINE) · <code>EASYSLIP_TOKEN</code> (ตรวจสลิปกับธนาคาร) — รายละเอียดใน README</div></div></div>
+   <div class="asec" id="a_notify"><div class="cardx"><h6>ช่องทางแจ้งเตือน และระบบตรวจสลิปอัตโนมัติ</h6>
+    <div class="small text-muted mb-2">ตั้งค่าที่ Apps Script → Project Settings → Script properties (ชื่อคีย์อยู่ในวงเล็บ) · แก้แล้วมีผลทันที ไม่ต้อง Deploy ใหม่</div>
+    <div class="table-responsive"><table class="table table-sm align-middle mb-2"><tbody id="nt"></tbody></table></div>
+    <button class="btn btn-primary btn-sm" id="btnNtTest">🔔 ส่งข้อความทดสอบถึงแอดมิน</button> <button class="btn btn-outline-secondary btn-sm" id="btnNtRef">รีเฟรชสถานะ</button></div></div>
 
    <div class="asec" id="a_qr"><div class="cardx"><h6>อัปโหลดรูป QR พร้อมเพย์</h6><div id="qrst" class="small text-muted mb-2"></div>
     <input type="file" id="qf" accept="image/*" class="form-control mb-2"><button class="btn btn-primary btn-sm" id="btnQr">อัปโหลด</button></div></div>
@@ -502,12 +502,9 @@ const TM=['มกราคม','กุมภาพันธ์','มีนาค
 const tm=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}:\d{2})$/.exec(s||'');return m?`${+m[3]} ${TM[+m[2]-1]} ${+m[1]+543} ${m[4]} น.`:esc(s)};
 const RST={open:['กำลังเปิดรับ','bg-success-subtle text-success-emphasis'],upcoming:['เร็ว ๆ นี้','bg-warning-subtle text-warning-emphasis'],full:['เต็มแล้ว','bg-danger-subtle text-danger-emphasis'],ended:['ปิดแล้ว','bg-secondary-subtle text-secondary-emphasis'],off:['ปิด','bg-secondary-subtle text-secondary-emphasis']};
 const idx=s=>INIT.sizes.findIndex(x=>x.size===s);
-function notifyUI(){ // แสดงช่องทางแจ้งเตือนเท่าที่แอดมินตั้งค่าไว้
-  if(!INIT)return;$('f_smsWrap').classList.toggle('d-none',!INIT.sms);
-  $('f_lineHint').classList.toggle('d-none',!INIT.lineOA);$('f_lineOA').textContent=INIT.lineOA||''}
 function load(){
   return api('getInit').then(d=>{
-    INIT=d;notifyUI();$('proj').textContent=d.project||'เสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569';
+    INIT=d;$('smsWrap').classList.toggle('d-none',!d.sms);$('proj').textContent=d.project||'เสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569';
     const R=d.round,mn=d.sizes.length?Math.min(...d.sizes.map(s=>s.price)):0;
     $('chips').innerHTML=(mn?`<span class="chip chip-y">ราคา ${num(mn)} บาท/ตัว</span>`:'')+(R?`<span class="chip">🗓 ${esc(R.name)} · ปิดรับ ${tm(R.end)}</span>`+(R.limit?`<span class="chip">เหลือ ${R.remaining} จาก ${R.limit} ตัว</span>`:''):'')+(d.contacts?`<span class="chip">📞 ${esc(d.contacts)}</span>`:'');
     $('closed').textContent='⛔ '+(d.msg||'');$('closed').classList.toggle('d-none',d.open);$('btnSubmit').disabled=!d.open;
@@ -563,7 +560,7 @@ function addrVal(){const g=i=>$(i).value.trim(),name=g('a_name'),tel=g('a_tel').
   return{addr:`ผู้รับ: ${name} โทร ${tel||g('f_phone').replace(/[\s-]/g,'')} | ${l1}, ต./แขวง ${sub}, อ./เขต ${dis}, จ.${pro} ${zip}`}}
 function resetOrderForm(){ // ล้างข้อมูลส่วนบุคคลทั้งหมดหลังสั่งซื้อสำเร็จ
   ['f_name','f_year','f_phone','f_line','f_email','f_note','a_name','a_tel','a_l1','a_sub','a_dis','a_pro','a_zip'].forEach(i=>$(i).value='');
-  {const sm=$('f_sms');if(sm)sm.checked=false}document.querySelector('input[name=f_del][value="รับที่โรงเรียนตามรอบนัด"]').checked=true;syncDel();Q={};calc()}
+  document.querySelector('input[name=f_del][value="รับที่โรงเรียนตามรอบนัด"]').checked=true;$('f_sms').checked=false;syncDel();Q={};calc()}
 /* ติดตามสถานะ: ซ่อนไว้จนกว่าจะกดเมนู + ล้างข้อมูลเมื่อปิด/ไม่ใช้งาน 5 นาที */
 let idleT=null,TAB='order',tpush=false,hideTs=0;
 /* กันหน้า "เด้งออก/หายเอง": จำคำค้นไว้ชั่วคราวในแท็บนี้ (sessionStorage ≤30 นาที ล้างเมื่อกดปิด/แนบสลิปสำเร็จ) เผื่อเบราว์เซอร์รีโหลดตอนเปิดกล้อง/แอปธนาคาร */
@@ -618,14 +615,19 @@ $('t_q').addEventListener('keydown',e=>{if(e.key==='Enter')track()});
 $('track').addEventListener('input',armIdle);$('track').addEventListener('click',armIdle);$('btnTrackClose').onclick=()=>closeTrack();
 $('btnTable2').onclick=()=>{showTab('order',{keepScroll:true});$('design').click()};
 
+function notifyNote(email,sms,id,phone){ // สรุปช่องทางแจ้งสถานะ + วิธีผูก LINE
+  const ch=[email?'อีเมล (แนบรูปใบสั่งซื้อ/ใบเสร็จ)':'',sms?'SMS':''].filter(Boolean);
+  const line=INIT.lineOA?`<div class="mt-1">💬 รับแจ้งทาง LINE: เพิ่มเพื่อน <a href="https://line.me/R/ti/p/${encodeURIComponent(INIT.lineOA)}" target="_blank" rel="noopener"><b>${esc(INIT.lineOA)}</b></a> แล้วพิมพ์<br><code>${esc(id)} เบอร์โทรที่ใช้สั่ง</code>${phone?`<div class="mt-2"><a class="btn btn-success btn-sm" target="_blank" rel="noopener" href="https://line.me/R/oaMessage/${encodeURIComponent(INIT.lineOA)}/?${encodeURIComponent(id+' '+phone)}">💬 กดเพื่อผูก LINE (ส่งข้อความให้อัตโนมัติ)</a><div class="text-muted" style="font-size:.8em">เปิดแชต LINE แล้วกดส่งข้อความที่เตรียมไว้ 1 ครั้ง</div></div>`:''}</div>`:'';
+  return(ch.length||line)?`<div class="small mt-2 p-2 rounded-3 text-start" style="background:#EEF4FF">📨 ระบบจะแจ้งสถานะ (รับคำสั่งซื้อ · ตรวจสลิป · ยืนยันรับเงิน · รับเสื้อ) ทาง ${ch.length?ch.join(' และ '):'ช่องทางที่ผูกไว้'}${line}</div>`:'';
+}
 function submitOrder(){
   const items=INIT.sizes.map(s=>({size:s.size,qty:Q[s.size]||0,price:s.price})).filter(i=>i.qty>0);
   const name=$('f_name').value.trim(),phone=$('f_phone').value.trim().replace(/[\s-]/g,'');
   if(!name)return err('กรุณากรอกชื่อ-นามสกุล');
   if(!/^0\d{8,9}$/.test(phone))return err('กรุณากรอกเบอร์โทร 9-10 หลัก เช่น 0812345678');
-  const email=$('f_email').value.trim(),sms=!!($('f_sms')&&$('f_sms').checked&&INIT.sms);
-  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))return err('อีเมลไม่ถูกต้อง');
   if(!items.length)return err('กรุณาเลือกไซส์อย่างน้อย 1 รายการ');
+  const email=$('f_email').value.trim(),sms=!!($('f_sms')&&$('f_sms').checked&&INIT.sms);
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email))return err('อีเมลไม่ถูกต้อง (หรือเว้นว่างไว้)');
   const post=delVal()==='จัดส่งไปรษณีย์';let addr='';
   if(post){const a=addrVal();if(a.err)return err(a.err);addr=a.addr}
   Swal.fire({title:'ตรวจสอบคำสั่งซื้อ',icon:'question',showCancelButton:true,confirmButtonText:'ยืนยันสั่งจอง',cancelButtonText:'แก้ไข',confirmButtonColor:'#16833F',
@@ -642,7 +644,7 @@ function submitOrder(){
         <img src="${INIT.qr||QR_IMG}" style="max-width:230px;margin:10px auto;display:block;border-radius:10px">
         <a class="small" href="${INIT.qr||QR_IMG}" download="promptpay-qr">⬇ บันทึกรูป QR</a>
         <div class="small mt-1">ชื่อบัญชี: ${esc(INIT.account)}<br>${esc(INIT.bank)}</div>
-        ${(email||sms||INIT.lineOA)?`<div class="small mt-2 p-2 rounded-3" style="background:#EEF4FF">🔔 ระบบจะแจ้งสถานะ ${[email?'ทางอีเมล (พร้อมไฟล์ใบสั่งซื้อ/ใบเสร็จ JPG)':'',sms?'ทาง SMS':'',INIT.lineOA?'ทาง LINE (เพิ่มเพื่อน '+esc(INIT.lineOA)+' แล้วพิมพ์ '+esc(o.id)+' '+esc(phone)+')':''].filter(Boolean).join(' · ')}</div>`:''}<div class="small text-muted mt-2">โอน ${num(o.total)} บาท แล้วแนบสลิปที่เมนู "ติดตาม" (กรอกเลขที่ออเดอร์ + เบอร์โทร) · จดเลขที่ออเดอร์ไว้ เพราะระบบจะไม่เก็บข้อมูลของคุณไว้ในเครื่อง</div>`
+        <div class="small text-muted mt-2">โอน ${num(o.total)} บาท แล้วแนบสลิปที่เมนู "ติดตาม" (กรอกเลขที่ออเดอร์ + เบอร์โทร) · จดเลขที่ออเดอร์ไว้ เพราะระบบจะไม่เก็บข้อมูลของคุณไว้ในเครื่อง</div>${notifyNote(email,sms,o.id,phone)}`
       }).then(x=>{if(x.isConfirmed&&img)showDoc(img,o.id+'.jpg','ใบสั่งซื้อ '+o.id);else if(x.isDenied){openTrack(o.id);track()}});
     }).catch(err);
   });
@@ -701,24 +703,20 @@ function showFull(o){ // ฉบับเต็ม (ยืนยันตัว�
 }
 $('btnTrack').onclick=track;
 const fileB64=f=>new Promise((ok,no)=>{const r=new FileReader();r.onload=()=>ok(r.result.split(',')[1]);r.onerror=no;r.readAsDataURL(f)});
-const EDIT_RE=/(Adobe Photoshop|Photoshop|Lightroom|GIMP|Canva|PicsArt|Snapseed|Pixlr|Fotor|Facetune|Meitu|Paint\.NET|Affinity|Photopea|Remini|Illustrator|Figma)/i;
-let JSQR=null;
-function loadJsQR(){return JSQR||(JSQR=new Promise((ok,no)=>{if(window.jsQR)return ok(window.jsQR);const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jsQR/1.4.0/jsQR.min.js';s.onload=()=>window.jsQR?ok(window.jsQR):no();s.onerror=no;document.head.appendChild(s)}))}
-async function slipScan(f){ // คืน {edit,qr,qrState}: edit=ชื่อโปรแกรมแก้ไขรูปที่พบในไฟล์ · qrState found|none|skip (skip=ตรวจไม่ได้ ไม่ถือว่าผิด)
-  const out={edit:'',qr:'',qrState:'skip'};
-  try{const s=new TextDecoder('latin1').decode(await f.slice(0,262144).arrayBuffer()),m=EDIT_RE.exec(s);if(m)out.edit=m[1]}catch(e){}
-  if(!/^image\//.test(f.type||''))return out;
-  let bm=null;
-  try{bm=await createImageBitmap(f);let tried=false;
-    if('BarcodeDetector' in window){try{const r=await new BarcodeDetector({formats:['qr_code']}).detect(bm);tried=true;if(r&&r[0]&&r[0].rawValue){out.qr=r[0].rawValue;out.qrState='found';return out}}catch(e){}}
-    let js=null;try{js=await loadJsQR()}catch(e){}
-    if(js){tried=true;for(const lim of [1600,900]){const k=Math.min(1,lim/Math.max(bm.width,bm.height)),c=document.createElement('canvas');
-        c.width=Math.max(1,Math.round(bm.width*k));c.height=Math.max(1,Math.round(bm.height*k));const x=c.getContext('2d');x.drawImage(bm,0,0,c.width,c.height);
-        const d=x.getImageData(0,0,c.width,c.height),r=js(d.data,c.width,c.height,{inversionAttempts:'attemptBoth'});c.width=c.height=0;
-        if(r&&r.data){out.qr=r.data;out.qrState='found';return out}}}
-    if(tried)out.qrState='none'}
-  catch(e){}finally{if(bm&&bm.close)bm.close()}
-  return out}
+/* ตรวจสลิปฝั่งเครื่องผู้ใช้: (1) ร่องรอยโปรแกรมแก้ไขรูปในไฟล์ต้นฉบับ (2) อ่าน QR ตรวจสอบบนสลิป เพื่อส่งให้เซิร์ฟเวอร์ตรวจกับธนาคาร/กันซ้ำ
+   ผลเป็น "สัญญาณเตือน" ให้ครูตรวจเอง ไม่ใช่การตัดสินเอง · ทำไม่ได้ (เบราว์เซอร์ไม่รองรับ) = ข้ามเงียบ ๆ */
+const EDIT_RE=/(photoshop|adobe|canva|snapseed|picsart|gimp|lightroom|pixelmator|photopea|facetune|meitu|remini|fotor|befunky|paint\.net)/i;
+let JSQR=null;const loadJsQR=()=>JSQR||(JSQR=window.jsQR?Promise.resolve():new Promise((ok,no)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';s.onload=ok;s.onerror=()=>{JSQR=null;no()};document.head.appendChild(s)}));
+async function slipScan(f,c){
+  const r={meta:{},qr:'',qrState:'skip'};
+  try{const buf=await f.slice(0,262144).arrayBuffer(),m=EDIT_RE.exec(new TextDecoder('latin1').decode(buf));if(m)r.meta.edit=m[1]}catch(e){}
+  try{
+    if('BarcodeDetector' in window){const d=new BarcodeDetector({formats:['qr_code']}),a=await d.detect(c);r.qrState=a.length?'found':'none';if(a.length)r.qr=String(a[0].rawValue||'').slice(0,600)}
+    if(!r.qr){await Promise.race([loadJsQR(),new Promise((_,no)=>setTimeout(no,4000))]);
+      if(window.jsQR){const id=c.getContext('2d').getImageData(0,0,c.width,c.height),q=jsQR(id.data,id.width,id.height,{inversionAttempts:'attemptBoth'});
+        if(q&&q.data){r.qr=String(q.data).slice(0,600);r.qrState='found'}else r.qrState='none'}}
+  }catch(e){}
+  return r}
 async function slipPrep(f){ // ย่อรูปสลิป ≤1600px เป็น JPEG: อัปโหลดไว + OCR อ่านยอดแม่นขึ้น + ไม่กินหน่วยความจำมือถือ
   const raw=async()=>({mimeType:f.type||mimeOf(f.name),base64:await fileB64(f)});
   if(!/^image\/(jpeg|png|webp)$/.test(f.type||''))return raw();
@@ -727,16 +725,20 @@ async function slipPrep(f){ // ย่อรูปสลิป ≤1600px เป�
     const k=Math.min(1,1600/Math.max(bm.width,bm.height));
     c=document.createElement('canvas');c.width=Math.max(1,Math.round(bm.width*k));c.height=Math.max(1,Math.round(bm.height*k));
     const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(bm,0,0,c.width,c.height);
-    return{mimeType:'image/jpeg',base64:c.toDataURL('image/jpeg',0.85).split(',')[1]}}
+    const sc=await slipScan(f,c);
+    return{mimeType:'image/jpeg',base64:c.toDataURL('image/jpeg',0.85).split(',')[1],meta:sc.meta,qr:sc.qr,qrState:sc.qrState}}
   catch(e){if(f.size<=4*1048576)return raw();throw new Error('ย่อรูปไม่สำเร็จ (รูปใหญ่เกินไป) กรุณาถ่ายภาพหน้าจอสลิปแล้วแนบใหม่')}
   finally{if(bm&&bm.close)bm.close();if(c){c.width=c.height=0}}}
 const telLink=s=>{const m=/0\d{2}-?\d{3}-?\d{4}/.exec(s||'');return m?`<a class="btn btn-success btn-sm mt-1" href="tel:${m[0].replace(/-/g,'')}">📞 โทร ${esc(s)}</a>`:esc(s||'ผู้ดูแล')};
+const sentLine=r=>r.notified&&r.notified.length?`<div class="small text-muted mt-2">📨 ส่งแจ้งเตือนแล้ว: ${esc(r.notified.join(' '))}</div>`:'';
 function slipResult(r){
+  if(r.autoPaid)return Swal.fire({icon:'success',title:'ยืนยันรับเงินแล้ว ✔',confirmButtonColor:'#0B2E7A',
+    html:`<div>${esc(r.message||'')}</div><div class="small text-muted mt-2">ดาวน์โหลดใบเสร็จรับเงิน (JPG) ได้ที่เมนู "ติดตาม" และใช้แสดงเมื่อรับเสื้อ</div>${sentLine(r)}`});
   if(r.accepted)return Swal.fire({icon:r.result==='ผ่าน'?'success':'info',title:r.result==='ผ่าน'?'ส่งสลิปแล้ว ✔ ยอดตรงกับคำสั่งซื้อ':'ส่งสลิปแล้ว รอครูตรวจสอบ',
-    html:`<div>${esc(r.message||'')}</div><div class="small text-muted mt-2">รอครูยืนยันยอดเงิน แล้วจะออกใบเสร็จรับเงินให้</div>${(r.notified&&r.notified.length)?`<div class="small mt-1">🔔 แจ้งผลให้คุณแล้ว: ${esc(r.notified.join(' '))}</div>`:''}`,confirmButtonColor:'#0B2E7A'});
+    html:`<div>${esc(r.message||'')}</div><div class="small text-muted mt-2">รอครูยืนยันยอดเงิน แล้วจะออกใบเสร็จรับเงินให้</div>${sentLine(r)}`,confirmButtonColor:'#0B2E7A'});
   return Swal.fire({icon:'error',title:'สลิปไม่ผ่านการตรวจสอบ',confirmButtonText:'เข้าใจแล้ว',confirmButtonColor:'#0B2E7A',
     html:`<div class="text-start"><div class="p-2 rounded-3 mb-2" style="background:#FDECEA;color:#9b1c1c">⚠ ${esc(r.message||'')}</div>
-    <b>กรุณาทำรายการโอนใหม่ให้ถูกต้อง แล้วแนบสลิปอีกครั้ง</b><br>หรือติดต่อสอบถาม<br>${telLink(r.contact)}</div>`})}
+    <b>กรุณาทำรายการโอนใหม่ให้ถูกต้อง แล้วแนบสลิปอีกครั้ง</b><br>หรือติดต่อสอบถาม<br>${telLink(r.contact)}${sentLine(r)}</div>`})}
 let SLIPBUSY=false;
 async function slip(sx,who,after){
   if(SLIPBUSY)return; // กันกดซ้ำ
@@ -746,9 +748,9 @@ async function slip(sx,who,after){
   busy('กำลังเตรียมรูปสลิป...');
   try{const p=await slipPrep(f);
     if(p.base64.length*.75>5*1048576){Swal.close();return err('ไฟล์ใหญ่เกิน 5 MB หลังย่อ กรุณาใช้รูปอื่น')}
-    const t=Swal.getTitle();if(t)t.textContent='กำลังตรวจสอบสลิป (ยอด/ผู้รับ/วันที่/QR/สลิปซ้ำ)... ประมาณ 10–30 วินาที อย่าปิดหน้านี้';
-    const sc=await slipScan(f).catch(()=>({edit:'',qr:'',qrState:'skip'}));
-    const r=await api('attachSlip',Object.assign({payer:$('s_payer'+sx).value,filename:f.name,mimeType:p.mimeType,base64:p.base64,qr:sc.qr,qrState:sc.qrState,meta:{edit:sc.edit}},who));
+    const t=Swal.getTitle();if(t)t.textContent='กำลังตรวจสอบสลิป... (ประมาณ 5–20 วินาที อย่าปิดหน้านี้)';
+    const r=await api('attachSlip',Object.assign({payer:$('s_payer'+sx).value,filename:f.name,mimeType:p.mimeType,base64:p.base64,meta:p.meta,qr:p.qr,qrState:p.qrState},who));
+    if(r.autoPaid&&r.rt&&r.receiptDoc){try{const t2=Swal.getTitle();if(t2)t2.textContent='ยืนยันรับเงินแล้ว กำลังออกใบเสร็จและส่งให้คุณ...';const im=await renderReceipt(r.receiptDoc);await api('sendReceiptImage',{rt:r.rt,base64:b64(im)})}catch(e){console.error(e)}}
     await slipResult(r);if(r.accepted){NORESUME=true;clearResume()}after()}
   catch(e){err(e)}
   finally{SLIPBUSY=false;if(btn)btn.disabled=false;armIdle()}
@@ -770,23 +772,9 @@ $('btnLogin').onclick=login;$('pass').onkeydown=e=>{if(e.key==='Enter')login()};
 document.querySelectorAll('a[data-s]').forEach(a=>{a.onclick=e=>{e.preventDefault();
   document.querySelectorAll('a[data-s]').forEach(x=>x.classList.toggle('active',x===a));
   document.querySelectorAll('.asec').forEach(s=>s.classList.toggle('on',s.id==='a_'+a.dataset.s));
+  if(a.dataset.s==='notify')drawNotify();
   const nv=$('nv');if(nv.classList.contains('show')&&window.bootstrap)bootstrap.Collapse.getOrCreateInstance(nv).hide()}});
 
-const ntRow=(l,on,hint)=>`<tr><td>${l}</td><td>${on?'<span class="pill bg-success-subtle text-success-emphasis">✔ พร้อมใช้</span>':'<span class="pill bg-secondary-subtle text-secondary-emphasis">ยังไม่ตั้งค่า</span>'}</td><td class="text-muted">${hint||''}</td></tr>`;
-function drawNotify(){$('ntst').innerHTML='กำลังโหลด...';
-  api('adminNotifyStatus',T).then(s=>{$('ntst').innerHTML=`<div class="table-responsive"><table class="table table-sm align-middle mb-2"><tbody>`+
-    ntRow('อีเมลแอดมิน',s.adminEmail>0,s.adminEmail?s.adminEmail+' อีเมล · โควต้าส่งวันนี้เหลือ '+(s.mailQuota<0?'?':s.mailQuota):'ตั้ง TEACHER_EMAIL')+
-    ntRow('LINE แอดมิน',s.adminLine,'LINE_TOKEN + LINE_TO')+ntRow('SMS แอดมิน',s.adminSms,'Twilio + ADMIN_SMS_TO')+
-    ntRow('LINE ลูกค้า (ผูกด้วยเลขออเดอร์+เบอร์)',s.customerLine,s.customerLine?esc(s.lineOA):'ตั้ง LINE_OA + Webhook')+ntRow('SMS ลูกค้า',s.customerSms,'ลูกค้าต้องติ๊กยินยอมตอนสั่งซื้อ')+
-    ntRow('ส่งรูปใบสั่งซื้อ/ใบเสร็จทาง LINE',s.publicImages,'PUBLIC_IMAGES=1 (ลิงก์รูปเปิดให้ผู้ที่มีลิงก์ดูได้) — อีเมลแนบไฟล์ได้เสมอ')+
-    ntRow('ตรวจสลิปกับธนาคาร (EasySlip)',s.bankApi,'ต้องมี EASYSLIP_TOKEN และ QR บนสลิป')+ntRow('ลิงก์เว็บในข้อความ (SITE_URL)',s.site,'')+
-    `</tbody></table></div>${s.webhook?`<div class="small">LINE Webhook URL: <code style="word-break:break-all">${esc(s.webhook)}</code></div>`:''}`}).catch(e=>{$('ntst').innerHTML='';err(e)})}
-$('btnNtTest').onclick=()=>{busy('กำลังส่ง...');api('adminTestNotify',T).then(r=>{Swal.close();r.channels.length?ok('ส่งแล้ว: '+r.channels.join(' ')):err(r.note)}).catch(err)};
-document.querySelector('a[data-s=notify]').addEventListener('click',drawNotify);
-function resendDlg(id){const o=D.orders.find(x=>x.id===id);if(!o)return;
-  Swal.fire({title:'แจ้งผู้สั่งซื้อซ้ำ '+id,input:'select',inputOptions:{status:'ข้อความสถานะปัจจุบัน',order:'ใบสั่งซื้อ (JPG)',receipt:'ใบเสร็จรับเงิน (JPG)'},showCancelButton:true,confirmButtonText:'ส่ง',cancelButtonText:'ยกเลิก',
-    html:`<div class="small text-start">ช่องทาง: ${[o.email?'✉ '+esc(o.email):'',o.lineBound?'LINE':'',o.sms?'SMS':''].filter(Boolean).join(' · ')||'ไม่มี'}</div>`}).then(r=>{
-    if(!r.isConfirmed)return;busy('กำลังส่ง...');api('adminResendNotify',T,id,r.value).then(x=>{ok('ส่งแล้ว: '+x.sent.join(' '));refresh()}).catch(err)})}
 function refresh(){
   api('adminDashboard',T).then(d=>{
     const first=!D;D=d;if(first)$('op').checked=d.master;
@@ -809,23 +797,41 @@ function refresh(){
 function drawOrders(){
   const q=$('q').value.toLowerCase(),s=$('fs').value,rr=$('fr').value,pp=$('fp').value;
   $('tb').innerHTML=D.orders.filter(o=>(!s||o.status===s)&&(!rr||o.roundName===rr)&&(!pp||(pp==='picked'?o.picked:(!o.picked&&o.status==='ชำระเงินแล้ว')))&&(!q||[o.id,o.name,o.phone,o.year].join(' ').toLowerCase().includes(q))).map(o=>`
-   <tr><td data-l="เลขที่"><b>${esc(o.id)}</b><div class="text-muted">${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div></td><td data-l="ผู้สั่ง">${esc(o.name)}<div class="text-muted">รุ่น ${esc(o.year)} · ${esc(o.phone)}</div>${(o.email||o.lineBound||o.sms)?`<div class="text-muted small">${o.email?'✉ '+esc(o.email)+' ':''}${o.lineBound?'💬LINE ':''}${o.sms?'📱SMS':''}</div><button class="btn btn-sm btn-outline-secondary py-0 mt-1" data-nt="${esc(o.id)}">🔔 แจ้งซ้ำ</button>`:''}${o.notif?`<div class="text-muted small">${esc(o.notif)}</div>`:''}</td>
+   <tr><td data-l="เลขที่"><b>${esc(o.id)}</b><div class="text-muted">${esc(o.date)}${o.roundName?' · '+esc(o.roundName):''}</div></td><td data-l="ผู้สั่ง">${esc(o.name)}<div class="text-muted">รุ่น ${esc(o.year)} · ${esc(o.phone)}</div></td>
    <td data-l="รายการ">${esc(o.items)}<div class="text-muted">${esc(o.delivery)}</div></td><td class="text-end" data-l="ยอด (บาท)">${num(o.total)}</td>
    <td data-l="สถานะ"><select class="form-select form-select-sm border-${col[o.status]}" data-st="${esc(o.id)}">${D.statuses.map(x=>`<option ${x===o.status?'selected':''}>${x}</option>`).join('')}</select>
      ${o.picked?`<div class="mt-1"><span class="pill bg-success-subtle text-success-emphasis">📦 ${plabel(o)}</span><div class="text-muted">${esc(o.pickedAt)}<br>ผู้รับ: ${esc(o.receiver)}${o.pickNote?' · '+esc(o.pickNote):''}</div><a href="#" class="small text-danger" data-unpk="${esc(o.id)}">ยกเลิกการบันทึก</a></div>`:o.status==='ชำระเงินแล้ว'?`<button class="btn btn-sm btn-outline-success py-0 mt-1" data-pk="${esc(o.id)}">📦 ${o.delivery==='จัดส่งไปรษณีย์'?'บันทึกจัดส่ง':'บันทึกรับเสื้อ'}</button>`:''}</td>
    <td data-l="เอกสาร">${o.slip?`<a href="${esc(o.slip)}" target="_blank" rel="noopener">สลิป</a>`:'-'} ${o.pdf?`<a href="${esc(o.pdf)}" target="_blank" rel="noopener">ใบสั่งซื้อ</a>`:''}${slipBadge(o)}
+     <div class="small text-muted mt-1">📨 ${[o.email?'✉':'',o.lineBound?'LINE':'',o.sms?'SMS':''].filter(Boolean).join(' ')||'ไม่มีช่องทางแจ้ง'}${o.notif?' · '+esc(o.notif):''} <a href="#" data-rs="${esc(o.id)}">ส่งแจ้งซ้ำ</a></div>
      ${o.status==='ชำระเงินแล้ว'?`<div class="mt-1"><button class="btn btn-sm btn-success py-0" data-rc="${esc(o.id)}">🧾 ${esc(o.receiptNo||'ใบเสร็จ')}</button>${o.receiptDate?`<div class="text-muted">${esc(o.receiptDate)}</div>`:''}</div>`:''}</td>
    <td data-l=""><button class="btn btn-sm btn-outline-danger" data-del="${esc(o.id)}">ลบ</button></td></tr>`).join('')||'<tr><td colspan="7" class="text-center text-muted">ไม่พบข้อมูล</td></tr>';
 }
 $('q').oninput=drawOrders;$('fs').onchange=drawOrders;$('fr').onchange=drawOrders;$('fp').onchange=drawOrders;
 $('tb').onchange=e=>{if(e.target.dataset.st)setSt(e.target.dataset.st,e.target.value)};
 $('tb').onclick=e=>{const b=e.target.closest('[data-del]');if(b)return del(b.dataset.del);
-  const nt=e.target.closest('[data-nt]');if(nt)return resendDlg(nt.dataset.nt);
+  const rs=e.target.closest('[data-rs]');if(rs){e.preventDefault();return resend(rs.dataset.rs)}
   const k=e.target.closest('[data-pk]');if(k)return pickDlg(k.dataset.pk);
   const u=e.target.closest('[data-unpk]');if(u){e.preventDefault();return unpick(u.dataset.unpk)}
   const r=e.target.closest('[data-rc]');if(r){const id=r.dataset.rc,o0=D.orders.find(x=>x.id===id);busy('กำลังสร้างรูปใบเสร็จ...');
     adminReceipt(id,!(o0&&o0.receiptUrl)).then(({d,img})=>{Swal.close();showDoc(img,d.receiptNo+'.jpg','ใบเสร็จรับเงิน '+d.receiptNo);refresh()}).catch(err)}};
-const SLB={'ผ่าน':['success','✔ สลิปผ่านตรวจอัตโนมัติ'],'ยอดไม่ตรง':['danger','⚠ ยอดไม่ตรง'],'ไม่ใช่สลิป':['danger','⚠ ไม่ใช่สลิป'],'ซ้ำ':['danger','⚠ สลิปซ้ำ'],'สลิปเก่า':['danger','⚠ สลิปเก่า (ก่อนวันสั่งซื้อ)'],'ตรวจอัตโนมัติไม่ได้':['warning','🔎 ตรวจเอง']};
+function resend(id){Swal.fire({title:'ส่งแจ้งสถานะซ้ำ '+id+'?',text:'ส่งข้อความสถานะล่าสุด (พร้อมรูปใบสั่งซื้อ/ใบเสร็จที่เก็บไว้) ให้ผู้สั่งซื้อทุกช่องทางที่มี',icon:'question',showCancelButton:true,confirmButtonText:'ส่ง',cancelButtonText:'ยกเลิก',confirmButtonColor:'#16833F'}).then(r=>{if(!r.isConfirmed)return;
+  busy('กำลังส่ง...');api('adminResendNotify',T,id).then(x=>{Swal.close();Swal.fire({icon:x.channels.length?'success':'info',title:x.channels.length?'ส่งแล้ว':'ไม่มีช่องทางรับแจ้ง',text:x.channels.length?x.channels.join(' '):x.note});refresh()}).catch(err)})}
+const ntRow=(ok,label,key,hint)=>`<tr><td style="width:2rem">${ok?'✅':'⚪'}</td><td><b>${label}</b> <code class="small">${key}</code><div class="small text-muted">${hint}</div></td></tr>`;
+function drawNotify(){api('adminNotifyStatus',T).then(s=>{$('nt').innerHTML=[
+  ntRow(s.adminEmail>0,'อีเมลแอดมิน','TEACHER_EMAIL','รับแจ้งออเดอร์ใหม่/สลิป พร้อมไฟล์รูปใบสั่งซื้อ-ใบเสร็จ-สลิป (คั่นหลายอีเมลด้วย ,)'),
+  ntRow(s.adminLine,'LINE แอดมิน','LINE_TOKEN + LINE_TO','Channel access token ของ LINE OA + userId/groupId ผู้รับ'),
+  ntRow(s.adminSms,'SMS แอดมิน','ADMIN_SMS_TO + TWILIO_*','ข้อความสั้น (SMS ส่งรูปไม่ได้)'),
+  ntRow(s.customerLine,'LINE ผู้สั่งซื้อ','LINE_OA','ใส่ @id ของ LINE OA → หน้าสั่งซื้อจะแสดงวิธีผูก LINE ('+(s.lineOA?esc(s.lineOA):'ยังไม่ตั้ง')+')'),
+  ntRow(s.customerSms,'SMS ผู้สั่งซื้อ','SMS_PROVIDER=twilio, TWILIO_SID/TOKEN/FROM','แสดงช่องติ๊ก "รับ SMS" ในหน้าสั่งซื้อ'),
+  ntRow(s.publicImages,'ส่งรูปทาง LINE','PUBLIC_IMAGES=1','LINE ต้องดึงรูปจากลิงก์สาธารณะ → ไฟล์ใบสั่งซื้อ/ใบเสร็จจะเปิดเป็น "ผู้มีลิงก์ดูได้" (มีชื่อ/ที่อยู่ในรูป) · ปิด = LINE ส่งเฉพาะข้อความ ส่วนอีเมลยังแนบไฟล์ปกติ'),
+  ntRow(s.adminImg,'ส่งรูปให้แอดมิน','ADMIN_IMG (ค่าเริ่มต้น เปิด; ใส่ 0 = ปิด)','แอดมินได้รับอีเมลแนบรูปทุกครั้งที่มีใบสั่งซื้อ/ใบเสร็จ — ถ้าโควต้าอีเมลไม่พอให้ปิด'),
+  ntRow(s.accountNo,'เทียบเลขท้ายบัญชี','ACCOUNT_NO','เลขบัญชี/พร้อมเพย์ของผู้รับ (ใช้ 4 ตัวท้ายเทียบกับสลิป นอกเหนือจากชื่อบัญชี)'),
+  ntRow(s.bankApi,'ตรวจสลิปกับธนาคาร (EasySlip)','EASYSLIP_TOKEN','ใช้ QR บนสลิปยืนยันรายการจริง ยอด ผู้รับ และเวลาโอน — กันสลิปปลอม/ตัดต่อได้แข็งแรงที่สุด (บริการภายนอก อาจมีค่าใช้จ่าย)'),
+  ntRow(s.autoApprove&&s.bankApi,'อนุมัติอัตโนมัติ','AUTO_APPROVE=1','เฉพาะสลิปที่ธนาคารยืนยันครบทุกข้อ (ต้องเปิดข้อก่อนหน้า) → ออกใบเสร็จ+แจ้งผู้สั่งซื้อทันที · นอกนั้นรอครูตรวจเหมือนเดิม'+(s.autoApprove&&!s.bankApi?' <b class="text-danger">เปิดไว้แต่ยังไม่มี EASYSLIP_TOKEN จึงยังไม่ทำงาน</b>':'')),
+  `<tr><td></td><td class="small">โควต้าอีเมลวันนี้เหลือ: <b>${s.mailQuota<0?'ไม่ทราบ':s.mailQuota}</b>${s.webhook?`<br>Webhook (LINE): <code style="word-break:break-all">${esc(s.webhook)}</code>`:''}</td></tr>`].join('')}).catch(err)}
+$('btnNtRef').onclick=drawNotify;
+$('btnNtTest').onclick=()=>{busy('กำลังส่ง...');api('adminTestNotify',T).then(r=>{Swal.close();Swal.fire({icon:r.channels.length?'success':'info',title:r.channels.length?'ส่งแล้ว':'ยังไม่ได้ตั้งช่องทาง',text:r.channels.length?r.channels.join(' '):r.note})}).catch(err)};
+const SLB={'ผ่าน':['success','✔ สลิปผ่านตรวจอัตโนมัติ'],'ยอดไม่ตรง':['danger','⚠ ยอดไม่ตรง'],'ไม่ใช่สลิป':['danger','⚠ ไม่ใช่สลิป'],'ซ้ำ':['danger','⚠ สลิปซ้ำ'],'สลิปเก่า':['danger','⚠ สลิปเก่า'],'ตรวจอัตโนมัติไม่ได้':['warning','🔎 ตรวจเอง']};
 const slipBadge=o=>{if(!o.slipResult)return'';const b=SLB[o.slipResult]||['secondary',o.slipResult];
   return `<div class="mt-1"><span class="pill bg-${b[0]}-subtle text-${b[0]}-emphasis">${b[1]}</span>${(o.slipAmt!==''&&o.slipAmt!=null&&!o.slipNote)?`<div class="text-muted">ยอดในสลิป ${num(o.slipAmt)} บาท</div>`:''}${o.slipNote?`<div class="text-muted">${esc(o.slipNote)}</div>`:''}</div>`};
 const plabel=o=>o.delivery==='จัดส่งไปรษณีย์'?'จัดส่งแล้ว':'รับเสื้อแล้ว';
