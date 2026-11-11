@@ -217,7 +217,7 @@ body.noscroll{overflow:hidden}
   <div class="cardx d-none" id="rounds_card"><div class="h" style="margin-bottom:10px">🗓 รอบการสั่งจอง</div><div id="rounds"></div></div>
   <div class="cardx" id="order">
       <div class="h"><i>1</i>เลือกไซส์และจำนวน</div>
-   <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3"><span class="small text-muted">ขนาดวัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง</span><button type="button" class="btn-sub" style="min-height:38px;padding:0 14px;font-size:.9rem" id="btnTable">🔍 ดูตารางไซส์</button></div>
+   <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3"><span class="small text-muted">ขนาดวัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง</span><button type="button" class="btn-sub" style="min-height:38px;padding:0 14px;font-size:.9rem" id="btnTable">🔍 ดูตารางไซส์</button> <button type="button" class="btn-sub" style="min-height:38px;padding:0 14px;font-size:.9rem" id="btnKids2">🧒 ไซส์เด็ก</button></div>
    <div class="row g-2" id="sizes"><div class="text-center text-muted p-3">กำลังโหลดไซส์...</div></div>
   </div>
 
@@ -276,7 +276,7 @@ body.noscroll{overflow:hidden}
   <div class="cardx"><div class="h">👕 ตารางไซส์และราคา</div>
    <div class="table-responsive"><table class="table table-sm align-middle mb-2"><thead><tr><th>ไซส์</th><th>รอบอก / ความยาว (นิ้ว)</th><th class="text-end">ราคา (บาท)</th></tr></thead><tbody id="infoSizes"></tbody></table></div>
    <div class="small text-muted mb-2">วัดเป็นหน่วยนิ้ว กรุณาเทียบตารางไซส์ก่อนสั่งจอง</div>
-   <button type="button" class="btn-sub" id="btnTable2">🔍 ดูรูปแบบเสื้อ</button></div>
+   <button type="button" class="btn-sub" id="btnTable2">🔍 ดูรูปแบบเสื้อ</button> <button type="button" class="btn-sub" id="btnKids">🧒 ดูตารางไซส์เด็ก</button></div>
   <div class="cardx"><div class="h">📋 ขั้นตอนการสั่งซื้อ</div>
    <ol class="howto mb-0"><li><b>เลือกไซส์และจำนวน</b> ได้หลายไซส์ในออเดอร์เดียว แล้วกรอกข้อมูลผู้สั่ง</li><li><b>กดยืนยันคำสั่งซื้อ</b> ระบบออกเลขที่ใบสั่งซื้อพร้อม QR พร้อมเพย์</li><li><b>โอนเงินตามยอด</b> แล้วไปที่แท็บ "ติดตาม / แจ้งโอน" เพื่อแนบสลิป — ระบบตรวจยอดให้ทันที</li><li>ครูยืนยันยอด ระบบออก <b>ใบเสร็จรับเงิน (JPG)</b> ไว้แสดงเมื่อรับเสื้อ</li></ol></div>
   <div class="cardx"><div class="h">📞 ติดต่อสอบถาม</div><div id="infoContact"></div></div>
@@ -502,17 +502,19 @@ const TM=['มกราคม','กุมภาพันธ์','มีนาค
 const tm=s=>{const m=/^(\d{4})-(\d{2})-(\d{2})[ T](\d{2}:\d{2})$/.exec(s||'');return m?`${+m[3]} ${TM[+m[2]-1]} ${+m[1]+543} ${m[4]} น.`:esc(s)};
 const RST={open:['กำลังเปิดรับ','bg-success-subtle text-success-emphasis'],upcoming:['เร็ว ๆ นี้','bg-warning-subtle text-warning-emphasis'],full:['เต็มแล้ว','bg-danger-subtle text-danger-emphasis'],ended:['ปิดแล้ว','bg-secondary-subtle text-secondary-emphasis'],off:['ปิด','bg-secondary-subtle text-secondary-emphasis']};
 const idx=s=>INIT.sizes.findIndex(x=>x.size===s);
+const isKid=s=>/^(เบอร์|เด็ก)/.test(s.size);
 function load(){
   return api('getInit').then(d=>{
     INIT=d;$('smsWrap').classList.toggle('d-none',!d.sms);$('proj').textContent=d.project||'เสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569';
     const R=d.round,mn=d.sizes.length?Math.min(...d.sizes.map(s=>s.price)):0;
-    $('chips').innerHTML=(mn?`<span class="chip chip-y">ราคา ${num(mn)} บาท/ตัว</span>`:'')+(R?`<span class="chip">🗓 ${esc(R.name)} · ปิดรับ ${tm(R.end)}</span>`+(R.limit?`<span class="chip">เหลือ ${R.remaining} จาก ${R.limit} ตัว</span>`:''):'')+(d.contacts?`<span class="chip">📞 ${esc(d.contacts)}</span>`:'');
+    const adP=d.sizes.filter(s=>!isKid(s)).map(s=>s.price),kdP=d.sizes.filter(isKid).map(s=>s.price),pr=a=>Math.min(...a)===Math.max(...a)?num(a[0]):num(Math.min(...a))+'-'+num(Math.max(...a));
+    $('chips').innerHTML=(adP.length&&kdP.length?`<span class="chip chip-y">ผู้ใหญ่ ${pr(adP)} · เด็ก ${pr(kdP)} บาท/ตัว</span>`:mn?`<span class="chip chip-y">ราคา ${num(mn)} บาท/ตัว</span>`:'')+(R?`<span class="chip">🗓 ${esc(R.name)} · ปิดรับ ${tm(R.end)}</span>`+(R.limit?`<span class="chip">เหลือ ${R.remaining} จาก ${R.limit} ตัว</span>`:''):'')+(d.contacts?`<span class="chip">📞 ${esc(d.contacts)}</span>`:'');
     $('closed').textContent='⛔ '+(d.msg||'');$('closed').classList.toggle('d-none',d.open);$('btnSubmit').disabled=!d.open;
     drawRounds(d.rounds||[]);
-    $('infoSizes').innerHTML=d.sizes.map(s=>`<tr><td><b>${esc(s.size)}</b></td><td>${esc(s.chest||'-')}</td><td class="text-end">${num(s.price)}</td></tr>`).join('')||'<tr><td colspan="3" class="text-muted">ยังไม่ได้ตั้งค่าไซส์</td></tr>';
+    $('infoSizes').innerHTML=(rows=>{const both=d.sizes.some(isKid)&&d.sizes.some(s=>!isKid(s)),ad=d.sizes.filter(s=>!isKid(s)),kd=d.sizes.filter(isKid),hd=t=>both?`<tr class="table-light"><td colspan="3"><b>${t}</b></td></tr>`:'';return (ad.length?hd('👕 ผู้ใหญ่')+rows(ad):'')+(kd.length?hd('🧒 เด็ก (นักเรียน)')+rows(kd):'')})(a=>a.map(s=>`<tr><td><b>${esc(s.size)}</b></td><td>${esc(s.chest||'-')}</td><td class="text-end">${num(s.price)}</td></tr>`).join(''))||'<tr><td colspan="3" class="text-muted">ยังไม่ได้ตั้งค่าไซส์</td></tr>';
     $('infoContact').innerHTML=d.contacts?String(d.contacts).split(/\s*·\s*/).map(c=>{const m=/0\d{2}-?\d{3}-?\d{4}/.exec(c);return `<div class="py-1">${m?`<a href="tel:${m[0].replace(/-/g,'')}" class="text-decoration-none">📞 ${esc(c)}</a>`:esc(c)}</div>`}).join(''):'<div class="text-muted">—</div>';
     $('dContact').innerHTML=$('infoContact').innerHTML;
-    $('sizes').innerHTML=d.sizes.map((s,i)=>{
+    const card=(s,i)=>{
       const out=s.remaining!=null&&s.remaining<=0;
       return `<div class="col-6 col-md-4 col-lg-3"><div class="size" id="c_${i}">
        <div class="n">${esc(s.size)}</div><div class="s">${esc(s.chest||'')}</div>
@@ -520,7 +522,10 @@ function load(){
        <div class="s">${s.remaining==null?'ไม่จำกัด':out?'<b class="text-danger">หมด</b>':'เหลือ '+s.remaining}</div>
        <div class="step"><button data-s="${esc(s.size)}" data-d="-1" aria-label="ลดจำนวนไซส์ ${esc(s.size)}" ${out?'disabled':''}>−</button>
        <input id="q_${i}" data-q="${esc(s.size)}" value="${Q[s.size]||0}" inputmode="numeric" ${out?'disabled':''}>
-       <button data-s="${esc(s.size)}" data-d="1" aria-label="เพิ่มจำนวนไซส์ ${esc(s.size)}" ${out?'disabled':''}>+</button></div></div></div>`}).join('')||'<div class="text-muted text-center p-3">ยังไม่ได้ตั้งค่าไซส์</div>';
+       <button data-s="${esc(s.size)}" data-d="1" aria-label="เพิ่มจำนวนไซส์ ${esc(s.size)}" ${out?'disabled':''}>+</button></div></div></div>`};
+    const adI=[],kdI=[];d.sizes.forEach((s,i)=>(isKid(s)?kdI:adI).push(i));const both=adI.length&&kdI.length;
+    const grp=(ids,t)=>ids.length?(both?`<div class="col-12 fw-bold mt-2">${t}</div>`:'')+ids.map(i=>card(d.sizes[i],i)).join(''):'';
+    $('sizes').innerHTML=(grp(adI,'👕 ไซส์ผู้ใหญ่')+grp(kdI,'🧒 ไซส์เด็ก (นักเรียน)'))||'<div class="text-muted text-center p-3">ยังไม่ได้ตั้งค่าไซส์</div>';
     calc();
   }).catch(e=>{$('sizes').innerHTML='<div class="text-center p-3"><div class="text-danger mb-2">โหลดข้อมูลไม่สำเร็จ</div><button class="btn btn-sm btn-outline-primary" onclick="load()">ลองใหม่</button></div>';err(e)});
 }
@@ -547,6 +552,7 @@ function minibarUpdate(){$('minibar').classList.toggle('d-none',!(TAB==='order'&
 $('sizes').onclick=e=>{const b=e.target.closest('button[data-d]');if(b)setq(b.dataset.s,(Q[b.dataset.s]||0)+ +b.dataset.d)};
 $('sizes').oninput=e=>{if(e.target.dataset.q)setq(e.target.dataset.q,e.target.value)};
 $('btnTable').onclick=()=>$('design').click();
+const showKids=()=>Swal.fire({imageUrl:'kids-size.jpg',imageAlt:'ตารางไซส์เสื้อนักเรียน',width:Math.min(Math.round(innerWidth*.96),620),padding:'.5em',showConfirmButton:false,showCloseButton:true});$('btnKids').onclick=showKids;$('btnKids2').onclick=showKids;
 $('design').onclick=()=>Swal.fire({imageUrl:$('design').src,imageAlt:'แบบเสื้อ',width:Math.min(Math.round(innerWidth*.96),900),padding:'.5em',showConfirmButton:false,showCloseButton:true});
 const delVal=()=>document.querySelector('input[name=f_del]:checked').value;
 function syncDel(){const post=delVal()==='จัดส่งไปรษณีย์';$('addrWrap').classList.toggle('d-none',!post);
