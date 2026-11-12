@@ -889,13 +889,35 @@ $('btnSaveRd').onclick=()=>{const rows=[...$('rd').rows].map(r=>{const i=r.query
   if(!rows.length&&!confirm('ไม่มีรอบเลย ระบบจะรับสั่งตามสวิตช์หลักอย่างเดียว ต้องการบันทึกหรือไม่?'))return;
   api('adminSaveRounds',T,rows).then(()=>{ok('บันทึกรอบแล้ว');D=null;refresh()}).catch(err)};
 $('btnOpen').onclick=()=>api('adminSetOpen',T,$('op').checked).then(()=>ok('บันทึกแล้ว')).catch(err);
+function roundReport(r){ // สรุปรายรอบ: เงิน/การรับเสื้อ/ยกเลิก/ช่องทางรับ + แยกไซส์
+  const F=['n','qty','amt','paidN','paidQty','paidAmt','unpaidN','unpaidQty','unpaidAmt','pickedQty','pendingQty','cancelN','cancelQty','schoolN','postN'],T={bySize:{}};F.forEach(f=>T[f]=0);
+  r.roundKeys.forEach(k=>{const b=r.byRound[k];F.forEach(f=>T[f]+=b[f]);Object.keys(b.bySize).forEach(s=>T.bySize[s]=(T.bySize[s]||0)+b.bySize[s])});
+  const th=h=>`<th class="text-nowrap">${h}</th>`,c=v=>`<td class="text-end">${v}</td>`;
+  const row=(k,b,tot)=>`<tr class="${tot?'table-light fw-bold':''}"><td class="text-nowrap">${esc(k)}${!tot&&b.stateTh?` <span class="badge bg-secondary">${esc(b.stateTh)}</span>`:''}${!tot&&b.start?`<div class="small text-muted">${esc(b.start)} – ${esc(b.end)}</div>`:''}</td>${c(b.n)}${c(b.qty)}${c(num(b.amt))}${c(b.paidQty)}${c(num(b.paidAmt))}${c(num(b.unpaidAmt))}${c(b.pickedQty)}${c(b.pendingQty)}${c(b.cancelN)}${c(b.schoolN+'/'+b.postN)}${c(tot?'-':(b.limit>0?b.qty+'/'+b.limit:'ไม่จำกัด'))}</tr>`;
+  let h=`<h6>แยกตามรอบสั่งจอง</h6><div class="table-responsive"><table class="table table-sm table-bordered"><thead><tr>${['รอบ','ออเดอร์','ตัว','ยอดรวม','ชำระแล้ว (ตัว)','ชำระแล้ว (บาท)','ค้างชำระ (บาท)','รับเสื้อแล้ว (ตัว)','รอรับ (ตัว)','ยกเลิก (ออเดอร์)','รับที่ รร./ไปรษณีย์','โควตา'].map(th).join('')}</tr></thead><tbody>${r.roundKeys.map(k=>row(k,r.byRound[k],false)).join('')}${row('รวมทุกรอบ',T,true)}</tbody></table></div>`;
+  const sz=(r.sizeOrder||[]).filter(s=>T.bySize[s]);Object.keys(T.bySize).forEach(s=>{if(!sz.includes(s))sz.push(s)});
+  if(sz.length)h+=`<h6>จำนวนเสื้อแยกไซส์ในแต่ละรอบ <span class="small text-muted">(ตัว · ไม่รวมที่ยกเลิก)</span></h6><div class="table-responsive"><table class="table table-sm table-bordered"><thead><tr>${th('รอบ')}${sz.map(s=>th(esc(s))).join('')}${th('รวม')}</tr></thead><tbody>${r.roundKeys.map(k=>`<tr><td class="text-nowrap">${esc(k)}</td>${sz.map(z=>c(r.byRound[k].bySize[z]||'-')).join('')}${c(r.byRound[k].qty)}</tr>`).join('')}<tr class="table-light fw-bold"><td>รวม</td>${sz.map(z=>c(T.bySize[z])).join('')}${c(T.qty)}</tr></tbody></table></div>`;
+  return h;
+}
+function roundOrders(r){ // รายออเดอร์ในแต่ละรอบ + รวมแต่ละไซส์ + รวมทั้งสิ้น
+  const ix=s=>{const k=(r.sizeOrder||[]).indexOf(s);return k<0?999:k},srt=o=>Object.keys(o).sort((a,b)=>ix(a)-ix(b)),c=v=>`<td class="text-end">${v}</td>`;
+  const fs=m=>srt(m).map(s=>`${esc(s)} : ${m[s]}`).join(' · ')||'-';
+  let h=`<h6>รายละเอียดออเดอร์ รายรอบ <span class="small text-muted">(ต่อคน/ต่อครั้งที่สั่ง · ออเดอร์ยกเลิกเป็นสีเทา ไม่รวมในยอดสรุป)</span></h6>`;
+  r.roundKeys.forEach(k=>{const b=r.byRound[k];
+    h+=`<div class="fw-bold mt-2">${esc(k)} <span class="small text-muted">(${b.orders.length} ออเดอร์)</span></div>`;
+    if(!b.orders.length){h+='<div class="small text-muted mb-2">ยังไม่มีออเดอร์</div>';return}
+    const sm={};srt(b.bySize).forEach(s=>sm[s]=b.bySize[s]);
+    h+=`<div class="table-responsive"><table class="table table-sm table-bordered"><thead><tr><th>เลขที่</th><th>ชื่อผู้สั่ง</th><th>Size : จำนวน</th><th class="text-end">รวม (ตัว)</th><th class="text-end">ราคา (บาท)</th><th>สถานะการชำระเงิน</th></tr></thead><tbody>${b.orders.map(o=>{const m={};o.items.forEach(it=>m[it.size]=(m[it.size]||0)+it.qty);return `<tr class="${o.status==='ยกเลิก'?'text-muted':''}"><td class="text-nowrap">${esc(o.id)}</td><td>${esc(o.name)}</td><td>${fs(m)}</td>${c(o.qty)}${c(num(o.total))}<td>${esc(o.status)}</td></tr>`}).join('')}<tr class="table-light fw-bold"><td colspan="2">รวมรอบนี้ (แต่ละไซส์)</td><td>${fs(sm)}</td>${c(b.qty)}${c(num(b.amt))}<td></td></tr></tbody></table></div>`;});
+  h+=`<h6>รวมทั้งสิ้น (ทุกรอบ)</h6><div class="table-responsive"><table class="table table-sm table-bordered"><thead><tr><th>Size</th><th class="text-end">จำนวน (ตัว)</th><th class="text-end">ยอด (บาท)</th></tr></thead><tbody>${srt(r.bySize).map(s=>`<tr><td>${esc(s)}</td>${c(r.bySize[s].qty)}${c(num(r.bySize[s].amt))}</tr>`).join('')}<tr class="table-light fw-bold"><td>รวมทั้งหมด</td>${c(r.total.qty)}${c(num(r.total.amt))}</tr></tbody></table></div>`;
+  return h;
+}
 function drawReport(){
   const r=D.report,tb=(h,rows)=>`<table class="table table-sm table-bordered"><thead><tr>${h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;
   $('rep').innerHTML=`<h5>รายงานสรุปการสั่งซื้อเสื้อที่ระลึก ผ้าป่าศิษย์เก่า 2569</h5><div class="small text-muted mb-2">ข้อมูล ณ ${r.at}</div>
    <p>ออเดอร์ ${r.total.orders} · ${r.total.qty} ตัว · ยอดรวม <b>${num(r.total.amt)}</b> บาท · ชำระแล้ว <b>${num(r.total.paidAmt)}</b> บาท<br>📦 รับเสื้อแล้ว <b>${r.total.pickedQty}</b> ตัว (${r.total.pickedOrders} ออเดอร์) · รอรับเสื้อ <b>${r.total.pendingQty}</b> ตัว (${r.total.pendingOrders} ออเดอร์)</p>
    <h6>แยกตามไซส์</h6>${tb(['ไซส์','จำนวน','ชำระแล้ว (ตัว)','ยอด'],Object.keys(r.bySize).map(k=>`<tr><td>${esc(k)}</td><td>${r.bySize[k].qty}</td><td>${r.bySize[k].paidQty}</td><td>${num(r.bySize[k].amt)}</td></tr>`).join(''))}
    <h6>แยกตามรุ่น</h6>${tb(['รุ่น','ออเดอร์','ตัว','ยอด'],Object.keys(r.byYear).sort().map(k=>`<tr><td>${esc(k)}</td><td>${r.byYear[k].n}</td><td>${r.byYear[k].qty}</td><td>${num(r.byYear[k].amt)}</td></tr>`).join(''))}
-   <h6>แยกตามรอบสั่งจอง</h6>${tb(['รอบ','ออเดอร์','ตัว','ยอด'],Object.keys(r.byRound).map(k=>`<tr><td>${esc(k)}</td><td>${r.byRound[k].n}</td><td>${r.byRound[k].qty}</td><td>${num(r.byRound[k].amt)}</td></tr>`).join(''))}
+   ${roundReport(r)}${roundOrders(r)}
    <h6>แยกตามสถานะ</h6>${tb(['สถานะ','ออเดอร์','ยอด'],D.statuses.map(k=>`<tr><td>${k}</td><td>${r.byStatus[k].n}</td><td>${num(r.byStatus[k].amt)}</td></tr>`).join(''))}`;
 }
 $('btnPdf').onclick=()=>{busy('กำลังสร้าง PDF...');api('adminReportPdf',T).then(r=>{Swal.close();saveFile(r)}).catch(err)};
